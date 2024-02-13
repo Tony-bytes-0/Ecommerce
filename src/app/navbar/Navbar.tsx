@@ -11,11 +11,11 @@ const NavBar = () => {
 
   return (
     <Grid container className="bg-gray-200">
-      <Grid item xs={12} className={`flex flex-row p-6 items-end`}>
+      <Grid item xs={12} className={`flex flex-row p-2 items-end`}>
         {links.map((link) => (
           <Grid item key={link.id}>
             <Link href={link.href} className="flex px-6">
-              <p className="p-10 rounded-md shadow-lg">{link.label}</p>
+              <p className="p-5 rounded-md shadow-lg">{link.label}</p>
             </Link>
           </Grid>
         ))}

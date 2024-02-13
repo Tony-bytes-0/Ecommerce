@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { Provider } from "react-redux";
 //redux
 import { makeStore, AppStore } from "@/lib/store";
-import NavBar from "@/app/navBar/NavBar";
+import NavBar from "@/app/navbar/Navbar";
 
 export default function RootLayout({
   children,
@@ -25,7 +25,7 @@ export default function RootLayout({
         <nav>
           <NavBar />
         </nav>
-        <Grid container className="my-10 mx-6">
+        <Grid container >
             <Provider store={storeRef.current}> {children} </Provider>
         </Grid>
       </body>

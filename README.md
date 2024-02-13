@@ -2,8 +2,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Proyecto creado con npx create-next-app@latest
 Fuente: https://nextjs.org/docs/pages/api-reference/create-next-app
 
-
-
 ## Instalación
 
 npm install
@@ -12,7 +10,4 @@ npm install
 
 npm run dev
 
-
-
 la aplicacion se muestra en http://localhost:3000
-

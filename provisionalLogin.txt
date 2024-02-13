@@ -1,0 +1,36 @@
+import React from "react";
+import TextField from "@mui/material/TextField";
+import { Box, Grid } from "@mui/material";
+//ICONS
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import KeyIcon from "@mui/icons-material/Key";
+
+function LoginInput() {
+  return (
+    <Grid
+      container
+      className="flex p-5 justify-center "
+      sx={{ width: "100%", height: "50vh" }}
+    >
+      <Box className='flex items-center justify-center shadow-lg'>
+
+      <Grid item xs={1}>
+          <AccountBoxIcon sx={{ fontSize: "4em" }} />
+      </Grid>
+      <Grid item xs={11} className="p-2 ">
+          <TextField id="standard-basic" label="Standard" className="flex" />
+      </Grid>
+
+      <Grid item xs={1}>
+          <KeyIcon sx={{ fontSize: "4em" }} />
+      </Grid>
+      <Grid item xs={11} className="p-2 ">
+          <TextField id="standard-basic" label="Standard" className="flex" />
+      </Grid>
+asdasd
+      </Box>
+    </Grid>
+  );
+}
+
+export default LoginInput;
