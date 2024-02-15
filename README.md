@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Proyecto creado con npx create-next-app@latest
 Fuente: https://nextjs.org/docs/pages/api-reference/create-next-app
 
+## Descripción
+aplicacion de compras y ventas con al f
+
 ## Instalación
 
 npm install
