@@ -3,7 +3,7 @@ Proyecto creado con npx create-next-app@latest
 Fuente: https://nextjs.org/docs/pages/api-reference/create-next-app
 
 ## Descripción
-aplicacion de compras y ventas con al f
+aplicacion de compras y ventas con una amplia variedad de productos y medios de pago.
 
 ## Instalación
 
