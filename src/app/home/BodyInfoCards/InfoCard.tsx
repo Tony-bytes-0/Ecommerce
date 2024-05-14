@@ -106,7 +106,7 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
             <Typography
               variant="h5"
               color="text.secondary"
-              sx={{ maxHeight: "30px", minHeight: "30px", overflow: "hidden" }}
+              sx={{ maxHeight: "30px", minHeight: "30px", overflow: "hidden", textAlign: "center", }}
             >
               {"Precio " + item.price + " $"}
             </Typography>
