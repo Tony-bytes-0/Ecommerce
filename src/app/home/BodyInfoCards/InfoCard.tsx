@@ -119,7 +119,7 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
               alignContent={"center"}
               margin={"auto"}
               //position={"fixed"}
-              //bottom={"3%"}
+              //bottom={"3%"
             >
               <Button
                 variant="contained"
