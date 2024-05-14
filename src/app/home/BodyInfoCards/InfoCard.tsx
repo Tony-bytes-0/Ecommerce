@@ -72,7 +72,7 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
         <Card
           className={hoverExpand}
           component={"div"}
-          style={{ maxHeight: "300px", minHeight: "300px" }}
+          style={{ maxHeight: "350px", minHeight: "350px" }}
         >
           <CardMedia
             sx={{ objectFit: "cover", maxHeight: "150px", minHeight: "150px" }}
@@ -81,10 +81,10 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
             style={{ objectFit: "cover" }}
           />
           <CardContent >
-              <Typography gutterBottom variant="h6" component="div" sx={{  maxHeight: "30px", minHeight: "30px", overflow: "hidden"}}>
+              <Typography gutterBottom variant="h6" component="div" sx={{  maxHeight: "70px", minHeight: "70px", overflow: "hidden", textAlign:'center'}}>
                 {item.name}
               </Typography>
-              <Typography variant="h5" color="text.secondary">
+              <Typography variant="h5" color="text.secondary" sx={{  maxHeight: "30px", minHeight: "30px", overflow: "hidden"}} >
                 {"Precio " + item.price + " $"}
               </Typography>
           </CardContent>
