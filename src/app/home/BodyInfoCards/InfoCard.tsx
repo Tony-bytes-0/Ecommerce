@@ -72,31 +72,54 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
         <Card
           className={hoverExpand}
           component={"div"}
-          style={{ maxHeight: "350px", minHeight: "350px" }}
+          style={{ maxHeight: "280px", minHeight: "280px" }}
         >
-          <CardMedia
-            sx={{ objectFit: "cover", maxHeight: "150px", minHeight: "150px" }}
+          {/*           <CardMedia
+            sx={{ maxHeight: "150px", minHeight: "150px" }}
             component="img"
             image={item.imgUrl}
-            style={{ objectFit: "cover" }}
-          />
-          <CardContent >
-              <Typography gutterBottom variant="h6" component="div" sx={{  maxHeight: "70px", minHeight: "70px", overflow: "hidden", textAlign:'center'}}>
-                {item.name}
-              </Typography>
-              <Typography variant="h5" color="text.secondary" sx={{  maxHeight: "30px", minHeight: "30px", overflow: "hidden"}} >
-                {"Precio " + item.price + " $"}
-              </Typography>
+          />  */}
+          <CardMedia>
+          <Box sx={{ maxHeight: "120px", minHeight: "120px", display:'flex' }}>
+            <Image
+              src={item.imgUrl}
+              alt=""
+              width={300}
+              height={200}
+            />
+          </Box>
+          </CardMedia>
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              sx={{
+                maxHeight: "40px",
+                minHeight: "40px",
+                overflow: "hidden",
+                textAlign: "center",
+              }}
+            >
+              {item.name}
+            </Typography>
+            <Typography
+              variant="h5"
+              color="text.secondary"
+              sx={{ maxHeight: "30px", minHeight: "30px", overflow: "hidden" }}
+            >
+              {"Precio " + item.price + " $"}
+            </Typography>
           </CardContent>
           <CardActions>
             <Box
               display={"flex"}
               width={"90%"}
-              //position={"fixed"}
-              //bottom={"3%"}
               justifyContent={"center"}
               alignContent={"center"}
               margin={"auto"}
+              //position={"fixed"}
+              //bottom={"3%"}
             >
               <Button
                 variant="contained"
