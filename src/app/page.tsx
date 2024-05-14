@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <Grid container sx = {GridMainStyles} >
       <Provider store={store}>
-        <Promo />
+        <Promo windowSize = {windowSize} />
         <BodyInfoCards items={items} xs = {
           windowSize.width <= 800 ? 5 : 2
         }  />

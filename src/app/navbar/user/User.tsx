@@ -63,7 +63,7 @@ function User(props: {
   return (
     <>
       {props.windowSize.width >= 800 ? (
-        <Grid container xs={props.size}>
+        <Grid container item xs={props.size}>
           {logged ? (
             <Grid item xs={12} textAlign={"center"}>
               <Typography variant="caption">Bienvenido</Typography>

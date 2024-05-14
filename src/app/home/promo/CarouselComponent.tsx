@@ -10,10 +10,11 @@ type products = {
 };
 type CarouselProps = {
   products: products[];
+  windowSize: { width: number; height: number };
 };
 const CarouselComponent: React.FC<CarouselProps> = ({ products }) => {
   return (
-    <Grid item>
+    <Grid item >
       <Carousel autoPlay interval={5000}>
         {products.map((item, i) => (
           <Item key={i} item={item} />

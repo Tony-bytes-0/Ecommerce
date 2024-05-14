@@ -35,12 +35,12 @@ const NavBar = (props: {
       alignItems={"center"}
       sx={MainGridStyles}
     >
-      <Grid container xs={6}>
+      <Grid container item xs={6}>
         <HamburgerMenu windowSize={props.windowSize} xs={2} />
         <HomeIconComponent windowSize={props.windowSize} xs={3} />
         <Categorys windowsSize = {props.windowSize} xs={6} />
       </Grid>
-      <Grid container xs={6} alignItems={"center"} alignContent={"center"}>
+      <Grid container item xs={6} alignItems={"center"} alignContent={"center"}>
         <SearchField windowSize={props.windowSize} size={7} />
         <Car phone={false} linkStyles={linkStyles} size={2} />
         <User windowSize={props.windowSize} size={3} />

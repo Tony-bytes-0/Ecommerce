@@ -3,7 +3,7 @@ import React from "react";
 import CarouselComponent from "@/app/home/promo/CarouselComponent";
 
 
-function Promo() {
+function Promo( props: {windowSize: {width: number, height: number}}) {
   const imageUrls = {
     home:"/images/home.jpg",
     ropa:"/images/ropa.jpg",
@@ -25,7 +25,7 @@ function Promo() {
   ];
   return (
     <Grid item xs={12} marginTop={10}>
-      <CarouselComponent products={products} />
+      <CarouselComponent windowSize = {props.windowSize} products={products} />
     </Grid>
   );
 }
