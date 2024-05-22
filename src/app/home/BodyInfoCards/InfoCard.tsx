@@ -7,10 +7,11 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton,
   Typography,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { Item, ListOfItems } from "./ItemTypes";
 import {
   getList,
@@ -18,6 +19,8 @@ import {
 } from "@/app/navbar/shopingCar/comunFunctions";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addAmountToItem, addItem } from "@/lib/shopingCar/shopingCart";
+//import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Image from "next/image";
 
 const hoverExpand =
@@ -25,9 +28,19 @@ const hoverExpand =
 const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
   const dispatch = useAppDispatch();
   const boxRef = createRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const [itemsInCar, setItemsInCar] = useState<ListOfItems>({ items: [] });
   const [cardHover, setCardHover] = useState(false);
   const shopingCart = useAppSelector((state) => state.shopingCart);
+  const [expanded, setExpanded] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const handleShow = () => {
+    setExpanded(true);
+  };
+  const handleHide = () => {
+    setExpanded(false);
+  };
   const handleAdd = (): void => {
     if (
       shopingCart.items.filter((iterable: Item) => item.id === iterable.id)
@@ -40,31 +53,26 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
       addStorageItem(item);
     }
   };
+  const handleMouseOver = () => {
+    setCardHover(true);
+  };
+
+  const handleMouseOut = () => {
+    setCardHover(false);
+  };
 
   useEffect(() => {
     setItemsInCar({ items: getList() });
-    const handleMouseOver = () => {
-      setCardHover(true);
-    };
-
-    const handleMouseOut = () => {
-      setCardHover(false);
-    };
 
     if (boxRef.current) {
-      const element = boxRef.current as HTMLDivElement; // Aserción de tipo
+      const element = boxRef.current as HTMLDivElement;
       element.addEventListener("mouseover", handleMouseOver);
       element.addEventListener("mouseout", handleMouseOut);
     }
+  }, [boxRef]); // Asegúrate de que todas las dependencias necesarias estén aquí
 
-    // Limpiar los event listeners al desmontar el componente
-    return () => {
-      if (boxRef.current) {
-        const element = boxRef.current as HTMLDivElement; // Aserción de tipo
-        element.removeEventListener("mouseover", handleMouseOver);
-        element.removeEventListener("mouseout", handleMouseOut);
-      }
-    };
+  useEffect(() => {
+    setIsOverflowing(item.name.length > 15);
   }, []);
   return (
     <Grid item xs={xs} margin={2} padding={0}>
@@ -74,39 +82,65 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
           component={"div"}
           style={{ maxHeight: "280px", minHeight: "280px" }}
         >
-          {/*           <CardMedia
-            sx={{ maxHeight: "150px", minHeight: "150px" }}
-            component="img"
-            image={item.imgUrl}
-          />  */}
           <CardMedia>
-          <Box sx={{ maxHeight: "120px", minHeight: "120px", display:'flex' }}>
-            <Image
-              src={item.imgUrl}
-              alt=""
-              width={300}
-              height={200}
-            />
-          </Box>
+            <Box
+              sx={{ maxHeight: "120px", minHeight: "120px", display: "flex" }}
+            >
+              <Image src={item.imgUrl} alt="" width={300} height={200} />
+            </Box>
           </CardMedia>
           <CardContent>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="div"
-              sx={{
-                maxHeight: "40px",
-                minHeight: "40px",
-                overflow: "hidden",
-                textAlign: "center",
-              }}
-            >
-              {item.name}
-            </Typography>
+            <Box ref={containerRef}>
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="div"
+                sx={{
+                  maxHeight: "40px",
+                  minHeight: "40px",
+                  overflow: "hidden",
+                  textAlign: "center",
+                }}
+              >
+                {item.name}
+                {isOverflowing ? (
+                  <IconButton
+                    onMouseEnter={handleShow}
+                    onMouseLeave={handleHide}
+                  >
+                    <MoreHorizIcon />
+                  </IconButton>
+                ) : (
+                  <></>
+                )}
+
+                {expanded ? (
+                  <Typography
+                    sx={{
+                      position: "absolute",
+                      left: "30%",
+                      top: "50%",
+                      background: "#ffffff",
+                    }}
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    {item.name}
+                  </Typography>
+                ) : (
+                  <></>
+                )}
+              </Typography>
+            </Box>
             <Typography
               variant="h5"
               color="text.secondary"
-              sx={{ maxHeight: "30px", minHeight: "30px", overflow: "hidden", textAlign: "center", }}
+              sx={{
+                maxHeight: "30px",
+                minHeight: "30px",
+                overflow: "hidden",
+                textAlign: "center",
+              }}
             >
               {"Precio " + item.price + " $"}
             </Typography>
@@ -118,8 +152,6 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
               justifyContent={"center"}
               alignContent={"center"}
               margin={"auto"}
-              //position={"fixed"}
-              //bottom={"3%"
             >
               <Button
                 variant="contained"
@@ -134,49 +166,7 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
           </CardActions>
         </Card>
       </Box>
-      {/* <Box
-        ref={boxRef}
-        className={hoverExpand}
-        sx={{
-          width: "100%", // Asegura que el Box ocupe todo el ancho disponible
-          height: "100%", // Asegura que el Box ocupe todo el alto disponible
-          objectFit: "contain", // Ajusta la imagen para que se contenga dentro del Box
-          minHeight:"300px",
-          backgroundColor: "#FFFFFF",
-        }}
-      >
-        <Box sx = {{
-          width:"100%",
-          height: "80%"
-        }}>
-          <Image
-            alt=""
-            src={item.imgUrl}
-            width={300}
-            height={200}
-            style={{ objectFit: "cover" }}
-          />
-        </Box>
-        <Box
-          display={"flex"}
-          height={"20%"}
-          justifyContent={"center"}
-          alignContent={"center"}
-          margin={"auto"}
-        >
-          <Button
-            variant="contained"
-            fullWidth
-            className="bg-blue-400"
-            onClick={handleAdd}
-          >
-            <ShoppingCartIcon />
-            añadir
-          </Button>
-        </Box>
-      </Box> */}
     </Grid>
   );
 };
-
 export default InfoCard;
