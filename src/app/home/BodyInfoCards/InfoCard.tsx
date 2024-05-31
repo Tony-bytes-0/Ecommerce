@@ -8,10 +8,11 @@ import {
   CardMedia,
   Grid,
   IconButton,
+  ThemeProvider,
   Typography,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Item, ListOfItems } from "./ItemTypes";
 import {
   getList,
@@ -19,21 +20,25 @@ import {
 } from "@/app/navbar/shopingCar/comunFunctions";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addAmountToItem, addItem } from "@/lib/shopingCar/shopingCart";
-//import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import esponsiveText from "./responsiveText";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Image from "next/image";
 
 const hoverExpand =
   "transition-transform duration-500 ease-in-out transform hover:scale-110 scrollBar";
-const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
+  const showOverflow = "relative overflow-visible max-h-[300px] overflow-indicator "
+type InfoCardTypes = {
+  item: Item;
+  xs: number;
+  windowSize: { width: number; height: number };
+};
+const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
   const dispatch = useAppDispatch();
-  const boxRef = createRef<HTMLDivElement>();
-  const containerRef = useRef<HTMLDivElement>(null);
   const [itemsInCar, setItemsInCar] = useState<ListOfItems>({ items: [] });
-  const [cardHover, setCardHover] = useState(false);
   const shopingCart = useAppSelector((state) => state.shopingCart);
   const [expanded, setExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  //const []
 
   const handleShow = () => {
     setExpanded(true);
@@ -53,30 +58,17 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
       addStorageItem(item);
     }
   };
-  const handleMouseOver = () => {
-    setCardHover(true);
-  };
-
-  const handleMouseOut = () => {
-    setCardHover(false);
-  };
 
   useEffect(() => {
     setItemsInCar({ items: getList() });
-
-    if (boxRef.current) {
-      const element = boxRef.current as HTMLDivElement;
-      element.addEventListener("mouseover", handleMouseOver);
-      element.addEventListener("mouseout", handleMouseOut);
-    }
-  }, [boxRef]); // Asegúrate de que todas las dependencias necesarias estén aquí
+  }, []); 
 
   useEffect(() => {
-    setIsOverflowing(item.name.length > 15);
+    setIsOverflowing(item.name.length > 10);
   }, []);
   return (
     <Grid item xs={xs} margin={2} padding={0}>
-      <Box ref={boxRef}>
+      <Box>
         <Card
           className={hoverExpand}
           component={"div"}
@@ -90,51 +82,31 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
             </Box>
           </CardMedia>
           <CardContent>
-            <Box ref={containerRef}>
+            <ThemeProvider theme={esponsiveText}>
               <Typography
                 gutterBottom
-                variant="h6"
-                component="div"
+                variant="h5"
+                className={expanded ? hoverExpand + showOverflow : ""}
                 sx={{
                   maxHeight: "40px",
                   minHeight: "40px",
                   overflow: "hidden",
                   textAlign: "center",
+                  whiteSpace: expanded ? 'none' : 'nowrap', // Evita el envoltorio de texto
+                  textOverflow: 'ellipsis', // Indica que el texto debe truncarse con puntos suspensivos
                 }}
+                onMouseEnter={handleShow}
+                onMouseLeave={handleHide}
               >
                 {item.name}
-                {isOverflowing ? (
-                  <IconButton
-                    onMouseEnter={handleShow}
-                    onMouseLeave={handleHide}
-                  >
-                    <MoreHorizIcon />
-                  </IconButton>
-                ) : (
-                  <></>
-                )}
-
-                {expanded ? (
-                  <Typography
-                    sx={{
-                      position: "absolute",
-                      left: "30%",
-                      top: "50%",
-                      background: "#ffffff",
-                    }}
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    {item.name}
-                  </Typography>
-                ) : (
-                  <></>
-                )}
               </Typography>
-            </Box>
+            </ThemeProvider>
             <Typography
-              variant="h5"
+              variant="h6"
               color="text.secondary"
+              className={expanded ? hoverExpand + showOverflow : ""}
+              onMouseEnter={handleShow}
+              onMouseLeave={handleHide}
               sx={{
                 maxHeight: "30px",
                 minHeight: "30px",
@@ -142,7 +114,7 @@ const InfoCard: React.FC<{ item: Item; xs: number }> = ({ item, xs }) => {
                 textAlign: "center",
               }}
             >
-              {"Precio " + item.price + " $"}
+              {item.price + " $"}
             </Typography>
           </CardContent>
           <CardActions>

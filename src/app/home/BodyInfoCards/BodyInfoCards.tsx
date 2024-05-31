@@ -4,15 +4,20 @@ import { Item } from "./ItemTypes";
 import InfoCard from "./InfoCard";
 
 type HomeBodyType = {
-  items: Item[],
-  xs :number;
-}
+  items: Item[];
+  xs: number;
+  windowSize: { width: number; height: number };
+};
 
-const BodyInfoCards: React.FC<HomeBodyType> = ({ items, xs }) => {
+const BodyInfoCards: React.FC<HomeBodyType> = ({ items, xs, windowSize }) => {
   return (
-    <Grid container direction="row" justifyContent={"center"} /* padding={15} */ >
+    <Grid
+      container
+      direction="row"
+      justifyContent={"center"} /* padding={15} */
+    >
       {items.map((item, index) => (
-        <InfoCard key={index} item={item} xs={xs} />
+        <InfoCard key={index} item={item} xs={xs} windowSize = {windowSize} />
       ))}
     </Grid>
   );

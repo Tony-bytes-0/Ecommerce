@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Promo from "@/app/home/promo/Promo";
 import BodyInfoCards from "@/app/home/BodyInfoCards/BodyInfoCards";
 import { staticItems } from "@/app/types/staticObjects";
 import { Provider } from "react-redux";
-import store from '@/lib/store';
+import store from "@/lib/store";
 
 const GridMainStyles = {
-  backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR 
-}
+  backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
+};
 
 export default function Home() {
   const items = staticItems;
@@ -31,12 +31,14 @@ export default function Home() {
   }, []);
 
   return (
-    <Grid container sx = {GridMainStyles} >
+    <Grid container sx={GridMainStyles}>
       <Provider store={store}>
-        <Promo windowSize = {windowSize} />
-        <BodyInfoCards items={items} xs = {
-          windowSize.width <= 800 ? 5 : 2
-        }  />
+        <Promo windowSize={windowSize} />
+        <BodyInfoCards
+          items={items}
+          xs={windowSize.width <= 800 ? 5 : 2}
+          windowSize={windowSize}
+        />
       </Provider>
     </Grid>
   );

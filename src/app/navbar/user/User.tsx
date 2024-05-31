@@ -1,54 +1,44 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
-import ModalOptions from "./ModalOptions";
 import Swal from "sweetalert2";
-import PersonIcon from "@mui/icons-material/Person";
 import LoginIcon from "@mui/icons-material/Login";
-
-const modalBoxStyle = {
-  position: "absolute" as "absolute",
-  display: "flex",
-  right: "20%",
-  top: "10%",
-  width: "40%",
-  height: "100%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  //overflowY: "scroll",
-};
+import DropdownMenu from "@/app/components/DropdownMenu";
+import ModalLogin from "./ModalLogin";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { mutatePassword } from "@/lib/ModalLogin/password";
+import { mutateUsurname } from "@/lib/ModalLogin/usurname";
 
 function User(props: {
   size: number;
   windowSize: { width: number; height: number };
 }) {
-  const [user, setUser] = useState("Usuario");
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.usurname);
+  const password = useAppSelector((state) => state.password);
   const [logged, setLogged] = useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [modalLogin, setModalLogin] = useState(false);
+
+  const handleModalLogin = () => {
+    setModalLogin(!modalLogin);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const hideModalLogin = () => {
+    setModalLogin(false);
+  };
+  const handleSetModalData = (
+    usurname: HTMLInputElement | undefined,
+    password: HTMLInputElement | undefined
+  ) => {
+    console.log('estos son los datos recibidos en la funcion: ', usurname, password)
+    dispatch(mutateUsurname(usurname));
+    dispatch(mutatePassword(password));
   };
   const handleLoggout = () => {
     Swal.fire({
       title: "Cerrar sesión",
       showDenyButton: true,
-      showCancelButton: true,
+      showConfirmButton: true,
       confirmButtonText: "Seguir conectado",
-      denyButtonText: `Confirmar, cerrar sesión`,
+      denyButtonText: `cerrar sesión`,
     }).then((result) => {
       if (result.isConfirmed) {
         console.log("seguir conectado");
@@ -58,54 +48,47 @@ function User(props: {
     });
   };
   const handleLogin = () => {
-    setLogged(true);
+    window.location.href = process.env.NEXT_PUBLIC_BASE_PATH + "/login";
   };
+  const autolog = () => {
+    console.log(user, password, " usuario y contraseña guardados.");
+  };
+  const userOptions = [
+    //{ id: 0, label: "Panel de usuario", function: handleLoggout },
+    { id: 4, label: "Cerrar sesion", function: handleLoggout },
+  ];
+  const logOptions = [
+    { id: 1, label: "Ingresar", function: handleModalLogin },
+    { id: 2, label: "Registrarse", function: handleLogin },
+    { id: 3, label: "AUTOLOG", function: autolog }, //debug
+  ];
   return (
     <>
-      {props.windowSize.width >= 800 ? (
+      {props.windowSize.width >= 800 ? ( //vista desktop
         <Grid container item xs={props.size}>
-          {logged ? (
-            <Grid item xs={12} textAlign={"center"}>
-              <Typography variant="caption">Bienvenido</Typography>
-            </Grid>
-          ) : (
-            <></>
-          )}
-          <Grid item xs={12}>
-            <ModalOptions
-              user={user}
-              logged={logged}
-              handleLoggout={handleLoggout}
-              handleLogin={handleLogin}
-            />
+          <Grid item xs={12} textAlign={"center"}>
+            <Typography variant="caption">
+              {logged ? "Bienvenido" : "Ingresar"}
+            </Typography>
+            {modalLogin ? (
+              <ModalLogin
+                hideModalLogin={hideModalLogin}
+                handleSetModalData={handleSetModalData}
+              />
+            ) : (
+              <></>
+            )}
           </Grid>
+          <DropdownMenu options={logged ? userOptions : logOptions} xs={12} />
         </Grid>
       ) : (
-        <Grid container xs={props.size}>
+        //vista movil
+        <Grid container xs={props.size} paddingLeft={2}>
           {logged ? (
-            <IconButton>
-              <Box display={"flex"} flexDirection={"column"}>
-                <button onClick={handleOpen}>
-                  <PersonIcon fontSize="large" />
-                </button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-              </Box>
-            </IconButton>
+            <DropdownMenu options={userOptions} xs={12} />
           ) : (
             <IconButton>
-              <LoginIcon fontSize="large" onClick={handleLoggout} />
+              <LoginIcon fontSize="large" onClick={handleModalLogin} />
             </IconButton>
           )}
         </Grid>

@@ -9,6 +9,16 @@ import { ListOfItems } from "./home/BodyInfoCards/ItemTypes";
 //static
 import { staticItems } from "@/app/types/staticObjects";
 import store from "@/lib/store";
+import Footer from "./login/Footer";
+
+const defaultGray = "#C1C1C1";
+
+const primaryColor = process.env.NEXT_PUBLIC_PRIMARY_COLOR
+  ? process.env.NEXT_PUBLIC_PRIMARY_COLOR
+  : defaultGray;
+const secundaryColor = process.env.NEXT_PUBLIC_SECONDARY_COLOR
+  ? process.env.NEXT_PUBLIC_SECONDARY_COLOR
+  : defaultGray;
 
 export default function RootLayout({
   children,
@@ -45,6 +55,7 @@ export default function RootLayout({
         </nav>
         <Grid container>
           <Provider store={store}> {children} </Provider>
+          <Footer name={'Ecommerce'} primaryColor={primaryColor} secundaryColor={secundaryColor} />
         </Grid>
       </body>
     </html>
