@@ -65,7 +65,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
 
   useEffect(() => {
     setIsOverflowing(item.name.length > 10);
-  }, []);
+  }, [item.name.length]);
   return (
     <Grid item xs={xs} margin={2} padding={0}>
       <Box>

@@ -34,7 +34,7 @@ function CarItems() {
       getList()
     );
     dispatch(setCarState(getList()));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Grid container className="bg-slate-200">

@@ -8,7 +8,8 @@ import NavBar from "@/app/navbar/Navbar";
 import { ListOfItems } from "./home/BodyInfoCards/ItemTypes";
 //static
 import { staticItems } from "@/app/types/staticObjects";
-import store from "@/lib/store";
+//import store from "@/lib/store";
+import {makeStore} from "@/lib/store";
 import Footer from "./login/Footer";
 
 const defaultGray = "#C1C1C1";
@@ -29,7 +30,7 @@ export default function RootLayout({
     width: 1000,
     height: 1000,
   });
-
+  const store = makeStore()
   useEffect(() => {
     const handleResize = () => {
       setWindowSize({
@@ -55,7 +56,11 @@ export default function RootLayout({
         </nav>
         <Grid container>
           <Provider store={store}> {children} </Provider>
-          <Footer name={'Ecommerce'} primaryColor={primaryColor} secundaryColor={secundaryColor} />
+          <Footer
+            name={"Ecommerce"}
+            primaryColor={primaryColor}
+            secundaryColor={secundaryColor}
+          />
         </Grid>
       </body>
     </html>

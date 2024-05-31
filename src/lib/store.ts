@@ -8,11 +8,11 @@ export const makeStore = () => {
     reducer: { shopingCart: shopingCart, usurname: usurname, password: password },
   })
 }
-
-export type AppStore = ReturnType<typeof makeStore>
 // Infer the `RootState` and `AppDispatch` types from the store itself
+export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
+
   
 
 //export type RootState = ReturnType<typeof store.getState>;

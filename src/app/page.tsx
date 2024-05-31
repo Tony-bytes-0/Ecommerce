@@ -5,7 +5,7 @@ import Promo from "@/app/home/promo/Promo";
 import BodyInfoCards from "@/app/home/BodyInfoCards/BodyInfoCards";
 import { staticItems } from "@/app/types/staticObjects";
 import { Provider } from "react-redux";
-import store from "@/lib/store";
+import { makeStore } from "@/lib/store";
 
 const GridMainStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -17,7 +17,7 @@ export default function Home() {
     width: 1000,
     height: 1000,
   });
-
+  const store = makeStore();
   useEffect(() => {
     const handleResize = () => {
       setWindowSize({

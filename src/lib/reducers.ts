@@ -1,9 +1,9 @@
 // reducers.ts
 import { combineReducers } from 'redux';
-import carItems, { increment } from '@/lib/shopingCar/shopingCart';
+//import {carItems, increment} from '@/lib/shopingCar/shopingCart';
 
 const rootReducer = combineReducers({
-    carItems, increment
+    //carItems, increment
  // Agrega otros reducers aquí
 });
 
