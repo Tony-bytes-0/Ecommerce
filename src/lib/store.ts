@@ -1,13 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
+import shopingCart from "@/lib/shopingCar/shopingCart";
+import usurname from "@/lib/ModalLogin/usurname";
+import password from "@/lib/ModalLogin/password"
+const store = configureStore({
+  reducer: { shopingCart: shopingCart, usurname: usurname, password: password },
+})
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {}
-  })
-}
+export type RootState = ReturnType<typeof store.getState>;
+export type Dispatch = typeof store.dispatch;
 
-// Infer the type of makeStore
-export type AppStore = ReturnType<typeof makeStore>
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export default store

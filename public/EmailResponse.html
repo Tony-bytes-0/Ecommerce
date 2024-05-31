@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{titulo}}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .basics {
+        width: 100%;
+        margin-top: 50px;
+      }
+      .blackDiv {
+        background-color: #404040;
+        color: #f4f4f4;
+        padding: 15px;
+        font-size: large;
+      }
+      .container {
+        width: 40%;
+        margin: auto;
+        padding: 5vh;
+        border-radius: 5px;
+        border: solid;
+        border-color: #bfbebe;
+      }
+      .header {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 5px;
+        background-color: #007bff;
+        color: white;
+      }
+      .borders {
+        border-bottom: solid;
+        border-radius: 10;
+        border-color: #bfbebe;
+      }
+      .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #007bff;
+        color: white;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Ecommerce</h1>
+      </div>
+      <div>
+        <p>Hola, Saludos cordiales {{nombre}}</p>
+        <p class="borders basics">
+          Lo contactamos por el siguiente motivo: {{asunto}}
+        </p>
+        <p class="blackDiv">
+          <b
+            >Para ver información detallada, haga click
+            <a href="{{link}}" style="color: #f4f4f4">aquí</a></b
+          >
+        </p>
+        <p class="borders basics">
+{{mensaje}}
+        </p>
+        <p class="blackDiv">
+            <b
+              >Si usted no realizó esta acción, puede administrar su cuenta tocando el siguiente enlace
+              <a href="{{link}}" style="color: #f4f4f4">administrar</a></b
+            >
+          </p>
+      </div>
+      <a href="www.ecommerce.com"></a>
+      <div class="footer">
+        <footer>
+          <p>© Ecommerce. Todos los derechos reservados.</p>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
