@@ -1,0 +1,67 @@
+import Swal from "sweetalert2";
+
+export const success = () => {
+  Swal.fire({
+    title: "¡Listo!",
+    text: "El usuario fue creado con exito",
+    icon: "success",
+    confirmButtonText: "Aceptar",
+  });
+};
+
+export const shortSuccess = () => {
+  Swal.fire({
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1000,
+  });
+};
+
+export const shortError =() => {
+  Swal.fire({
+    icon: "error",
+    confirmButtonText:'Ok',
+    showConfirmButton: true,
+  })
+}
+
+export const errorSwal = () => {
+  Swal.fire({
+    title: "¡Oops!",
+    text: "Ocurrio un error",
+    icon: "error",
+    confirmButtonText: "Oh",
+  });
+};
+
+export const showLoadingSpinner = (msg) => {
+  Swal.fire({
+    title: msg,
+    // html: 'Please wait...',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+};
+
+export const closeSwal = () => {
+  Swal.close();
+};
+
+export function logoutConfirm (handler)  {
+  let response = false
+  Swal.fire({
+    title: "Cerrar sesión",
+    showDenyButton: true,
+    showConfirmButton: true,
+    confirmButtonText: "Seguir conectado",
+    denyButtonText: `cerrar sesión`,
+  }).then((result) => {
+    if (result.isDenied) {
+      handler()
+    }
+  });
+  return response
+};

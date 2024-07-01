@@ -9,8 +9,8 @@ import { ListOfItems } from "./home/BodyInfoCards/ItemTypes";
 //static
 import { staticItems } from "@/app/types/staticObjects";
 //import store from "@/lib/store";
-import {makeStore} from "@/lib/store";
-import Footer from "./login/Footer";
+import { makeStore } from "@/lib/store";
+import Footer from "./components/Footer";
 
 const defaultGray = "#C1C1C1";
 
@@ -27,12 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [windowSize, setWindowSize] = useState({
-    width: 1000,
-    height: 1000,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
-  const store = makeStore()
-  useEffect(() => {
+  const store = makeStore();
+
+  /*   useEffect(() => {
     const handleResize = () => {
+      console.log('el use efect!!!')
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -41,7 +43,7 @@ export default function RootLayout({
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, []); */
 
   const [carItems, setCarItems] = useState<ListOfItems>({ items: [] });
   const [items, setItems] = useState(staticItems);
@@ -51,7 +53,10 @@ export default function RootLayout({
       <body>
         <nav>
           <Provider store={store}>
-            <NavBar windowSize={windowSize} carItems={carItems} />
+            <NavBar
+              windowSize={windowSize}
+              carItems={carItems}
+            />
           </Provider>
         </nav>
         <Grid container>
