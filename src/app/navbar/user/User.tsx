@@ -11,7 +11,7 @@ import {
   tonyPassword,
 } from "@/app/login/login/communFunctions";
 import { setToken, setUser } from "@/lib/token/sesionToken";
-import { logoutConfirm } from "@/app/login/modalAlerts";
+import { logoutConfirm } from "@/app/components/modalAlerts";
 import { LoginPromiseToken } from "@/app/types/userSesionToken";
 
 function User(props: {
