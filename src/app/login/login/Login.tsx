@@ -1,4 +1,3 @@
-"use client"
 import { ReactHTMLElement, useState } from "react";
 import { CreateAcc } from "./CreateAcc";
 import { LoginButton } from "./LoginButton";
