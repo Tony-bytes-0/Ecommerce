@@ -26,10 +26,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [windowSize, setWindowSize] = useState({
+/*   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  });
+  }); */
   const store = makeStore();
 
   /*   useEffect(() => {
@@ -54,7 +54,7 @@ export default function RootLayout({
         <nav>
           <Provider store={store}>
             <NavBar
-              windowSize={windowSize}
+              //windowSize={windowSize}
               carItems={carItems}
             />
           </Provider>

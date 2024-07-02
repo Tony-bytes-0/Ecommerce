@@ -12,29 +12,31 @@ import AdminPanel from "./adminPanel/AdminPanel";
 import { useAppSelector } from "@/lib/hooks";
 import { hasMoreThanOneProperty } from "../login/login/communFunctions";
 import { UserToken } from "../types/userSesionToken";
+import { useState } from "react";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
   borderColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR,
 };
 type navBar = {
-  windowSize: {
+  /*   windowSize: {
     width: number;
     height: number;
-  };
+  }; */
   carItems: ListOfItems;
-}
+};
 
-const NavBar:React.FC<navBar> = ({windowSize, carItems}) => {
-//const NavBar = (props: {
-/*   windowSize: {
+
+const NavBar: React.FC<navBar> = ({ carItems }) => {
+  //const NavBar = (props: {
+  /*   windowSize: {
     width: number;
     height: number;
   };
   carItems: ListOfItems;
   handleExample: Function;
 }) => { */
-/*   const userLogged = useAppSelector(
+  /*   const userLogged = useAppSelector(
     (state) => state.sesionToken as UserToken
   );
   function showmeDataLoggedUser(){
@@ -45,6 +47,10 @@ const NavBar:React.FC<navBar> = ({windowSize, carItems}) => {
   } */
   //hasMoreThanOneProperty( sesionToken.sesionToken.data )
   //hasMoreThanOneProperty;
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
   const linkStyles =
     "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
   const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; //bg-gray-300 border-slate-400
