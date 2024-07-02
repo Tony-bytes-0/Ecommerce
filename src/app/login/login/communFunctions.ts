@@ -4,7 +4,7 @@ import {
   errorSwal,
   shortSuccess,
   showLoadingSpinner,
-} from "../modalAlerts";
+} from "../../components/modalAlerts";
 
 export function dinamicLogin(
   email: string | HTMLInputElement,

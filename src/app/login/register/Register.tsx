@@ -10,7 +10,7 @@ import {
   showLoadingSpinner,
   errorSwal,
   closeSwal,
-} from "../modalAlerts";
+} from "../../components/modalAlerts";
 //axios
 import baseInstance from "@/app/api";
 
