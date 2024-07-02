@@ -13,8 +13,12 @@ const GridMainStyles = {
 
 export default function Home() {
   const items = staticItems;
+  const [windowSize, setWindowSize] = useState({
+    width: 1000,
+    height: 1000,
+  });
   const store = makeStore();
-/*   useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
@@ -24,12 +28,9 @@ export default function Home() {
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []); */
+  }, []);
 
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  }); 
+  
 
   return (
     <Grid container sx={GridMainStyles}>
