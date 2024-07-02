@@ -18,7 +18,7 @@ export default function Home() {
     height: 1000,
   });
   const store = makeStore();
-  useEffect(() => {
+/*   useEffect(() => {
     const handleResize = () => {
       if (typeof window !== "undefined") {
         setWindowSize({
@@ -30,7 +30,7 @@ export default function Home() {
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, []); */
 
   return (
     <Grid container sx={GridMainStyles}>
