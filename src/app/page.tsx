@@ -18,19 +18,19 @@ export default function Home() {
     height: 1000,
   });
   const store = makeStore();
-/*   useEffect(() => {
+     useEffect(() => {
     const handleResize = () => {
-      if (typeof window !== "undefined") {
+      //if (typeof window !== "undefined") {
         setWindowSize({
           width: window.innerWidth,
           height: window.innerHeight,
         });
-      }
+      //}
     };
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
-  }, []); */
+  }, []); 
 
   return (
     <Grid container sx={GridMainStyles}>
