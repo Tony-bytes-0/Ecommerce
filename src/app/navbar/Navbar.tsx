@@ -48,8 +48,8 @@ const NavBar: React.FC<navBar> = ({ carItems }) => {
   //hasMoreThanOneProperty( sesionToken.sesionToken.data )
   //hasMoreThanOneProperty;
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 1000,
+    height: 1000,
   });
   const linkStyles =
     "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
