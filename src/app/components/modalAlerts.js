@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import baseInstance from "../api";
 
 export const success = () => {
   Swal.fire({
@@ -17,13 +18,13 @@ export const shortSuccess = () => {
   });
 };
 
-export const shortError =() => {
+export const shortError = () => {
   Swal.fire({
     icon: "error",
-    confirmButtonText:'Ok',
+    confirmButtonText: "Ok",
     showConfirmButton: true,
-  })
-}
+  });
+};
 
 export const errorSwal = () => {
   Swal.fire({
@@ -50,8 +51,8 @@ export const closeSwal = () => {
   Swal.close();
 };
 
-export function logoutConfirm (handler)  {
-  let response = false
+export function logoutConfirm(handler) {
+  let response = false;
   Swal.fire({
     title: "Cerrar sesión",
     showDenyButton: true,
@@ -60,8 +61,42 @@ export function logoutConfirm (handler)  {
     denyButtonText: `cerrar sesión`,
   }).then((result) => {
     if (result.isDenied) {
-      handler()
+      handler();
     }
   });
-  return response
-};
+  return response;
+}
+
+export function postData(
+  email,
+  password,
+  fullName,
+  country,
+  phoneNumber,
+  codePostal
+) {
+  const data = {
+    email: email,
+    password: password,
+    person: {
+      fullName: fullName,
+      country: country,
+      phoneNumber: phoneNumber,
+      codePostal: codePostal,
+    },
+  };
+  console.log("datos a enviar: ", data);
+  showLoadingSpinner("Subiendo...");
+  baseInstance
+    .post("/user/", data)
+    .then((response) => {
+      console.log(" la respuesta del envio: ", response.data);
+      closeSwal();
+      success();
+    })
+    .catch((error) => {
+      console.error("Error: ", error);
+      closeSwal();
+      errorSwal();
+    });
+}

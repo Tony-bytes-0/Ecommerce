@@ -15,8 +15,6 @@ const mainStyles = {
   justifyContent: "center",
   alignItems: "center",
 };
-
-
 const LoginInput = (props: {
   primaryColor: string;
   secundaryColor: string;

@@ -39,6 +39,17 @@ export function dinamicLogin(
       });
   });
 }
+export function redirectRole(role: string){
+  if(role == 'CLIENT'){
+    window.location.href = '/';
+  }
+  else if(role == 'ADMIN'){
+    window.location.href = '/dashboard'
+  }
+  else {
+    window.location.href = '#'
+  }
+}
   export function hasMoreThanOneProperty(obj: any) {
     return Object.keys(obj).length > 1;
   }

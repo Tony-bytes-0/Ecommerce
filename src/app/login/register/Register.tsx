@@ -5,24 +5,21 @@ import { RegisterButton } from "./RegisterButton";
 import { RegisterInputs } from "./RegisterInputs";
 import { BasicInputs } from "./BasicInputs";
 import { Button, Grid, Slide } from "@mui/material";
-import {
-  success,
-  showLoadingSpinner,
-  errorSwal,
-  closeSwal,
-} from "../../components/modalAlerts";
+import { postData } from "@/app/components/modalAlerts";
 //axios
-import baseInstance from "@/app/api";
 
 const regexs = {
   //email: /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\.)+com$/,
   //password: /^(?=.*[A-Z])(?=.*\d).{9,}$/,
   email: /^([a-zA-Z0-9._%+-]{1,50})@(?:(?:[a-zA-Z0-9.-]+\.)?[a-zA-Z]{2,})$/,
-  password: /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,}$/,
+  password: /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+  ///^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,}$/ // password regex antiguo
   fullName: /^.{1,50}$/,
   postalCode: /^.{1,10}$/,
   phone: /^\d{1,20}$/,
   country: /^.{1,20}$/,
+  onlyNumbers: /^\d+$/,
+  onlyChar: /^[A-Za-z]+$/,
 };
 
 const Register = ({ handler }: { handler: () => void }) => {
@@ -41,22 +38,30 @@ const Register = ({ handler }: { handler: () => void }) => {
   };
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
-      setFullname(event.target.value);
+      const value = event.target.value;
+      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
+      setFullname(filteredValue);
     }
   };
   const handlePostalCode = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
-      setPostalCode(event.target.value);
+      const value = event.target.value;
+      const filteredValue = value.replace(/[^\d\b]/g, "");
+      setPostalCode(filteredValue);
     }
   };
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event && event.target) {
-      setCountry(event.target.value);
+      const value = event.target.value;
+      const filteredValue = value.replace(/[^\d\b]/g, "");
+      setCountry(filteredValue);
     }
   };
   const handlePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
-      setPhone(event.target.value);
+      const value = event.target.value;
+      const filteredValue = value.replace(/[^\d\b]/g, "");
+      setPhone(filteredValue);
     }
   };
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,58 +122,25 @@ const Register = ({ handler }: { handler: () => void }) => {
     }
   };
   async function sendData() {
+    //la vez que pedi el falfel -----------------------------------------------------------------------------------
     const fullNameRegex = validateInput("fullName", fullName, regexs.fullName);
     const postalRx = validateInput("postalCode", postalCode, regexs.postalCode);
     const countryCodeRegex = validateInput("country", country, regexs.country);
     const phoneRegex = validateInput("phone", phone, regexs.phone);
-    console.log(
-      "resultado de los regex ",
-      fullNameRegex,
-      phoneRegex,
-      countryCodeRegex,
-      postalRx
-    );
     if (fullNameRegex && postalRx && countryCodeRegex && phoneRegex) {
-      console.log("si funciona");
-      console.log('lista de errores: ', errorList)
+      alert("QUE JUEGO HIZO WILLYREX!!!");
+      console.log("lista de errores: ", errorList);
+      postData(email, password, fullName, country, phone, postalCode);
     } else {
       console.log("algo no funciono!");
-      console.log('lista de errores: ', errorList)
+      console.log("lista de errores: ", errorList);
     }
-    /*     console.log('resultado de country', validateInput("country", country, regexs.country))
+    /*     
+    console.log('resultado de country', validateInput("country", country, regexs.country))
     console.log('resultado de country', validateInput("postalCode", postalCode, regexs.postalCode))
-    console.log('resultado de phone', validateInput("phone", phone, regexs.phone)) */
-    /*
-      const data = {
-        email: email,
-        password: password,
-        person: {
-          fullName: fullName,
-          country: country,
-          phoneNumber: phone,
-          codePostal: postalCode,
-        },
-      };
-      console.log("datos a enviar: ", data);
-      showLoadingSpinner("Subiendo...");
-      baseInstance
-        .post("/user/", data)
-        .then((response) => {
-          console.log(" la respuesta del envio: ", response.data);
-          closeSwal();
-          success();
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-          closeSwal();
-          errorSwal();
-        });
-    }
-        */
-    // AQUI ES DONDE ESTA EL CACAOOOOOO ---------------------------------
-
-    //return data;
-  } // AQUI ES DONDE ESTA EL CACAOOOOOO -------------------------------------------------------------
+    console.log('resultado de phone', validateInput("phone", phone, regexs.phone))
+    */
+  }
   return (
     <>
       <Header />
