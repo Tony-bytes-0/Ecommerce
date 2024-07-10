@@ -4,14 +4,19 @@ import { LoginButton } from "./LoginButton";
 import LoginInput from "./LoginInput";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { dinamicLogin, redirectRole, tonyEmail, tonyPassword } from "./communFunctions";
+import {
+  dinamicLogin,
+  evaluateRoleLoginAction,
+  tonyEmail,
+  tonyPassword,
+} from "./communFunctions";
 import { setToken, setUser } from "@/lib/token/sesionToken";
 import { LoginPromiseToken, UserToken } from "@/app/types/userSesionToken";
 type loginType = {
-  handler: () => void
-}
-const Login: React.FC<loginType> = ({handler}) => {
-//const Login = ({ handler }: { handler: () => void }) => {
+  handler: () => void;
+  redirect: (arg0: string) => void;
+};
+const Login: React.FC<loginType> = ({ handler, redirect }) => {
   const dispatch = useAppDispatch();
   const sesionToken = useAppSelector((state) => state.sesionToken);
   const [email, setEmail] = useState("");
@@ -33,14 +38,14 @@ const Login: React.FC<loginType> = ({handler}) => {
     const loginResult: LoginPromiseToken = localResponse;
     dispatch(setToken(loginResult.data.token));
     dispatch(setUser(loginResult.data.user));
-    
+    redirect(evaluateRoleLoginAction(loginResult.data.user.role))
   }
   async function autoLogin() {
     const localResponse = await dinamicLogin(tonyEmail, tonyPassword);
     const loginResult: LoginPromiseToken = localResponse;
     dispatch(setToken(loginResult.data.token));
     dispatch(setUser(loginResult.data.user));
-    redirectRole(loginResult.data.user.role)
+    redirect(evaluateRoleLoginAction(loginResult.data.user.role))
   }
   return (
     <>

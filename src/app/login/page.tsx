@@ -1,12 +1,12 @@
 "use client";
 import { Grid } from "@mui/material";
 import React, { useState } from "react";
-//import { getEnvColors } from "@/app/types/common";
 import Register from "./register/Register";
 import Login from "./login/Login";
-//import Back from "./Back";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter()
   //const colors = getEnvColors();
   const mainGridStyles = {
     width: "100%",
@@ -24,6 +24,9 @@ function Page() {
   const handleLogin = () => {
     setLogin((login) => !login);
   };
+  const redirect = (route: string) => {
+    router.push(process.env.NEXT_PUBLIC_BASE_PATH + route)
+  }
   return (
     <Grid
       container
@@ -37,7 +40,7 @@ function Page() {
       <Grid container xs={6} sx={innerGrid}>
         {/* <Back action = {handleLogin} /> */}
         {login ? (
-          <Login handler={handleLogin} />
+          <Login handler={handleLogin} redirect = {redirect } />
         ) : (
           <Register handler={handleLogin} />
         )}

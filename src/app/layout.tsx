@@ -1,17 +1,10 @@
 "use client";
 import "./globals.css";
 import { Grid } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
 import { Provider } from "react-redux";
-//redux
 import NavBar from "@/app/navbar/Navbar";
-import { ListOfItems } from "./home/BodyInfoCards/ItemTypes";
-//static
-import { staticItems } from "@/app/types/staticObjects";
-//import store from "@/lib/store";
 import { makeStore } from "@/lib/store";
 import Footer from "./components/Footer";
-import { useAppSelector } from "@/lib/hooks";
 
 const defaultGray = "#C1C1C1";
 
@@ -28,18 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const store = makeStore();
-  const [carItems, setCarItems] = useState<ListOfItems>({ items: [] });
-  const [items, setItems] = useState(staticItems);
-
   return (
     <html lang="en">
       <body>
         <nav>
           <Provider store={store}>
-            <NavBar
-              //windowSize={windowSize}
-              carItems={carItems}
-            />
+            <NavBar />
           </Provider>
         </nav>
         <Grid container>

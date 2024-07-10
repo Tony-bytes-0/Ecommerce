@@ -4,49 +4,21 @@ import SearchField from "@/app/navbar/SearchField";
 import HamburgerMenu from "./hamburgerMenu/HamburgerMenu";
 import Car from "@/app/navbar/shopingCar/Car";
 import HomeIconComponent from "./HomeIconComponent";
-
-import { ListOfItems } from "../home/BodyInfoCards/ItemTypes";
 import User from "./user/User";
 import Categorys from "./categorys/Categorys";
 import AdminPanel from "./adminPanel/AdminPanel";
-import { useAppSelector } from "@/lib/hooks";
-import { hasMoreThanOneProperty } from "../login/login/communFunctions";
-import { UserToken } from "../types/userSesionToken";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
   borderColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR,
 };
-type navBar = {
-  /*   windowSize: {
-    width: number;
-    height: number;
-  }; */
-  carItems: ListOfItems;
-};
-
-
-const NavBar: React.FC<navBar> = ({ carItems }) => {
-  //const NavBar = (props: {
-  /*   windowSize: {
-    width: number;
-    height: number;
-  };
-  carItems: ListOfItems;
-  handleExample: Function;
-}) => { */
-  /*   const userLogged = useAppSelector(
-    (state) => state.sesionToken as UserToken
-  );
-  function showmeDataLoggedUser(){
-    return hasMoreThanOneProperty( userLogged.sesionToken.data )
+const NavBar: React.FC = () => {
+  const router = useRouter()
+  const handleNavigate = (route: string) => {
+    router.push(route)
   }
-  function getRole(){
-    return userLogged.sesionToken.data.user.role
-  } */
-  //hasMoreThanOneProperty( sesionToken.sesionToken.data )
-  //hasMoreThanOneProperty;
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
@@ -72,7 +44,7 @@ const NavBar: React.FC<navBar> = ({ carItems }) => {
       <Grid container item xs={6} alignItems={"center"} alignContent={"center"}>
         <SearchField windowSize={windowSize} size={7} />
         <Car phone={false} linkStyles={linkStyles} size={2} />
-        <User windowSize={windowSize} size={3} />
+        <User windowSize={windowSize} size={3} handleNavigate={handleNavigate} />
       </Grid>
     </Grid>
   );
