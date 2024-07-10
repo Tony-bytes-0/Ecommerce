@@ -11,6 +11,7 @@ import { staticItems } from "@/app/types/staticObjects";
 //import store from "@/lib/store";
 import { makeStore } from "@/lib/store";
 import Footer from "./components/Footer";
+import { useAppSelector } from "@/lib/hooks";
 
 const defaultGray = "#C1C1C1";
 
@@ -26,25 +27,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-/*    const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });  */
   const store = makeStore();
-
-  /*   useEffect(() => {
-    const handleResize = () => {
-      console.log('el use efect!!!')
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); */
-
   const [carItems, setCarItems] = useState<ListOfItems>({ items: [] });
   const [items, setItems] = useState(staticItems);
 

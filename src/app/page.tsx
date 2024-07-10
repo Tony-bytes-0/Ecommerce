@@ -1,47 +1,23 @@
-"use client";
-import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Promo from "@/app/home/promo/Promo";
-import BodyInfoCards from "@/app/home/BodyInfoCards/BodyInfoCards";
-import { staticItems } from "@/app/types/staticObjects";
-import { Provider } from "react-redux";
-import { makeStore } from "@/lib/store";
 
-const GridMainStyles = {
-  backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
-};
+"use client"
+import { Provider } from 'react-redux';
+import { makeStore } from '@/lib/store'; // Asegúrate de que esta ruta sea correcta
+import { useAppSelector } from '@/lib/hooks';
+import { Button } from '@mui/material';
 
-export default function Home() {
-  const items = staticItems;
-  const [windowSize, setWindowSize] = useState({
-    width: 1000,
-    height: 1000,
-  });
+// Crea tu store aquí si prefieres hacerlo directamente en _app.js
+// const store = makeStore();
+
+function MyApp() {
+  // Utiliza el mismo método para crear tu store que usaste en otros lugares
   const store = makeStore();
-     useEffect(() => {
-    const handleResize = () => {
-      //if (typeof window !== "undefined") {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      //}
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); 
-
+    const token = useAppSelector((state) => state.sesionToken)
   return (
-    <Grid container sx={GridMainStyles}>
-      <Provider store={store}>
-        <Promo windowSize={windowSize} />
-        <BodyInfoCards
-          items={items}
-          xs={windowSize.width <= 800 ? 5 : 2}
-          windowSize={windowSize}
-        />
-      </Provider>
-    </Grid>
+    <Layout
+      <Button sx={{padding: 40, margin: 40}} onClick={() => console.log(token)}> ver el token...
+      </Button >
+    
   );
 }
+
+export default MyApp;

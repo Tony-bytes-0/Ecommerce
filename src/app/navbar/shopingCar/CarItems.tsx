@@ -29,10 +29,10 @@ function CarItems() {
     return total;
   };
   useEffect(() => {
-    console.log(
+/*     console.log(
       "lista de items, al cargar el componente del carrito: ",
       getList()
-    );
+    ); */
     dispatch(setCarState(getList()));
   }, [dispatch]);
 
