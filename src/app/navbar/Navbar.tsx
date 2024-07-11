@@ -36,7 +36,9 @@ const NavBar: React.FC = () => {
       alignItems={"center"}
       sx={MainGridStyles}
     >
+
       <Grid container item xs={6}>
+      <AdminPanel />
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />
         <Categorys windowsSize={windowSize} xs={6} />
