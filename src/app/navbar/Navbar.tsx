@@ -6,7 +6,6 @@ import Car from "@/app/navbar/shopingCar/Car";
 import HomeIconComponent from "./HomeIconComponent";
 import User from "./user/User";
 import Categorys from "./categorys/Categorys";
-import AdminPanel from "./adminPanel/AdminPanel";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +37,6 @@ const NavBar: React.FC = () => {
     >
 
       <Grid container item xs={6}>
-      <AdminPanel />
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />
         <Categorys windowsSize={windowSize} xs={6} />

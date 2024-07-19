@@ -18,7 +18,7 @@ export function dinamicLogin(
       password: password,
     };
     baseInstance
-      .post("/auth/login", data)
+      .post("/auth/login", {email, password})
       .then((response) => {
         console.log("response: ", response.data); // debug
         closeSwal();
@@ -27,7 +27,7 @@ export function dinamicLogin(
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("error capturado: ", error); // debug
+        console.log("error capturado: ", error, email, password); // debug
         closeSwal();
         errorSwal();
         // Rechaza la promesa con el error
