@@ -53,7 +53,7 @@ const Register = ({ handler }: { handler: () => void }) => {
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event && event.target) {
       const value = event.target.value;
-      const filteredValue = value.replace(/[^\d\b]/g, "");
+      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
       setCountry(filteredValue);
     }
   };
@@ -132,7 +132,6 @@ const Register = ({ handler }: { handler: () => void }) => {
       console.log("lista de errores: ", errorList);
       postData(email, password, fullName, country, phone, postalCode);
     } else {
-      console.log("algo no funciono!");
       console.log("lista de errores: ", errorList);
     }
     /*     

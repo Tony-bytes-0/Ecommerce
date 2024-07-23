@@ -5,6 +5,8 @@ import LoginInput from "./LoginInput";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
+  adminEmail,
+  adminPassword,
   dinamicLogin,
   evaluateRoleLoginAction,
   tonyEmail,
@@ -41,7 +43,8 @@ const Login: React.FC<loginType> = ({ handler, redirect }) => {
     redirect(evaluateRoleLoginAction(loginResult.data.user.role))
   }
   async function autoLogin() {
-    const localResponse = await dinamicLogin(tonyEmail, tonyPassword);
+    //const localResponse = await dinamicLogin(tonyEmail, tonyPassword);
+    const localResponse = await dinamicLogin(adminEmail, adminPassword);
     const loginResult: LoginPromiseToken = localResponse;
     dispatch(setToken(loginResult.data.token));
     dispatch(setUser(loginResult.data.user));

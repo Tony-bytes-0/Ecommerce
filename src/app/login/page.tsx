@@ -12,13 +12,12 @@ function Page() {
     width: "100%",
     height: "120vh",
     display: "flex",
-    backgroundImage: "linear-gradient(to bottom, #222239, #000000)",
+    backgroundImage: process.env.register_background_gradient,
         //overflowY: 'scroll'
   };
   const innerGrid = {
-    background: "#282828",
+    background: process.env.register_boxes_div_colors,
     padding: 3,
-
   };
   const [login, setLogin] = useState(true);
   const handleLogin = () => {

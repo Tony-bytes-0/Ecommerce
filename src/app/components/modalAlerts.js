@@ -100,3 +100,19 @@ export function postData(
       errorSwal();
     });
 }
+
+async function sendData() {
+  //la vez que pedi el falfel -----------------------------------------------------------------------------------
+  const fullNameRegex = validateInput("fullName", fullName, regexs.fullName);
+  const postalRx = validateInput("postalCode", postalCode, regexs.postalCode);
+  const countryCodeRegex = validateInput("country", country, regexs.country);
+  const phoneRegex = validateInput("phone", phone, regexs.phone);
+  if (fullNameRegex && postalRx && countryCodeRegex && phoneRegex) {
+    alert("QUE JUEGO HIZO WILLYREX!!!");
+    console.log("lista de errores: ", errorList);
+    postData(email, password, fullName, country, phone, postalCode);
+  } else {
+    console.log("algo no funciono!");
+    console.log("lista de errores: ", errorList);
+  }
+}

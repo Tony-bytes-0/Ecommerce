@@ -53,3 +53,6 @@ export function hasMoreThanOneProperty(obj: any) {
 
 export const tonyEmail = "tonygonzalezgarcia39@gmail.com";
 export const tonyPassword = "Ecommerce1234$";
+
+export const adminEmail = 'ecommerce@admin.com';
+export const adminPassword = '12345678Admin';
