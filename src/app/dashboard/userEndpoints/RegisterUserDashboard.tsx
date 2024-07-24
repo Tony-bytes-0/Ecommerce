@@ -53,7 +53,7 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
       const value = event.target.value;
-      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
+      const filteredValue = value.replace(/[^a-zA-Z\s]/g, "");
       setFullname(filteredValue);
     }
   };
@@ -67,7 +67,7 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event && event.target) {
       const value = event.target.value;
-      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
+      const filteredValue = value.replace(/[^a-zA-Z\s]/g, "");
       setCountry(filteredValue);
     }
   };
@@ -97,13 +97,13 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
   const [confirm, setConfirm] = useState("");
   const [errorList, setErrorList] = useState<string[]>([]);
   return (
-    <Slide
+/*     <Slide
     in={open}
     container={null}
     direction="left"
     mountOnEnter
     unmountOnExit
-  >
+  > */
     <Grid
       container
       xs={12}
@@ -148,7 +148,7 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
         </Button>
       </Grid>
     </Grid>
-    </Slide>
+    /* </Slide> */
   );
 };
 

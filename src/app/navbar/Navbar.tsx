@@ -8,6 +8,7 @@ import User from "./user/User";
 import Categorys from "./categorys/Categorys";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import DrawerLeft from "../dashboard/DrawerLeft";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -35,6 +36,7 @@ const NavBar: React.FC = () => {
       alignItems={"center"}
       sx={MainGridStyles}
     >
+      <DrawerLeft />
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />

@@ -39,7 +39,7 @@ const Register = ({ handler }: { handler: () => void }) => {
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
       const value = event.target.value;
-      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
+      const filteredValue = value.replace(/[^a-zA-Z\s]/g, "");
       setFullname(filteredValue);
     }
   };
@@ -53,7 +53,7 @@ const Register = ({ handler }: { handler: () => void }) => {
   const handleCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event && event.target) {
       const value = event.target.value;
-      const filteredValue = value.replace(/[^a-zA-Z\b]/g, "");
+      const filteredValue = value.replace(/[^a-zA-Z\s]/g, "");
       setCountry(filteredValue);
     }
   };
