@@ -139,3 +139,46 @@ export function postData(
       errorSwal();
     });
 }
+// category api
+
+export async function baseGet (route, token, loadMessage ){
+  try {
+    showLoadingSpinner(loadMessage)
+    const response = await baseInstance.get(route, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    shortSuccess()
+    console.log(response.data)
+    return response.data;
+    
+  } catch (error) {
+    shortError()
+    console.log(error);
+  }
+  finally{
+    closeSwal()
+  }
+}
+
+export async function basePost (route, token, data, loadMessage ){
+  try {
+    showLoadingSpinner(loadMessage)
+    const response = await baseInstance.post(route, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    shortSuccess()
+    console.log(response.data)
+    return response.data;
+    
+  } catch (error) {
+    shortError()
+    console.log(error);
+  }
+  finally{
+    closeSwal()
+  }
+}

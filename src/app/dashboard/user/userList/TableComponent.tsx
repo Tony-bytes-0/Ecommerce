@@ -97,9 +97,6 @@ const TableComponent: React.FC<propsUserList> = ({ userList }) => {
           ) : (
             <></>
           )}
-          {userList.map((user) => (
-            <Row user={user} key={user.id} />
-          ))}
         </TableBody>
       </Table>
     </TableContainer>

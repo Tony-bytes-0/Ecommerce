@@ -32,26 +32,23 @@ const buttonStyles = {
 const closebuttonStyles = {
   background: "#f1f1f1",
   display: "flex",
-  //justifyContent: "flex-end",
   alignItems: "center",
   paddingLeft: 3,
 };
 
 type menuOption = {
-  id: number;
   name: string;
   navigator: () => void;
   icon: any;
 };
 
 const IterateOptions: React.FC<menuOption> = ({
-  id,
   name,
   navigator,
   icon,
 }) => {
   return (
-    <ListItem key={id}>
+    <ListItem >
       <ListItemButton onClick={navigator}>
         <ListItemIcon>{icon}</ListItemIcon>
         <Typography fontSize={16}>{name}</Typography>
@@ -71,27 +68,23 @@ export default function DrawerLeftNew() {
   };
   const userOptions: menuOption[] = [
     {
-      id: 0,
       name: "Listar usuarios",
-      navigator: () => handleNavigate("/dashboard/userList"),
+      navigator: () => handleNavigate("/dashboard/user/userList"),
       icon: <PersonIcon />,
     },
     {
-      id: 1,
       name: "Crear usuario",
-      navigator: () => handleNavigate("/dashboard/userRegister"),
+      navigator: () => handleNavigate("/dashboard/user/userRegister"),
       icon: <PersonIcon />,
     },
   ];
-  const productOptions = [
+  const categoryOptions = [
     {
-      id: 11,
-      name: "Categorias",
-      navigator: () => console.log("usuarios navigator"),
+      name: "Ver categorias",
+      navigator: () => handleNavigate("/dashboard/category/categoryList"),
       icon: <LabelIcon />,
     },
     {
-      id: 21,
       name: "Productos",
       navigator: () => console.log("usuarios navigator"),
       icon: <CategoryIcon />,
@@ -105,7 +98,6 @@ export default function DrawerLeftNew() {
           <ChevronRightIcon fontSize="large" />
         </IconButton>
       </Box>
-
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box sx={closebuttonStyles}>
           <IconButton onClick={toggleDrawer(false)}>
@@ -114,19 +106,35 @@ export default function DrawerLeftNew() {
         </Box>
         <List>
           <ListItem>
-            <Typography fontSize={16}><b>Usuarios</b></Typography>
+            <Typography fontSize={16}>
+              <b>Usuarios</b>
+            </Typography>
           </ListItem>
-          {userOptions.map((e) => (
+          <Divider />
+          {userOptions.map((e,index) => (
             <IterateOptions
-              key={e.id}
-              id={e.id}
+              key={index}
               name={e.name}
               navigator={e.navigator}
               icon={e.icon}
             />
           ))}
+          <Divider />
+          <ListItem>
+            <Typography fontSize={16}>
+              <b>Categorias</b>
+            </Typography>
+          </ListItem>
+          {categoryOptions.map((e, index) => (
+            <IterateOptions 
+            key={index}
+            name={e.name}
+            icon={e.icon}
+            navigator={e.navigator}
+            />
+          ))}
+          <Divider />
         </List>
-        <Divider />
         {/* {userEndpointsList} */}
       </Drawer>
     </div>
