@@ -13,9 +13,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { UserStandarData } from "@/app/types/userSesionToken";
 import Swal from "sweetalert2";
 import { renderToString } from "react-dom/server";
+import { asyncDeleteUserById } from "@/app/components/modalAlerts";
 
 interface propsUserList {
   userList: UserStandarData[];
+  activeToken: string
 }
 interface TableComponentProps {
   user: UserStandarData;
@@ -62,7 +64,7 @@ const Row: React.FC<TableComponentProps> = ({ user }) => {
           <Button onClick={() => showUserData(user)}>
             <VisibilityIcon />
           </Button>
-          <Button color="error" onClick={() => alert("borrar")}>
+          <Button color="error" onClick={() => asyncDeleteUserById(user.id)}>
             <DeleteIcon />
           </Button>
         </ButtonGroup>

@@ -31,7 +31,7 @@ const ListUsersDashboard: React.FC = () => {
   return (
     <Box sx={baseDashboardContainer}>
       <Grid item xs={12}>
-        <TableComponent userList = {listOfUsers} />
+        <TableComponent userList = {listOfUsers} activeToken={token} />
       </Grid>
     </Box>
   );

@@ -68,6 +68,24 @@ export function logoutConfirm(handler) {
 }
 //users api
 
+export async function asyncDeleteUserById(id, token){
+  try{
+    showLoadingSpinner("Listando usuarios");
+    const response = await baseInstance.delete("/user/"+id , {
+      headers: { Authorization: `Bearer ${token}`, },
+    });
+    shortSuccess();
+    return response.data;
+  }
+  catch(error){
+    console.log(error);
+    errorSwal();
+  }
+  finally{
+    closeSwal();
+  }
+}
+
 export async function asyncFetchUsers(token) {
   try {
     showLoadingSpinner("Listando usuarios");
