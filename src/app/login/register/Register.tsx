@@ -128,7 +128,6 @@ const Register = ({ handler }: { handler: () => void }) => {
     const countryCodeRegex = validateInput("country", country, regexs.country);
     const phoneRegex = validateInput("phone", phone, regexs.phone);
     if (fullNameRegex && postalRx && countryCodeRegex && phoneRegex) {
-      alert("QUE JUEGO HIZO WILLYREX!!!");
       console.log("lista de errores: ", errorList);
       postData(email, password, fullName, country, phone, postalCode);
     } else {

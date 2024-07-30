@@ -18,3 +18,17 @@ const defaultColor = process.env.defaultColor
 export const globalStyle = {
     fontFamily: '"Segoe UI", Arial, sans-serif',
   };
+
+  export const baseDashboardContainer = {
+    paddingTop: "10%",
+    paddingLeft: "4rem",
+    paddingRight:"4rem",
+    paddingBottom: "2rem",
+    height: "100%",
+    width: "100%",
+    minHeight: "100vh",
+    color: "#000000",
+    backgroundImage: 'linear-gradient(to bottom, #222239, #000000)',
+    overflowY: 'scroll',
+    flexShrink: 1
+  };

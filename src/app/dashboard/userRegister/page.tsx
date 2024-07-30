@@ -1,11 +1,17 @@
+"use client";
 import { postData } from "@/app/components/modalAlerts";
 import { userRegex } from "@/app/components/userEndpoints";
 import { BasicInputs } from "@/app/login/register/BasicInputs";
 import { RegisterInputs } from "@/app/login/register/RegisterInputs";
-import { Button, Grid, Slide } from "@mui/material";
+import { baseDashboardContainer } from "@/app/types/common";
+import { Box, Button, Grid } from "@mui/material";
 import { useState } from "react";
+//import { baseDashboardContainer } from 
 
-const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
+const baseContainer = baseDashboardContainer;
+
+
+const RegisterUserDashboard: React.FC<{ open: boolean }> = ({ open }) => {
   function validateInput(fieldName: string, input: string, regex: RegExp) {
     if (regex.test(input)) {
       //caso de que pasa la regex, añade el error a errorList y devuelve true
@@ -38,7 +44,6 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
     );
     const phoneRegex = validateInput("phone", phone, userRegex.phone);
     if (fullNameRegex && postalRx && countryCodeRegex && phoneRegex) {
-      alert("QUE JUEGO HIZO WILLYREX!!!");
       console.log("lista de errores: ", errorList);
       postData(email, password, fullName, country, phone, postalCode);
     } else {
@@ -97,58 +102,46 @@ const RegisterUserDashboard: React.FC<{open: boolean}> = ({open}) => {
   const [confirm, setConfirm] = useState("");
   const [errorList, setErrorList] = useState<string[]>([]);
   return (
-/*     <Slide
-    in={open}
-    container={null}
-    direction="left"
-    mountOnEnter
-    unmountOnExit
-  > */
-    <Grid
-      container
-      xs={12}
-      style={{
-        color: "blue",
-      }} /* sx={{paddingLeft:'15%', paddingRight:'15%'}} */
-    >
-      <BasicInputs
-        email={email}
-        handleEmail={handleEmail}
-        password={password}
-        handlePassword={handlePassword}
-        confirm={confirm}
-        handleConfirm={handleConfirm}
-        errorList={errorList}
-      />
-      <RegisterInputs
-        fullName={fullName}
-        handleFullName={handleName}
-        postalCode={postalCode}
-        handlePostalCode={handlePostalCode}
-        country={country}
-        handleCountry={handleCountry}
-        phone={phone}
-        handlePhone={handlePhone}
-        errorList={errorList}
-      />
-      <Grid
-        item
-        xs={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Button
-          variant="outlined"
-          fullWidth
-          //onClick={() => console.log("probando el boton")}
-          onClick={() => sendData()}
+    <Box sx={baseContainer}>
+      <Grid container xs={12}>
+        <BasicInputs
+          email={email}
+          handleEmail={handleEmail}
+          password={password}
+          handlePassword={handlePassword}
+          confirm={confirm}
+          handleConfirm={handleConfirm}
+          errorList={errorList}
+        />
+        <RegisterInputs
+          fullName={fullName}
+          handleFullName={handleName}
+          postalCode={postalCode}
+          handlePostalCode={handlePostalCode}
+          country={country}
+          handleCountry={handleCountry}
+          phone={phone}
+          handlePhone={handlePhone}
+          errorList={errorList}
+        />
+        <Grid
+          item
+          xs={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
         >
-          <b>Crear usuario</b>
-        </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            //onClick={() => console.log("probando el boton")}
+            onClick={() => sendData()}
+          >
+            <b>Crear usuario</b>
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-    /* </Slide> */
+    </Box>
   );
 };
 

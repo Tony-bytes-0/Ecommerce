@@ -5,13 +5,19 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setToken, setUser } from "@/lib/token/sesionToken";
 import { logoutConfirm } from "@/app/components/modalAlerts";
 import { useRouter } from "next/navigation";
+import {
+  adminEmail,
+  adminPassword,
+  dinamicLogin,
+} from "@/app/login/login/communFunctions";
+import { LoginPromiseToken } from "@/app/types/userSesionToken";
 
 type UserTypes = {
-  size: number; 
+  size: number;
   windowSize: { width: number; height: number };
   handleNavigate: (arg0: string) => void;
-}
-const User: React.FC<UserTypes> = ({size, windowSize, handleNavigate}) => {
+};
+const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const sesionToken = useAppSelector((state) => state.sesionToken);
@@ -27,19 +33,28 @@ const User: React.FC<UserTypes> = ({size, windowSize, handleNavigate}) => {
     logoutConfirm(() => dispatch(setToken("no")));
   };
 
-  const roleLabels = {
-    CLIENT: "Cliente",
-    ADMIN: "Administrador",
-    superAdmin: "Super Admin",
-  };
   const userOptions = [
     //{ id: 0, label: "Panel de usuario", function: handleLoggout },
     { id: 4, label: "Cerrar sesion", function: handleLoggout },
   ];
   const logOptions = [
-    { id: 1, label: "Ingresar", function: () => handleNavigate(process.env.NEXT_PUBLIC_BASE_PATH + "/login") },
+    {
+      id: 1,
+      label: "Ingresar",
+      function: () =>
+        handleNavigate(process.env.NEXT_PUBLIC_BASE_PATH + "/login"),
+    },
     //{ id: 2, label: "Registrarse", function: handleLogin },
-    //{ id: 3, label: "AUTOLOG", function: autolog }, //debug
+    {
+      id: 3,
+      label: "AUTOLOG con admin",
+      function: async () => {
+        const localResponse = await dinamicLogin(adminEmail, adminPassword);
+        const loginResult: LoginPromiseToken = localResponse;
+        dispatch(setToken(loginResult.data.token));
+        dispatch(setUser(loginResult.data.user));
+      },
+    }, //debug
   ];
 
   return (
@@ -79,6 +94,6 @@ const User: React.FC<UserTypes> = ({size, windowSize, handleNavigate}) => {
       }
     </>
   );
-}
+};
 
 export default User;
