@@ -15,12 +15,20 @@ export default function CategoryAdmin() {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [newCategory, setNewCategory] = useState("");
+  const [updateData, setUpdateData] = useState("");
+  const [updateModal, setUpdateModal] = useState(false);
   const [modal, setModal] = useState(false);
 
   const handleOpen = () => setModal(true);
   const handleClose = () => setModal(false);
 
   const handleCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if ((event && event.target.value) || event.target.value == "") {
+      const value = event.target.value;
+      setNewCategory(value);
+    }
+  };
+  const handleUpdateCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
     if ((event && event.target.value) || event.target.value == "") {
       const value = event.target.value;
       setNewCategory(value);
@@ -53,8 +61,13 @@ export default function CategoryAdmin() {
 
   return (
     <Box sx={baseDashboardContainer}>
-      {token !== 'no' ?       <Grid container>
+      {/* 
+        //token !== 'no' ?       
+      */}
+
+      <Grid container>
         <Grid item xs={12}>
+          <AddCategory handleOpen={handleOpen} />
           <AddCategory handleOpen={handleOpen} />
           <CategoryInput
             newCategory={newCategory}
@@ -65,8 +78,10 @@ export default function CategoryAdmin() {
           />
           <TableComponent token={token} categoryList={categoryList} />
         </Grid>
-      </Grid> : <InvalidCredentials />}
-
+      </Grid>
+      {/* 
+        //: <InvalidCredentials /> 
+      */}
     </Box>
   );
 }

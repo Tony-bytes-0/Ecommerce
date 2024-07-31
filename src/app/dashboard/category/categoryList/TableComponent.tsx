@@ -10,10 +10,7 @@ import Paper from "@mui/material/Paper";
 import { Button, ButtonGroup } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { UserStandarData } from "@/app/types/userSesionToken";
 import Swal from "sweetalert2";
-import { renderToString } from "react-dom/server";
-import { asyncDeleteUserById } from "@/app/components/modalAlerts";
 import { CategoryType } from "@/app/types/category";
 
 interface propsCategoryList {
