@@ -1,6 +1,6 @@
 "use client";
-import { baseGet, basePost } from "@/app/components/modalAlerts";
-import { CategoryType } from "@/app/types/category";
+import { baseGet, basePost } from "@/app/components/baseApiRequest";
+import { CategoryType } from "./types";
 import { baseDashboardContainer } from "@/app/types/common";
 import { useAppSelector } from "@/lib/hooks";
 import { Box, Grid } from "@mui/material";
@@ -15,12 +15,10 @@ export default function CategoryAdmin() {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [newCategory, setNewCategory] = useState("");
-  const [updateData, setUpdateData] = useState("");
-  const [updateModal, setUpdateModal] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [addModal, setAddModal] = useState(false);
 
-  const handleOpen = () => setModal(true);
-  const handleClose = () => setModal(false);
+  const handleOpen = () => setAddModal(true);
+  const handleClose = () => setAddModal(false);
 
   const handleCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
     if ((event && event.target.value) || event.target.value == "") {
@@ -28,12 +26,7 @@ export default function CategoryAdmin() {
       setNewCategory(value);
     }
   };
-  const handleUpdateCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if ((event && event.target.value) || event.target.value == "") {
-      const value = event.target.value;
-      setNewCategory(value);
-    }
-  };
+
   async function fetchCategoryList() {
     const response = await baseGet("/category/", token, "Cargando categorias");
     setCategoryList(response.data);
@@ -57,7 +50,7 @@ export default function CategoryAdmin() {
         fetchCategoryList();
       }
     }
-  }, [categoryList, token]);
+  }, [categoryList, token, welcome]);
 
   return (
     <Box sx={baseDashboardContainer}>
@@ -68,15 +61,16 @@ export default function CategoryAdmin() {
       <Grid container>
         <Grid item xs={12}>
           <AddCategory handleOpen={handleOpen} />
-          <AddCategory handleOpen={handleOpen} />
+
           <CategoryInput
             newCategory={newCategory}
             handler={handleCategory}
-            modal={modal}
+            modal={addModal}
             handleClose={handleClose}
             addFunction={createNewCategory}
+            buttonText = {'Agregar'}
           />
-          <TableComponent token={token} categoryList={categoryList} />
+          <TableComponent token={token} categoryList={categoryList} updateFetchFunction={fetchCategoryList} />
         </Grid>
       </Grid>
       {/* 

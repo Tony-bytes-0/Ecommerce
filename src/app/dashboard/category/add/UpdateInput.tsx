@@ -12,16 +12,17 @@ import {
 
 
 
-const CategoryInput: React.FC<{
+const UpdateInput: React.FC<{
   buttonText: string;
-  newCategory: string;
+  newValue: string;
   handler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   modal: boolean;
   handleClose: () => void;
-  addFunction: () => void;
-}> = ({ newCategory, handler, handleClose, modal, addFunction, buttonText }) => {
+  addFunction: (_id: string, token: string) => Promise<void>;
+  token: string;
+}> = ({ newValue, handler, handleClose, modal, addFunction, buttonText, token }) => {
     const addAndCloseModal = () => {
-        addFunction()
+        addFunction(newValue, token)
         handleClose()
     }
   return (
@@ -32,7 +33,7 @@ const CategoryInput: React.FC<{
           className="bg-white"
           size="small"
           variant="filled"
-          value={newCategory}
+          value={newValue}
           onChange={handler}
           fullWidth
         />
@@ -45,4 +46,4 @@ const CategoryInput: React.FC<{
   );
 };
 
-export default CategoryInput;
+export default UpdateInput;
