@@ -1,5 +1,5 @@
 export interface UserToken {
-  token: string;
+  token: string; //| undefined;
   user: {
     _id: string;
     email: string;

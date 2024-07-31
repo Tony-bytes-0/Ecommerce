@@ -4,14 +4,17 @@ import { userRegex } from "@/app/components/userEndpoints";
 import { BasicInputs } from "@/app/login/register/BasicInputs";
 import { RegisterInputs } from "@/app/login/register/RegisterInputs";
 import { baseDashboardContainer } from "@/app/types/common";
+import { useAppSelector } from "@/lib/hooks";
 import { Box, Button, Grid } from "@mui/material";
 import { useState } from "react";
+import InvalidCredentials from "../../InvalidCredentials";
 //import { baseDashboardContainer } from 
 
 const baseContainer = baseDashboardContainer;
 
 
 const RegisterUserDashboard: React.FC = () => {
+  const token = useAppSelector((state) => state.sesionToken.token)
   function validateInput(fieldName: string, input: string, regex: RegExp) {
     if (regex.test(input)) {
       //caso de que pasa la regex, añade el error a errorList y devuelve true
@@ -103,7 +106,7 @@ const RegisterUserDashboard: React.FC = () => {
   const [errorList, setErrorList] = useState<string[]>([]);
   return (
     <Box sx={baseContainer}>
-      <Grid container xs={12}>
+      {token !== 'no' ?       <Grid container xs={12}>
         <BasicInputs
           email={email}
           handleEmail={handleEmail}
@@ -140,7 +143,8 @@ const RegisterUserDashboard: React.FC = () => {
             <b>Crear usuario</b>
           </Button>
         </Grid>
-      </Grid>
+      </Grid>  : <InvalidCredentials />}
+
     </Box>
   );
 };

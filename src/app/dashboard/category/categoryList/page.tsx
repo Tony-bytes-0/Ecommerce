@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import AddCategory from "../add/Add";
 import CategoryInput from "../add/CategoryInput";
+import InvalidCredentials from "../../InvalidCredentials";
 
 export default function CategoryAdmin() {
   const [welcome, setWelcome] = useState(true);
@@ -52,7 +53,7 @@ export default function CategoryAdmin() {
 
   return (
     <Box sx={baseDashboardContainer}>
-      <Grid container>
+      {token !== 'no' ?       <Grid container>
         <Grid item xs={12}>
           <AddCategory handleOpen={handleOpen} />
           <CategoryInput
@@ -64,7 +65,8 @@ export default function CategoryAdmin() {
           />
           <TableComponent token={token} categoryList={categoryList} />
         </Grid>
-      </Grid>
+      </Grid> : <InvalidCredentials />}
+
     </Box>
   );
 }

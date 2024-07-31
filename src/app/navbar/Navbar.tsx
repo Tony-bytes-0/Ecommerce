@@ -9,16 +9,18 @@ import Categorys from "./categorys/Categorys";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DrawerLeftNew from "./drawerLeft/newDrawer";
+import { useAppSelector } from "@/lib/hooks";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
   borderColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR,
 };
 const NavBar: React.FC = () => {
-  const router = useRouter()
+  const router = useRouter();
   const handleNavigate = (route: string) => {
-    router.push(route)
-  }
+    router.push(route);
+  };
+  const token = useAppSelector((state) => state.sesionToken.token)
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
@@ -36,7 +38,8 @@ const NavBar: React.FC = () => {
       alignItems={"center"}
       sx={MainGridStyles}
     >
-      <DrawerLeftNew />
+      {token !== 'no' ? <DrawerLeftNew /> : <></>}
+      
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />
@@ -45,7 +48,11 @@ const NavBar: React.FC = () => {
       <Grid container item xs={6} alignItems={"center"} alignContent={"center"}>
         <SearchField windowSize={windowSize} size={7} />
         <Car phone={false} linkStyles={linkStyles} size={2} />
-        <User windowSize={windowSize} size={3} handleNavigate={handleNavigate} />
+        <User
+          windowSize={windowSize}
+          size={3}
+          handleNavigate={handleNavigate}
+        />
       </Grid>
     </Grid>
   );

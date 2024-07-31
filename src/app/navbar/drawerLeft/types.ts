@@ -3,8 +3,6 @@ export type menuOption = {
     navigator: string;
     icon: JSX.Element;
   };
-
-  
   export interface MenuOptionList {
     user: menuOption[], category: menuOption[]
   }

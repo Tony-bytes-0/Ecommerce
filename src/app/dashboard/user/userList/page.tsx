@@ -6,33 +6,36 @@ import { asyncFetchUsers } from "@/app/components/modalAlerts";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { UserStandarData } from "@/app/types/userSesionToken";
+import InvalidCredentials from "../../InvalidCredentials";
 
 const ListUsersDashboard: React.FC = () => {
-  const [welcome, setWelcome] = useState(true)
+  const [welcome, setWelcome] = useState(true);
   const [listOfUsers, setUsers] = useState<UserStandarData[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
 
-  async function buscateLosUsuarios(){
-    const esperate = await asyncFetchUsers(token)
-    setUsers(esperate)
+  async function buscateLosUsuarios() {
+    const esperate = await asyncFetchUsers(token);
+    setUsers(esperate);
   }
   useEffect(() => {
-    console.log('al inicio del use state welome es ', token)
-    if(token == 'no'){
-      console.log('deslogeado!')
-    }
-    else{
-      if(welcome){
-        setWelcome(false)
-        buscateLosUsuarios()
+    if (token == "no") {
+      console.log("deslogeado!");
+    } else {
+      if (welcome) {
+        setWelcome(false);
+        buscateLosUsuarios();
       }
     }
   }, []);
   return (
     <Box sx={baseDashboardContainer}>
-      <Grid item xs={12}>
-        <TableComponent userList = {listOfUsers} activeToken={token} />
-      </Grid>
+      {token !== "no" ? (
+        <Grid item xs={12}>
+          <TableComponent userList={listOfUsers} activeToken={token} />
+        </Grid>
+      ) : (
+        <InvalidCredentials />
+      )}
     </Box>
   );
 };
