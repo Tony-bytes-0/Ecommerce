@@ -8,7 +8,6 @@ import User from "./user/User";
 import Categorys from "./categorys/Categorys";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import DrawerLeft from "./drawerLeft/DrawerLeft";
 import DrawerLeftNew from "./drawerLeft/newDrawer";
 
 const MainGridStyles = {

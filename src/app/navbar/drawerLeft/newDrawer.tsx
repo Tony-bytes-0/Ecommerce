@@ -11,44 +11,27 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { IconButton, Typography } from "@mui/material";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import CloseIcon from "@mui/icons-material/Close";
 import CategoryIcon from "@mui/icons-material/Category";
 import LabelIcon from "@mui/icons-material/Label";
 import PersonIcon from "@mui/icons-material/Person";
 import { useRouter } from "next/navigation";
-
-const buttonStyles = {
-  background: "#f1f1f1",
-  width: "4rem",
-  position: "fixed",
-  top: "30%",
-  left: "0%",
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-};
-
-const closebuttonStyles = {
-  background: "#f1f1f1",
-  display: "flex",
-  alignItems: "center",
-  paddingLeft: 3,
-};
+import TitleDivider from "./TitleDivider";
+import OpenSidebarButton from "./OpenSidebarButton";
+import CloseSidebarButton from "./CloseSidebarButton";
+import {OptionList} from "./optionList"
 
 type menuOption = {
   name: string;
   navigator: () => void;
   icon: any;
 };
+interface optionList {
+  user: 
+}
 
-const IterateOptions: React.FC<menuOption> = ({
-  name,
-  navigator,
-  icon,
-}) => {
+const IterateOptions: React.FC<menuOption> = ({ name, navigator, icon }) => {
   return (
-    <ListItem >
+    <ListItem>
       <ListItemButton onClick={navigator}>
         <ListItemIcon>{icon}</ListItemIcon>
         <Typography fontSize={16}>{name}</Typography>
@@ -93,25 +76,12 @@ export default function DrawerLeftNew() {
 
   return (
     <div>
-      <Box sx={buttonStyles}>
-        <IconButton onClick={toggleDrawer(true)}>
-          <ChevronRightIcon fontSize="large" />
-        </IconButton>
-      </Box>
+      <OpenSidebarButton handler={toggleDrawer(true)} />
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        <Box sx={closebuttonStyles}>
-          <IconButton onClick={toggleDrawer(false)}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
+      <CloseSidebarButton handler={toggleDrawer(false)} />
         <List>
-          <ListItem>
-            <Typography fontSize={16}>
-              <b>Usuarios</b>
-            </Typography>
-          </ListItem>
-          <Divider />
-          {userOptions.map((e,index) => (
+          <TitleDivider title={"Usuarios"} fontSize={16} />
+          {userOptions.map((e, index) => (
             <IterateOptions
               key={index}
               name={e.name}
@@ -119,23 +89,17 @@ export default function DrawerLeftNew() {
               icon={e.icon}
             />
           ))}
-          <Divider />
-          <ListItem>
-            <Typography fontSize={16}>
-              <b>Categorias</b>
-            </Typography>
-          </ListItem>
+          <TitleDivider title={"Categorias"} fontSize={16} />
           {categoryOptions.map((e, index) => (
-            <IterateOptions 
-            key={index}
-            name={e.name}
-            icon={e.icon}
-            navigator={e.navigator}
+            <IterateOptions
+              key={index}
+              name={e.name}
+              icon={e.icon}
+              navigator={e.navigator}
             />
           ))}
           <Divider />
         </List>
-        {/* {userEndpointsList} */}
       </Drawer>
     </div>
   );
