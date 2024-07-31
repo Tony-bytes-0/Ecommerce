@@ -25,19 +25,8 @@ const DrawerLeft: React.FC = ({}) => {
   return (
     <>
           <Drawer open={open} onClose={() => toggleDrawer(false)}>
-        <Box
-          sx={{
-            background: "#b11111",
-            justifyItems: "end",
-            display: "flex",
-          }}
-        >
-          <Box>
-            <IconButton onClick={() => toggleDrawer(false)}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </Box>
+
+
         
       </Drawer>
       <Box sx={buttonStyles}>
@@ -45,7 +34,7 @@ const DrawerLeft: React.FC = ({}) => {
           <ChevronRightIcon fontSize="large" />
         </IconButton>
       </Box>
-      <DrawerComponent open = {open} toggleDrawer = {toggleDrawer} />
+      <DrawerComponent toggleDrawer = {toggleDrawer} />
     </>
   );
 };
