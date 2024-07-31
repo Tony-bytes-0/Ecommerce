@@ -11,7 +11,7 @@ import { useState } from "react";
 const baseContainer = baseDashboardContainer;
 
 
-const RegisterUserDashboard: React.FC<{ open: boolean }> = ({ open }) => {
+const RegisterUserDashboard: React.FC = () => {
   function validateInput(fieldName: string, input: string, regex: RegExp) {
     if (regex.test(input)) {
       //caso de que pasa la regex, añade el error a errorList y devuelve true
