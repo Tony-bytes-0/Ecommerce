@@ -34,7 +34,7 @@ const DrawerLeft: React.FC = ({}) => {
           <ChevronRightIcon fontSize="large" />
         </IconButton>
       </Box>
-      <DrawerComponent toggleDrawer = {toggleDrawer} />
+      <DrawerComponent />
     </>
   );
 };
