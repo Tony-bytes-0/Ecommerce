@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Swal from "sweetalert2";
 import { CategoryType, propsCategoryList } from "@/app/dashboard/category/categoryList/types";
 import UpdateInput from "../add/UpdateInput";
-import { basePut } from "@/app/components/baseApiRequest";
+import { baseDelete, basePut } from "@/app/components/baseApiRequest";
 
 
 
@@ -43,6 +43,30 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
     });
   }
 
+  async function deleteCategory(_id: string, token: string) {
+    Swal.fire({
+      title: "Borrar categoria?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Si, estoy seguro",
+      denyButtonText: `no, volver`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+    baseDelete(
+      "/category/" + _id ,
+    token,
+      "Eliminando, no cierre esta pestaña"
+    ).then(() => {
+      updateFetchFunction();
+    });
+  }
+
   return (
     <TableRow
       //key={user.id}
@@ -54,7 +78,7 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
           <Button onClick={() => toggleModal()}>
             <EditIcon />
           </Button>
-          <Button color="error" onClick={() => alert("borrar categoria")}>
+          <Button color="error" onClick={() => deleteCategory(_id, token)}>
             <DeleteIcon />
           </Button>
         </ButtonGroup>
@@ -64,7 +88,7 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
         handler={handleUpdate}
         modal={updateModal}
         handleClose={toggleModal}
-        addFunction={(id, token) => updateCategory(_id, token)}
+        addFunction={(token) => updateCategory(_id, token)}
         token={token}
         buttonText={"Agregar"}
       />

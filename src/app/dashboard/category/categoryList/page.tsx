@@ -7,7 +7,7 @@ import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import AddCategory from "../add/Add";
-import CategoryInput from "../add/CategoryInput";
+import CategoryInput from "../add/CategoryInput"; 
 import InvalidCredentials from "../../InvalidCredentials";
 
 export default function CategoryAdmin() {
@@ -60,7 +60,7 @@ export default function CategoryAdmin() {
 
       <Grid container>
         <Grid item xs={12}>
-          <AddCategory handleOpen={handleOpen} />
+          <AddCategory handleOpen={handleOpen} updateFetchFunction={fetchCategoryList} />
 
           <CategoryInput
             newCategory={newCategory}

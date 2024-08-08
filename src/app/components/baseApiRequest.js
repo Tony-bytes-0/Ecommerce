@@ -63,3 +63,24 @@ export async function baseGet (route, token, loadMessage ){
       closeSwal()
     }
   }
+
+  export async function baseDelete(route, token, loadMessage){
+    try {
+      showLoadingSpinner(loadMessage)
+      const response = await baseInstance.delete(route, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      shortSuccess()
+      console.log(response.data)
+      return response.data;
+      
+    } catch (error) {
+      shortError()
+      console.log(error);
+    }
+    finally{
+      closeSwal()
+    }
+  }
