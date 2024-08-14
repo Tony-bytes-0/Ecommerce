@@ -41,7 +41,7 @@ export default function Home() {
         <Promo windowSize={windowSize} />
         <BodyInfoCards
           items={items}
-          xs={windowSize.width <= 800 ? 5 : 2}
+          xs={windowSize.width <= 800 ? 5 : 3}
           windowSize={windowSize}
         />
        </Provider> 

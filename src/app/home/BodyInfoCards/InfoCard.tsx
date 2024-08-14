@@ -21,8 +21,8 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addAmountToItem, addItem } from "@/lib/shopingCar/shopingCart";
 import esponsiveText from "./responsiveText";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Image from "next/image";
+import Link from "next/link";
 
 const hoverExpand =
   "transition-transform duration-500 ease-in-out transform hover:scale-110 scrollBar";
@@ -72,13 +72,13 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
         <Card
           className={hoverExpand}
           component={"div"}
-          style={{ maxHeight: "280px", minHeight: "280px" }}
+          style={{ maxHeight: "580px", minHeight: "380px" }}
         >
           <CardMedia>
             <Box
-              sx={{ maxHeight: "120px", minHeight: "120px", display: "flex" }}
+              sx={{ maxHeight: "380px", minHeight: "100px", display: "flex" }}
             >
-              <Image src={item.imgUrl} alt="" width={300} height={200} />
+              <Image src={item.imgUrl} alt="" width={10000} height={1000} />
             </Box>
           </CardMedia>
           <CardContent>
@@ -120,7 +120,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
           <CardActions>
             <Box
               display={"flex"}
-              width={"90%"}
+              width={"20%"}
               justifyContent={"center"}
               alignContent={"center"}
               margin={"auto"}
@@ -132,7 +132,6 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
                 onClick={handleAdd}
               >
                 <ShoppingCartIcon />
-                añadir
               </Button>
             </Box>
           </CardActions>

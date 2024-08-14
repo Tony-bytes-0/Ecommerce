@@ -27,7 +27,7 @@ const UpdateInput: React.FC<{
     }
   return (
     <Dialog open={modal} onClose={handleClose}>
-      <DialogTitle>Añadir una nueva categoria</DialogTitle>
+      <DialogTitle>Editar categoria</DialogTitle>
       <DialogContent>
       <TextField
           className="bg-white"

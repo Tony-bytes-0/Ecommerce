@@ -32,12 +32,12 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
   };
 
   async function updateCategory(_id: string, token: string) {
-    console.log('estoy enviando esto: ', {name: update}, "/category/" + _id )
+    //console.log('estoy enviando esto: ', {name: update}, "/category/" + _id ) //debug
     basePut(
       "/category/" + _id ,
       token,
       { name: update },
-      "Creando categoria"
+      "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
     ).then(() => {
       updateFetchFunction();
     });
@@ -88,9 +88,9 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
         handler={handleUpdate}
         modal={updateModal}
         handleClose={toggleModal}
-        addFunction={(token) => updateCategory(_id, token)}
+        addFunction={() => updateCategory(_id, token)}
         token={token}
-        buttonText={"Agregar"}
+        buttonText={"Editar"}
       />
     </TableRow>
   );
