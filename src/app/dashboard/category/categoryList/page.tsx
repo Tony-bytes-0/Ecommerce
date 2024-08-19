@@ -54,9 +54,9 @@ export default function CategoryAdmin() {
 
   return (
     <Box sx={baseDashboardContainer}>
-      {/* 
-        //token !== 'no' ?       
-      */}
+       
+        {token !== 'no' ?       
+      
 
       <Grid container>
         <Grid item xs={12}>
@@ -73,9 +73,9 @@ export default function CategoryAdmin() {
           <TableComponent token={token} categoryList={categoryList} updateFetchFunction={fetchCategoryList} />
         </Grid>
       </Grid>
-      {/* 
-        //: <InvalidCredentials /> 
-      */}
+      
+        : <InvalidCredentials />} 
+      
     </Box>
   );
 }
