@@ -16,7 +16,6 @@ export default function Home() {
   const items = staticItems;
   const store = makeStore()
   //const token = useAppDispatch((state) => state.)
-  const token = useAppSelector((state) => state.sesionToken)
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
