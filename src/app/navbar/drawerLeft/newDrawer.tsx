@@ -12,7 +12,7 @@ import { menuOption, MenuOptionList } from "./types";
 export default function DrawerLeftNew() {
   const router = useRouter();
   const handleNavigate = (route: string) => {
-    router.replace(route);
+    router.push(route);
   };
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {

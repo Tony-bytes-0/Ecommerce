@@ -26,7 +26,7 @@ const InvalidCredentials: React.FC = () => {
             <Button
               variant="contained"
               color="warning"
-              onClick={() => router.replace('/login')}
+              onClick={() => router.push('/login')}
               sx={{ padding: 5 }}
             >
               <b>Ingresar</b>
