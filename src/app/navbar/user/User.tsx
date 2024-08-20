@@ -4,11 +4,11 @@ import DropdownMenu from "@/app/components/DropdownMenu";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setToken, setUser } from "@/lib/token/sesionToken";
 import { logoutConfirm } from "@/app/components/modalAlerts";
-import { useRouter } from "next/navigation";
 import {
   adminEmail,
   adminPassword,
   dinamicLogin,
+  evaluateRoleLoginAction,
 } from "@/app/login/login/communFunctions";
 import { LoginPromiseToken } from "@/app/types/userSesionToken";
 
@@ -19,7 +19,7 @@ type UserTypes = {
 };
 const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  //const router = useRouter();
   const sesionToken = useAppSelector((state) => state.sesionToken);
   const [modalLogin, setModalLogin] = useState(false);
   //modal
@@ -53,6 +53,8 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
         const loginResult: LoginPromiseToken = localResponse;
         dispatch(setToken(loginResult.data.token));
         dispatch(setUser(loginResult.data.user));
+        handleNavigate( evaluateRoleLoginAction(loginResult.data.user.role) )
+        
       },
     }, //debug
   ];

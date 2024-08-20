@@ -29,7 +29,7 @@ function DropdownMenu(props: { options: Option[]; xs: number }) {
           <MenuButton>
             <PersonIcon />
           </MenuButton>
-          <Menu slots={{ listbox: AnimatedListbox }} className="z-20">
+          <Menu slots={{ listbox: AnimatedListbox }} >
             {props.options.map((e) => (
               <MenuItem key={e.id} onClick={e.function}>
                 {e.label}

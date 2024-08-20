@@ -55,7 +55,17 @@ export default function DrawerLeftNew() {
               navigator={e.navigator}
             />
           ))}
-          <Divider />
+
+          <TitleDivider title={"Productos"} fontSize={16} />
+          
+          {menuOptionList.product.map((e, index) => (
+            <IterateOptions
+              key={index}
+              name={e.name}
+              icon={e.icon}
+              navigator={e.navigator}
+            />
+          ))}
         </List>
       </Drawer>
     </div>

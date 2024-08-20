@@ -24,8 +24,8 @@ export const optionList = {
 ],
   product: [
     {
-        name: "Listar Productos",
-        navigator: "",
+        name: "Ver Productos",
+        navigator: "/dashboard/product",
         icon: <CategoryIcon />,
       },
   ]

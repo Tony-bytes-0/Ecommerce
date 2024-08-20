@@ -4,6 +4,6 @@ export type menuOption = {
     icon: JSX.Element;
   };
   export interface MenuOptionList {
-    user: menuOption[], category: menuOption[]
+    user: menuOption[], category: menuOption[], product: menuOption[],
   }
 
