@@ -24,12 +24,11 @@ const ProductInput: React.FC<{
   }
   buttonText: string;
   modalTitle: string;
-  //handler: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handler: (event: React.ChangeEvent<HTMLInputElement>, fieldName: string) => void;
+  handler: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: string) => void;
   modal: boolean;
   handleClose: () => void;
   addFunction: () => void;
-}> = ({ handler, handleClose, modal, addFunction, buttonText, modalTitle }) => {
+}> = ({ handler, handleClose, modal, addFunction, buttonText, modalTitle, formFields }) => {
     const addAndCloseModal = () => {
         addFunction()
         handleClose()
@@ -44,10 +43,53 @@ const ProductInput: React.FC<{
             className="bg-white"
             size="small"
             variant="filled"
-            value={name}
+            value={formFields.name}
             onChange={(event) => handler(event, 'name')}
             fullWidth
           />
+
+        <TextField
+            label="Descripción"
+            className="bg-white"
+            size="small"
+            variant="filled"
+            value={formFields.description}
+            onChange={(event) => handler(event, 'description')}
+            fullWidth
+          />
+
+          <TextField
+            label="Precio"
+            className="bg-white"
+            size="small"
+            variant="filled"
+            value={formFields.price}
+            onChange={(event) => handler(event, 'price')}
+            fullWidth
+          />
+
+          <TextField
+            label="Stock"
+            className="bg-white"
+            size="small"
+            variant="filled"
+            value={formFields.stock}
+            onChange={(event) => handler(event, 'stock')}
+            fullWidth
+          />
+
+          <TextField
+            label="Categoria"
+            className="bg-white"
+            size="small"
+            variant="filled"
+            value={formFields.category}
+            onChange={(event) => handler(event, 'category')}
+            fullWidth
+          />
+
+  
+
         </DialogContent>
         <DialogActions>
           <Button onClick={addAndCloseModal}>{buttonText}</Button>

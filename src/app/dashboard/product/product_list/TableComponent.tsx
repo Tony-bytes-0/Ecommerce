@@ -12,15 +12,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from '@mui/icons-material/Edit';
 import Swal from "sweetalert2";
-import { ProductType, propsProductList } from "@/app/dashboard/product/product_list/types";
+import {  propsProductList, TableComponentProductType } from "@/app/dashboard/product/product_list/types";
 import UpdateInput from "../add/UpdateInput";
 import { baseDelete, basePut } from "@/app/components/baseApiRequest";
 
 
 
-const Row: React.FC<ProductType> = ({ name, 
+const Row: React.FC<TableComponentProductType> = ({ 
+  name, 
   description, category, price, stock, 
-  updateFetchFunction, token }) => {
+  updateFetchFunction, 
+  provitionalDelete,
+  token }) => {
   const [update, setUpdate] = React.useState("");
   const [updateModal, setUpdateModal] = React.useState(false);
   const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +48,7 @@ const Row: React.FC<ProductType> = ({ name,
     });
   }
 
-  async function deleteCategory(name: string, token: string) {
+/*   async function deleteProduct(name: string, token: string) { //estatico
     Swal.fire({
       title: "Borrar categoria?",
       showDenyButton: true,
@@ -53,7 +56,6 @@ const Row: React.FC<ProductType> = ({ name,
       confirmButtonText: "Si, estoy seguro",
       denyButtonText: `no, volver`
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         
       } else if (result.isDenied) {
@@ -68,6 +70,7 @@ const Row: React.FC<ProductType> = ({ name,
       updateFetchFunction();
     });
   }
+ */
 
   return (
     <TableRow
@@ -84,7 +87,7 @@ const Row: React.FC<ProductType> = ({ name,
           <Button onClick={() => toggleModal()}>
             <EditIcon />
           </Button>
-          <Button color="error" onClick={() => deleteCategory(name, token)}>
+          <Button color="error" onClick={() => provitionalDelete(name, token)}>
             <DeleteIcon />
           </Button>
         </ButtonGroup>
@@ -102,7 +105,7 @@ const Row: React.FC<ProductType> = ({ name,
   );
 };
 
-const TableComponent: React.FC<propsProductList> = ({ productList, updateFetchFunction, token }) => {
+const TableComponent: React.FC<propsProductList> = ({ productList, updateFetchFunction, provitionalDelete, token }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -136,6 +139,7 @@ const TableComponent: React.FC<propsProductList> = ({ productList, updateFetchFu
               stock={product.stock}
               price={product.price}
               category={product.category}
+              provitionalDelete = {provitionalDelete}
               token={token} />
             ))
           ) : (

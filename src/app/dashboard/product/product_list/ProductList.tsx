@@ -18,44 +18,25 @@ interface IFormFields {
 
 export default function ProductList() {
   const [welcome, setWelcome] = useState(true);
-  const [productList, setCategoryList] = useState<ProductType[]>([]);
+  const [productList, setProductList] = useState<ProductType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [addModal, setAddModal] = useState(false);
 
-  const [formFields, setFormFields] = useState<IFormFields>({
+  const [formFields, setFormState] = useState<IFormFields>({
     name: '',
     description: '',
     price: '',
     stock: '',
     category: '',
   });
-  
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: keyof IFormFields) => {
-    const { name, value } = event.target;
-    if (name && value) {
-      setFormFields(prevState => ({
-        ...prevState,
-        [fieldName]: value,
-      }));
-    }
-/*  
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("")
-  const [price, setPrice] = useState("")
-  const [stock, setStock] = useState("")
-  const [category, setCategory] = useState("") 
-  */
-  
-
-
-/*   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if ((event && event.target.value) || event.target.value == "") {
-      const value = event.target.value;
-      setName(value);
-    }
-  }; */
-
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: string) => {
+    const value = event.target.value;
+    setFormState(prevState => ({
+      ...prevState,
+      [fieldName]: value, }));
+  };
+    
 
   
   const handleOpen = () => setAddModal(true);
@@ -68,7 +49,26 @@ export default function ProductList() {
   function fetchProductList ()  {
     console.log('soy una supuesta funcion asincrona :)')
   }
-  async function createNewCategory() {
+  async function createNewProduct(){
+    setProductList(
+      currentLsit => [
+        ...currentLsit, formFields
+      ]
+    )
+    setFormState({
+      name: '',
+      description: '',
+      price: '',
+      stock: '',
+      category: '',
+    })
+  }
+  function provitionalDelete(name: string){
+    setProductList(
+      productList.filter((e) => e.name !== name)
+    )
+  }
+/*   async function createNewCategory() { //estatico
     basePost(
       "/category/",
       token,
@@ -77,7 +77,7 @@ export default function ProductList() {
     ).then(() => {
       //fetchProductList(); // estatico
     });
-  }
+  } */
   useEffect(() => {
     if (token == "no") {
       console.log("deslogeado!");
@@ -100,10 +100,15 @@ export default function ProductList() {
             handler={handleChange}
             modal={addModal}
             handleClose={handleClose}
-            addFunction={createNewCategory}
+            addFunction={createNewProduct}
             buttonText = {'Agregar'}
           />
-          <TableComponent token={token} productList={productList} updateFetchFunction={fetchProductList} />
+          <TableComponent 
+          token={token} 
+          productList={productList} 
+          updateFetchFunction={fetchProductList}
+          provitionalDelete = {provitionalDelete}
+          />
         </Grid>
       </Grid>
 
