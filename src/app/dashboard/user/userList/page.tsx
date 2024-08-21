@@ -26,7 +26,7 @@ const ListUsersDashboard: React.FC = () => {
         buscateLosUsuarios();
       }
     }
-  }, []);
+  }, [buscateLosUsuarios, welcome, token]);
   return (
     <Box sx={baseDashboardContainer}>
       {token !== "no" ? (

@@ -50,7 +50,7 @@ export default function CategoryAdmin() {
         fetchCategoryList();
       }
     }
-  }, [categoryList, token, welcome]);
+  }, [fetchCategoryList, token, welcome]);
 
   return (
     <Box sx={baseDashboardContainer}>
