@@ -7,6 +7,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 import AddProduct from "../add/Add";
 import ProductInput from "../add/ProductInput"; 
+import { regexs } from "@/app/components/regexs";
 
 interface IFormFields {
   name: string;
@@ -32,6 +33,13 @@ export default function ProductList() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, fieldName: string) => {
     const value = event.target.value;
+    if (fieldName === 'price' && !regexs.floatNumber.test(value)) {
+      return; // Prevent updating state with invalid input
+    }
+    if (fieldName === 'stock' && !regexs.onlyNumbers.test(value)) {
+      return; // Prevent updating state with invalid input
+    }
+
     setFormState(prevState => ({
       ...prevState,
       [fieldName]: value, }));

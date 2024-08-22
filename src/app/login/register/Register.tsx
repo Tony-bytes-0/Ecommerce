@@ -6,9 +6,10 @@ import { RegisterInputs } from "./RegisterInputs";
 import { BasicInputs } from "./BasicInputs";
 import { Button, Grid, Slide } from "@mui/material";
 import { postData } from "@/app/components/modalAlerts";
+import { regexs } from "@/app/components/regexs"
 //axios
 
-const regexs = {
+/* const regexs = {
   //email: /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\.)+com$/,
   //password: /^(?=.*[A-Z])(?=.*\d).{9,}$/,
   email: /^([a-zA-Z0-9._%+-]{1,50})@(?:(?:[a-zA-Z0-9.-]+\.)?[a-zA-Z]{2,})$/,
@@ -20,7 +21,7 @@ const regexs = {
   country: /^.{1,20}$/,
   onlyNumbers: /^\d+$/,
   onlyChar: /^[A-Za-z]+$/,
-};
+}; */
 
 const Register = ({ handler }: { handler: () => void }) => {
   const [email, setEmail] = useState("");
