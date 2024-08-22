@@ -1,0 +1,1 @@
+export const largeFontSize = 24

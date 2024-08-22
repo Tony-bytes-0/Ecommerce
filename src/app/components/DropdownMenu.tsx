@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Box, Grid, IconButton, Menu, MenuList } from '@mui/material';
+import { Box, Grid, IconButton, Menu, MenuList, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 
 type Option = {
@@ -34,9 +34,8 @@ const DropdownMenuComponent: React.FC<DropdownOption> = ({ options }) => {
       <MenuList>
         {options.map((option) => (
           <MenuItem key={option.id} onClick={option.function}>
-            {/*           <ListItemIcon>
-            </ListItemIcon> */}
-            <ListItemText primary={option.label} />
+            {/* <ListItemText primary={option.label} /> */}
+            <Typography >{option.label}</Typography>
           </MenuItem>
         ))}
       </MenuList>

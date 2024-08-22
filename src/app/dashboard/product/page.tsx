@@ -9,10 +9,15 @@ export default function Page() {
     const token = useAppSelector((state) => state.sesionToken.token);
     return (
         <Box sx={baseDashboardContainer}>
-            {token !== 'no' ?
+            {/* 
+                {token !== 'no' ? 
+            */}
                 <ProductList />
                 :
-                <InvalidCredentials />}
+            {/* 
+                <InvalidCredentials />
+                } 
+            */}
         </Box>
     )
 }

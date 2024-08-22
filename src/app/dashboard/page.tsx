@@ -8,7 +8,7 @@ const baseContainer = baseDashboardContainer;
 const Dashboard: React.FC = ({}) => {
 
   return (
-<Box sx={baseContainer}>dashboard</Box>
+<Box sx={baseContainer}></Box>
   );
 };
 

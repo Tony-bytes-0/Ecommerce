@@ -20,16 +20,7 @@ type UserTypes = {
 };
 const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
   const dispatch = useAppDispatch();
-  //const router = useRouter();
   const sesionToken = useAppSelector((state) => state.sesionToken);
-  const [modalLogin, setModalLogin] = useState(false);
-  //modal
-  const handleModalLogin = () => {
-    setModalLogin(!modalLogin);
-  };
-  const hideModalLogin = () => {
-    setModalLogin(false);
-  };
   const handleLoggout = () => {
     logoutConfirm(() => dispatch(setToken("no")));
   };

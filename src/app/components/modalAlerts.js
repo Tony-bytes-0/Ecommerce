@@ -70,7 +70,7 @@ export function logoutConfirm(handler) {
 
 export async function asyncDeleteUserById(id, token){
   try{
-    showLoadingSpinner("Listando usuarios");
+    showLoadingSpinner("Eliminando...");
     const response = await baseInstance.delete("/user/"+id , {
       headers: { Authorization: `Bearer ${token}`, },
     });
