@@ -11,6 +11,7 @@ import {
   evaluateRoleLoginAction,
 } from "@/app/login/login/communFunctions";
 import { LoginPromiseToken } from "@/app/types/userSesionToken";
+import DropdownMenuComponent from "@/app/components/DropdownMenu";
 
 type UserTypes = {
   size: number;
@@ -76,9 +77,8 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
                   : "Ingresar"}
               </Typography>
             </Grid>
-            <DropdownMenu
+            <DropdownMenuComponent
               options={sesionToken.token !== "no" ? userOptions : logOptions}
-              xs={12}
             />
           </Grid>
         ) : (
