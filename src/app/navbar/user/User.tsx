@@ -1,5 +1,5 @@
 import { Grid, IconButton, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DropdownMenu from "@/app/components/DropdownMenu";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setToken, setUser } from "@/lib/token/sesionToken";
@@ -10,8 +10,9 @@ import {
   dinamicLogin,
   evaluateRoleLoginAction,
 } from "@/app/login/login/communFunctions";
-import { LoginPromiseToken } from "@/app/types/userSesionToken";
+import { LoginPromiseToken, UserToken } from "@/app/types/userSesionToken";
 import DropdownMenuComponent from "@/app/components/DropdownMenu";
+import { getSessionData, setSessionCookie } from "@/app/helpers/cookies"
 
 type UserTypes = {
   size: number;
@@ -46,10 +47,19 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
         dispatch(setToken(loginResult.data.token));
         dispatch(setUser(loginResult.data.user));
         handleNavigate( evaluateRoleLoginAction(loginResult.data.user.role) )
-        
+        setSessionCookie({ token: loginResult.data.token, userData: loginResult.data.user }, { expires: 7 });
       },
     }, //debug
   ];
+  //const [sessionData, setSessionData] = useState<UserToken | null>(null);
+/*   useEffect(() => {
+    const sesionData = getSessionData()
+    if (sesionData) {
+      setSessionData(sesionData);
+      console.log('las cukis son: ', sesionData //.user.person.fullName
+        )
+    }
+  }, []) */
 
   return (
     <>
@@ -62,7 +72,9 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
                 {sesionToken.token !== "no"
                   ? "Bienvenido " +
                     sesionToken.user.person.fullName +
+                    //sessionData?.user?.person.fullName +
                     " ( " +
+                    //sessionData?.user?.role +
                     sesionToken.user.role +
                     " ) "
                   : "Ingresar"}

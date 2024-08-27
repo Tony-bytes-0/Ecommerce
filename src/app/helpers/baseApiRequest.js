@@ -1,4 +1,4 @@
-import {closeSwal, shortError, shortSuccess, showLoadingSpinner} from "./modalAlerts"
+import {closeSwal, shortError, shortSuccess, showLoadingSpinner} from "../components/modalAlerts"
 import baseInstance from "../api";
 
 export async function baseGet (route, token, loadMessage ){

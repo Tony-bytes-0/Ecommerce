@@ -5,13 +5,19 @@ import { BasicInputs } from "@/app/login/register/BasicInputs";
 import { RegisterInputs } from "@/app/login/register/RegisterInputs";
 import { baseDashboardContainer } from "@/app/types/common";
 import { useAppSelector } from "@/lib/hooks";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import InvalidCredentials from "../../InvalidCredentials";
+import ElegantFont from "@/app/components/ElegantFont";
 //import { baseDashboardContainer } from 
 
-const baseContainer = baseDashboardContainer;
-
+const baseContainer = { ...baseDashboardContainer };
+const innerStyles = {
+  //backgroundColor: '#f11111'
+  margin: 'auto',
+  width: '50%',
+  backgroundColor: '#2c2b2b',
+}
 
 const RegisterUserDashboard: React.FC = () => {
   const token = useAppSelector((state) => state.sesionToken.token)
@@ -104,46 +110,49 @@ const RegisterUserDashboard: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errorList, setErrorList] = useState<string[]>([]);
+
+
   return (
     <Box sx={baseContainer}>
-      {token !== 'no' ?       <Grid container xs={12}>
-        <BasicInputs
-          email={email}
-          handleEmail={handleEmail}
-          password={password}
-          handlePassword={handlePassword}
-          confirm={confirm}
-          handleConfirm={handleConfirm}
-          errorList={errorList}
-        />
-        <RegisterInputs
-          fullName={fullName}
-          handleFullName={handleName}
-          postalCode={postalCode}
-          handlePostalCode={handlePostalCode}
-          country={country}
-          handleCountry={handleCountry}
-          phone={phone}
-          handlePhone={handlePhone}
-          errorList={errorList}
-        />
-        <Grid
-          item
-          xs={2}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Button
-            variant="outlined"
-            fullWidth
-            //onClick={() => console.log("probando el boton")}
-            onClick={() => sendData()}
-          >
-            <b>Crear usuario</b>
-          </Button>
-        </Grid>
-      </Grid>  : <InvalidCredentials />}
+      <ElegantFont textColor = {'#FFFFFF'}>Crear usuario</ElegantFont>
+      {/* {token !== 'no' ?        */}
+      <Grid container xs={12}>
+        <Box sx={innerStyles}>
+          <BasicInputs
+            email={email}
+            handleEmail={handleEmail}
+            password={password}
+            handlePassword={handlePassword}
+            confirm={confirm}
+            handleConfirm={handleConfirm}
+            errorList={errorList}
+          />
+          <RegisterInputs
+            fullName={fullName}
+            handleFullName={handleName}
+            postalCode={postalCode}
+            handlePostalCode={handlePostalCode}
+            country={country}
+            handleCountry={handleCountry}
+            phone={phone}
+            handlePhone={handlePhone}
+            errorList={errorList}
+          />
+
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', justifyItems: 'center', padding:5 }} >
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={() => sendData()}
+            >
+              <b>Crear usuario</b>
+            </Button>
+          </Box>
+
+        </Box>
+      </Grid>
+
+      {/* : <InvalidCredentials />} */}
 
     </Box>
   );

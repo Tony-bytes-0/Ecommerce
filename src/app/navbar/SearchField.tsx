@@ -32,7 +32,7 @@ function SearchField(props: {size: number, windowSize: {width: number, height: n
                 onChange={handleSearch}
                 variant="filled"
                 className="min-w-full"
-                label="Busqueda"
+                //label="Busqueda"
               ></TextField>
             </Box>
           </Modal>
@@ -47,7 +47,7 @@ function SearchField(props: {size: number, windowSize: {width: number, height: n
             onChange={handleSearch}
             variant="outlined"
             size="small"
-            label="Busqueda"
+            //label="Busqueda"
           />
         </Box>
       )}

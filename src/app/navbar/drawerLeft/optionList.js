@@ -1,6 +1,7 @@
 import CategoryIcon from "@mui/icons-material/Category";
 import LabelIcon from "@mui/icons-material/Label";
 import PersonIcon from "@mui/icons-material/Person";
+import AddIcon from '@mui/icons-material/Add';
 
 export const optionList = {
   user: [
@@ -12,7 +13,7 @@ export const optionList = {
     {
       name: "Crear usuario",
       navigator: "/dashboard/user/userRegister",
-      icon: <PersonIcon />,
+      icon: <AddIcon />,
     },
 ],
   category: [

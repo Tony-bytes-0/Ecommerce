@@ -9,12 +9,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, ButtonGroup } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from '@mui/icons-material/Edit';
 import Swal from "sweetalert2";
 import { CategoryType, propsCategoryList } from "@/app/dashboard/category/categoryList/types";
 import UpdateInput from "../add/UpdateInput";
-import { baseDelete, basePut } from "@/app/components/baseApiRequest";
+import { baseDelete, basePut } from "@/app/helpers/baseApiRequest";;
 
 
 

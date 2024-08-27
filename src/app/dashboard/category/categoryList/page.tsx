@@ -1,5 +1,5 @@
 "use client";
-import { baseGet, basePost } from "@/app/components/baseApiRequest";
+import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
 import { CategoryType } from "./types";
 import { baseDashboardContainer } from "@/app/types/common";
 import { useAppSelector } from "@/lib/hooks";
