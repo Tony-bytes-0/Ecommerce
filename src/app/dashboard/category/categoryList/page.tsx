@@ -9,7 +9,7 @@ import TableComponent from "./TableComponent";
 import AddCategory from "../add/Add";
 import CategoryInput from "../add/CategoryInput"; 
 import InvalidCredentials from "../../InvalidCredentials";
-import CustomAddNewItemType from "@/app/components/AddNewItem";
+import CustomAddNewItem from "@/app/components/CustomAddNewItem";
 import CategoryIcon from "@mui/icons-material/Category";
 import CustomAddEditButtons from "@/app/components/CustomAddEditButtons";
 import CustomTitleHeader from "@/app/components/TittleHeader";
@@ -74,7 +74,7 @@ export default function CategoryAdmin() {
           <Box sx={{alignItems: 'center', display:'flex', justifyContent:'center'}}>
             <CustomAddEditButtons action={handleOpen} action2={fetchCategoryList} />
           </Box>
-          <CustomAddNewItemType 
+          <CustomAddNewItem 
             item = {newCategory}
             itemName={'Nueva categoria'}
             itemProperty="Nombre de la categoria"

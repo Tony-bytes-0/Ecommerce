@@ -17,7 +17,7 @@ import {
 } from "@/app/dashboard/category/categoryList/types";
 import UpdateInput from "../add/UpdateInput";
 import { baseDelete, basePut } from "@/app/helpers/baseApiRequest";
-import CustomAddNewItemType from "@/app/components/AddNewItem";
+import CustomAddNewItem from "@/app/components/CustomAddNewItem";
 import CategoryIcon from "@mui/icons-material/Category";
 
 const Row: React.FC<CategoryType> = ({
@@ -98,7 +98,7 @@ const Row: React.FC<CategoryType> = ({
         token={token}
         buttonText={"Editar"}
       /> */}
-      <CustomAddNewItemType
+      <CustomAddNewItem
         item={update}
         itemName={"Nuevo nombre"}
         itemProperty="Nombre de la categoria"

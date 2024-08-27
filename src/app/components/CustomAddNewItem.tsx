@@ -29,7 +29,7 @@ type CustomAddNewItemType = {
   icon: any;
 };
 
-const CustomAddNewItemType: React.FC<CustomAddNewItemType> = ({
+const CustomAddNewItem: React.FC<CustomAddNewItemType> = ({
   item,
   itemProperty,
   buttonText,
@@ -83,4 +83,4 @@ const CustomAddNewItemType: React.FC<CustomAddNewItemType> = ({
   );
 };
 
-export default CustomAddNewItemType;
+export default CustomAddNewItem;
