@@ -1,5 +1,5 @@
 "use client";
-import { baseGet, basePost } from "@/app/components/baseApiRequest";
+import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
 import { ProductType } from "./types";
 import { useAppSelector } from "@/lib/hooks";
 import {  Grid } from "@mui/material";

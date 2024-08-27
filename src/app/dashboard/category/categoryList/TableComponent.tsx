@@ -9,15 +9,23 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, ButtonGroup } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
-import { CategoryType, propsCategoryList } from "@/app/dashboard/category/categoryList/types";
+import {
+  CategoryType,
+  propsCategoryList,
+} from "@/app/dashboard/category/categoryList/types";
 import UpdateInput from "../add/UpdateInput";
-import { baseDelete, basePut } from "@/app/helpers/baseApiRequest";;
+import { baseDelete, basePut } from "@/app/helpers/baseApiRequest";
+import CustomAddNewItemType from "@/app/components/AddNewItem";
+import CategoryIcon from "@mui/icons-material/Category";
 
-
-
-const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) => {
+const Row: React.FC<CategoryType> = ({
+  name,
+  updateFetchFunction,
+  _id,
+  token,
+}) => {
   const [update, setUpdate] = React.useState("");
   const [updateModal, setUpdateModal] = React.useState(false);
   const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +41,7 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
   async function updateCategory(_id: string, token: string) {
     //console.log('estoy enviando esto: ', {name: update}, "/category/" + _id ) //debug
     basePut(
-      "/category/" + _id ,
+      "/category/" + _id,
       token,
       { name: update },
       "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
@@ -48,18 +56,17 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Si, estoy seguro",
-      denyButtonText: `no, volver`
+      denyButtonText: `no, volver`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
     baseDelete(
-      "/category/" + _id ,
-    token,
+      "/category/" + _id,
+      token,
       "Eliminando, no cierre esta pestaña"
     ).then(() => {
       updateFetchFunction();
@@ -82,7 +89,7 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
           </Button>
         </ButtonGroup>
       </TableCell>
-      <UpdateInput
+{/*       <UpdateInput
         newValue={update}
         handler={handleUpdate}
         modal={updateModal}
@@ -90,12 +97,27 @@ const Row: React.FC<CategoryType> = ({ name, updateFetchFunction, _id, token }) 
         addFunction={() => updateCategory(_id, token)}
         token={token}
         buttonText={"Editar"}
+      /> */}
+      <CustomAddNewItemType
+        item={update}
+        itemName={"Nuevo nombre"}
+        itemProperty="Nombre de la categoria"
+        handler={handleUpdate}
+        modal={updateModal}
+        handleClose={toggleModal}
+        addFunction={() => updateCategory(_id, token)}
+        buttonText={"Editar"}
+        icon={<CategoryIcon />}
       />
     </TableRow>
   );
 };
 
-const TableComponent: React.FC<propsCategoryList> = ({ categoryList, updateFetchFunction, token }) => {
+const TableComponent: React.FC<propsCategoryList> = ({
+  categoryList,
+  updateFetchFunction,
+  token,
+}) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -112,7 +134,13 @@ const TableComponent: React.FC<propsCategoryList> = ({ categoryList, updateFetch
         <TableBody>
           {categoryList.length > 0 ? (
             categoryList.map((category, index) => (
-              <Row _id={category._id} name={category.name} key={index} updateFetchFunction={updateFetchFunction} token={token} />
+              <Row
+                _id={category._id}
+                name={category.name}
+                key={index}
+                updateFetchFunction={updateFetchFunction}
+                token={token}
+              />
             ))
           ) : (
             <></>

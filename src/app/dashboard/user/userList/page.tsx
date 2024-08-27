@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { UserStandarData } from "@/app/types/userSesionToken";
 import InvalidCredentials from "../../InvalidCredentials";
+import CustomTitleHeader from "@/app/components/TittleHeader";
+import ElegantFont from "@/app/components/ElegantFont";
 
 const ListUsersDashboard: React.FC = () => {
   const [welcome, setWelcome] = useState(true);
@@ -32,6 +34,10 @@ const ListUsersDashboard: React.FC = () => {
       {
       //token !== "no" ? (
         <Grid item xs={12}>
+          <CustomTitleHeader width="100%">
+            <ElegantFont textColor="#FFFFFF">Usuarios</ElegantFont>
+          </CustomTitleHeader>
+          <Box sx={{margin:2}}></Box>
           <TableComponent userList={listOfUsers} activeToken={token} />
         </Grid>
       /* ) : (

@@ -107,20 +107,6 @@ const TableComponent: React.FC<propsUserList> = ({ userList }) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow sx={{ backgroundColor: blue[600] }}>
-            <TableCell colSpan={4} >
-              <Typography
-                paddingTop={2}
-                fontFamily={"cursive"}
-                textAlign={"center"}
-                fontSize={largeFontSize}
-                color={'#FFFFFF'}
-              >
-                <b>Listar usuarios</b>{" "}
-                <ListIcon fontSize="large"  />
-              </Typography>
-            </TableCell>
-          </TableRow>
           <TableRow>
             <TableCell align="center">
               <Typography>

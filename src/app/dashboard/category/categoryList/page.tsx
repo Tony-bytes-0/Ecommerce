@@ -9,8 +9,14 @@ import TableComponent from "./TableComponent";
 import AddCategory from "../add/Add";
 import CategoryInput from "../add/CategoryInput"; 
 import InvalidCredentials from "../../InvalidCredentials";
+import CustomAddNewItemType from "@/app/components/AddNewItem";
+import CategoryIcon from "@mui/icons-material/Category";
+import CustomAddEditButtons from "@/app/components/CustomAddEditButtons";
+import CustomTitleHeader from "@/app/components/TittleHeader";
+import ElegantFont from "@/app/components/ElegantFont";
 
 export default function CategoryAdmin() {
+  
   const [welcome, setWelcome] = useState(true);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
@@ -55,26 +61,36 @@ export default function CategoryAdmin() {
   return (
     <Box sx={baseDashboardContainer}>
        
-        {token !== 'no' ?       
-      
+        {
+        //token !== 'no' || process.env.DEBUG === "true" ?       
 
       <Grid container>
         <Grid item xs={12}>
-          <AddCategory handleOpen={handleOpen} updateFetchFunction={fetchCategoryList} />
 
-          <CategoryInput
-            newCategory={newCategory}
-            handler={handleCategory}
-            modal={addModal}
+          <CustomTitleHeader width="100%" >
+            <ElegantFont textColor="#FFFFFF" >Categorias</ElegantFont>
+          </CustomTitleHeader>
+
+          <Box sx={{alignItems: 'center', display:'flex', justifyContent:'center'}}>
+            <CustomAddEditButtons action={handleOpen} action2={fetchCategoryList} />
+          </Box>
+          <CustomAddNewItemType 
+            item = {newCategory}
+            itemName={'Nueva categoria'}
+            itemProperty="Nombre de la categoria"
+            handler= {handleCategory}
+            modal= {addModal}
             handleClose={handleClose}
             addFunction={createNewCategory}
             buttonText = {'Agregar'}
+            icon = {<CategoryIcon/>}
           />
           <TableComponent token={token} categoryList={categoryList} updateFetchFunction={fetchCategoryList} />
         </Grid>
       </Grid>
       
-        : <InvalidCredentials />} 
+        //: <InvalidCredentials />
+        } 
       
     </Box>
   );

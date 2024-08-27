@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Swal from "sweetalert2";
 import {  propsProductList, TableComponentProductType } from "@/app/dashboard/product/product_list/types";
 import UpdateInput from "../add/UpdateInput";
-import { baseDelete, basePut } from "@/app/components/baseApiRequest";
+import { baseDelete, basePut } from "@/app/helpers/baseApiRequest";
 
 
 

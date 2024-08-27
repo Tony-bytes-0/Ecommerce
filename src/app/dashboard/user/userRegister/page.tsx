@@ -9,18 +9,21 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import InvalidCredentials from "../../InvalidCredentials";
 import ElegantFont from "@/app/components/ElegantFont";
-//import { baseDashboardContainer } from 
+import { blue } from "@mui/material/colors";
+import CustomTitleHeader from "@/app/components/TittleHeader";
+//import { baseDashboardContainer } from
 
 const baseContainer = { ...baseDashboardContainer };
 const innerStyles = {
   //backgroundColor: '#f11111'
-  margin: 'auto',
-  width: '50%',
-  backgroundColor: '#2c2b2b',
-}
+  margin: "auto",
+  width: "50%",
+  backgroundColor: "#2c2b2b",
+  borderRadius: "20px",
+};
 
 const RegisterUserDashboard: React.FC = () => {
-  const token = useAppSelector((state) => state.sesionToken.token)
+  const token = useAppSelector((state) => state.sesionToken.token);
   function validateInput(fieldName: string, input: string, regex: RegExp) {
     if (regex.test(input)) {
       //caso de que pasa la regex, añade el error a errorList y devuelve true
@@ -110,11 +113,14 @@ const RegisterUserDashboard: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errorList, setErrorList] = useState<string[]>([]);
-
+  const userPrimaryColor = process.env.NEXT_PUBLIC_PRIMARY_COLOR;
 
   return (
     <Box sx={baseContainer}>
-      <ElegantFont textColor = {'#FFFFFF'}>Crear usuario</ElegantFont>
+
+        <CustomTitleHeader width="50%">
+          <ElegantFont textColor={"#FFFFFF"}>Crear usuario</ElegantFont>
+        </CustomTitleHeader>
       {/* {token !== 'no' ?        */}
       <Grid container xs={12}>
         <Box sx={innerStyles}>
@@ -139,21 +145,23 @@ const RegisterUserDashboard: React.FC = () => {
             errorList={errorList}
           />
 
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', justifyItems: 'center', padding:5 }} >
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={() => sendData()}
-            >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              justifyItems: "center",
+              padding: 5,
+            }}
+          >
+            <Button variant="outlined" fullWidth onClick={() => sendData()}>
               <b>Crear usuario</b>
             </Button>
           </Box>
-
         </Box>
       </Grid>
 
       {/* : <InvalidCredentials />} */}
-
     </Box>
   );
 };
