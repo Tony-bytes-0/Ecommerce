@@ -29,13 +29,14 @@ const ListUsersDashboard: React.FC = () => {
   }, [buscateLosUsuarios, welcome, token]);
   return (
     <Box sx={baseDashboardContainer}>
-      {token !== "no" ? (
+      {
+      //token !== "no" ? (
         <Grid item xs={12}>
           <TableComponent userList={listOfUsers} activeToken={token} />
         </Grid>
-      ) : (
+      /* ) : (
         <InvalidCredentials />
-      )}
+      ) */}
     </Box>
   );
 };

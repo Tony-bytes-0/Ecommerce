@@ -7,17 +7,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { UserStandarData } from "@/app/types/userSesionToken";
 import Swal from "sweetalert2";
 import { renderToString } from "react-dom/server";
 import { asyncDeleteUserById } from "@/app/components/modalAlerts";
+import ElegantFont from "@/app/components/ElegantFont";
+import { baseDashboardContainer } from "@/app/types/common";
+import { blue } from "@mui/material/colors";
+import { largeFontSize } from "@/app/types/globalFontSizes";
+import ListIcon from "@mui/icons-material/List";
 
 interface propsUserList {
   userList: UserStandarData[];
-  activeToken: string
+  activeToken: string;
 }
 interface TableComponentProps {
   user: UserStandarData;
@@ -26,17 +31,41 @@ interface TableComponentProps {
 const ReactToHtmlUserData: React.FC<TableComponentProps> = ({ user }) => {
   return (
     <div>
-      <h2><b>Id: </b>{user.id}</h2>
-      <h2><b>Email: </b>{user.email}</h2>
-      <h2><b>fecha de creacion:</b> {user.createdAt}</h2>
-      <h2><b>Rol asignado</b>{user.role}</h2>
-      <br/>
-      <b style={{borderBottom:'2px solid'}}>Datos de la persona</b>
-      <br/><br/>
-      <h2><b>Nombre completo: </b>{user.person.fullName}</h2>
-      <h2><b>Numero telefónico: </b>{user.person.phoneNumber}</h2>
-      <h2><b>País: </b>{user.person.country}</h2>
-      <h2><b>Codigo postal: </b>{user.person.codePostal}</h2>
+      <h2>
+        <b>Id: </b>
+        {user.id}
+      </h2>
+      <h2>
+        <b>Email: </b>
+        {user.email}
+      </h2>
+      <h2>
+        <b>fecha de creacion:</b> {user.createdAt}
+      </h2>
+      <h2>
+        <b>Rol asignado</b>
+        {user.role}
+      </h2>
+      <br />
+      <b style={{ borderBottom: "2px solid" }}>Datos de la persona</b>
+      <br />
+      <br />
+      <h2>
+        <b>Nombre completo: </b>
+        {user.person.fullName}
+      </h2>
+      <h2>
+        <b>Numero telefónico: </b>
+        {user.person.phoneNumber}
+      </h2>
+      <h2>
+        <b>País: </b>
+        {user.person.country}
+      </h2>
+      <h2>
+        <b>Codigo postal: </b>
+        {user.person.codePostal}
+      </h2>
     </div>
   );
 };
@@ -44,10 +73,10 @@ const ReactToHtmlUserData: React.FC<TableComponentProps> = ({ user }) => {
 const showUserData = (user: UserStandarData) => {
   const renderedString = renderToString(<ReactToHtmlUserData user={user} />);
   Swal.fire({
-    title:'Información detallada ',
+    title: "Información detallada ",
     html: renderedString,
-    showConfirmButton: true
-  })
+    showConfirmButton: true,
+  });
 };
 
 const Row: React.FC<TableComponentProps> = ({ user }) => {
@@ -78,9 +107,25 @@ const TableComponent: React.FC<propsUserList> = ({ userList }) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
+          <TableRow sx={{ backgroundColor: blue[600] }}>
+            <TableCell colSpan={4} >
+              <Typography
+                paddingTop={2}
+                fontFamily={"cursive"}
+                textAlign={"center"}
+                fontSize={largeFontSize}
+                color={'#FFFFFF'}
+              >
+                <b>Listar usuarios</b>{" "}
+                <ListIcon fontSize="large"  />
+              </Typography>
+            </TableCell>
+          </TableRow>
           <TableRow>
             <TableCell align="center">
-              <b>Email</b>
+              <Typography>
+                <b>Email</b>
+              </Typography>
             </TableCell>
             <TableCell align="center">
               <b>Nombre completo</b>
