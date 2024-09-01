@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import InputFragment from "./InputFragment";
 
-
 type RegisterInputs = {
   fullName: string;
   handleFullName: Function;
@@ -14,11 +13,12 @@ type RegisterInputs = {
   errorList: string[];
 };
 const hints = {
-  fullName:'El nombre debe tener menos de 50 caracteres',
-  postalCode:'El codigo postal debe tener menos de 20 numeros',
-  country:'El nombre del pais debe ser menor',
-  phone:'El número no debe exceder los 20 caracteres'
-}
+  fullName: "El nombre debe tener menos de 50 caracteres",
+  postalCode: "Numero entre 1 y 20 digitos",
+  country: "El nombre del pais debe ser menor",
+  phone: "Numero entre 1 y 20 digitos",
+  //onlynumbers: 'Este campo solo puede contener'
+};
 
 export const RegisterInputs: React.FC<RegisterInputs> = ({
   fullName,
@@ -29,7 +29,7 @@ export const RegisterInputs: React.FC<RegisterInputs> = ({
   handleCountry,
   phone,
   handlePhone,
-  errorList
+  errorList,
 }) => {
   const mainGridStyles = {
     padding: 2,

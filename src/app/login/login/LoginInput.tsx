@@ -66,11 +66,11 @@ const LoginInput: React.FC<loginInput> = ({
           }}
         />
       </form>
-      <Link href={"recoverPassword"}>
+{/*       <Link href={"recoverPassword"}>
         <Typography sx={{ color: "#54ACFF" }}>
           Olvidaste tu contraseña?
         </Typography>
-      </Link>
+      </Link> */}
     </Grid>
   );
 };
