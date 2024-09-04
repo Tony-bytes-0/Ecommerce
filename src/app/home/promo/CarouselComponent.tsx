@@ -33,7 +33,7 @@ function Item(props: { item: { name: string; image: string } }) {
         fill={true}
         objectFit="container"
         style={{
-          maskImage: "linear-gradient(black 80%, transparent)",
+          maskImage: "linear-gradient(black 70%, transparent)",
         }}
       />
       {/* <p>{props.item.description}</p> */}
