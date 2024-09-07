@@ -127,7 +127,7 @@ export function postData(
   console.log("datos a enviar: ", data);
   showLoadingSpinner("Subiendo...");
   baseInstance
-    .post("/user/", data)
+    .post("api/user/", data)
     .then((response) => {
       console.log(" la respuesta del envio: ", response.data);
       closeSwal();

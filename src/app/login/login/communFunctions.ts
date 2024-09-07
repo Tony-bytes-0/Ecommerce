@@ -18,9 +18,9 @@ export function dinamicLogin(
       password: password,
     };
     baseInstance
-      .post("/auth/login", {email, password})
+      .post("auth/login", {email, password})
       .then((response) => {
-        console.log("response:: ", response.data); // debug
+        console.log("response: ", response.data); // debug
         closeSwal();
         shortSuccess();
         // Resuelve la promesa con la respuesta
