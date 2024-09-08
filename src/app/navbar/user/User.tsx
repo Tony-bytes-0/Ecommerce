@@ -12,18 +12,29 @@ import {
 } from "@/app/login/login/communFunctions";
 import { LoginPromiseToken, UserToken } from "@/app/types/userSesionToken";
 import DropdownMenuComponent from "@/app/components/DropdownMenu";
-import { getSessionData, setSessionCookie } from "@/app/helpers/cookies"
+import { expireSesion, setNewSession } from "@/app/login/login/localUserData";
 
 type UserTypes = {
   size: number;
   windowSize: { width: number; height: number };
   handleNavigate: (arg0: string) => void;
+  sesionToken: UserToken | undefined;
+  logout: () => void;
 };
-const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
+
+const User: React.FC<UserTypes> = ({
+  size,
+  windowSize,
+  handleNavigate,
+  sesionToken,
+  logout,
+}) => {
   const dispatch = useAppDispatch();
-  const sesionToken = useAppSelector((state) => state.sesionToken);
   const handleLoggout = () => {
-    logoutConfirm(() => dispatch(setToken("no")));
+    logoutConfirm(() => {
+      logout();
+      expireSesion();
+    });
   };
 
   const userOptions = [
@@ -37,7 +48,6 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
       function: () =>
         handleNavigate(process.env.NEXT_PUBLIC_BASE_PATH + "/login"),
     },
-    //{ id: 2, label: "Registrarse", function: handleLogin },
     {
       id: 3,
       label: "AUTOLOG con admin",
@@ -46,40 +56,56 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
         const loginResult: LoginPromiseToken = localResponse;
         dispatch(setToken(loginResult.data.token));
         dispatch(setUser(loginResult.data.user));
-        handleNavigate( evaluateRoleLoginAction(loginResult.data.user.role) )
-        setSessionCookie({ token: loginResult.data.token, userData: loginResult.data.user }, { expires: 7 });
+        handleNavigate(evaluateRoleLoginAction(loginResult.data.user.role));
+        setNewSession(loginResult.data.user, loginResult.data.token);
       },
     }, //debug
   ];
 
+  const getName = () => {
+    if (sesionToken?.user?.person?.fullName) {
+      return sesionToken?.user.person.fullName;
+    }
+  };
+  const getOptions = () => {
+    if (sesionToken?.token === '') {
+      return logOptions
+    }
+    else {
+      return userOptions
+    }
+  }
 
   return (
     <>
-{/*         //vista desktop
+      {/*         //vista desktop
         //windowSize.width >= 800 ? ( */}
-          <Grid container item xs={size}>
-            <Grid item xs={12} textAlign={"center"}>
-              <Typography variant="caption">
-                {sesionToken.token !== "no"
+      <Grid container item xs={size}>
+        <Grid item xs={12} textAlign={"center"}>
+          <Typography variant="caption">
+            {/*                 {sesionToken.token !== "no"
                   ? "Bienvenido " +
                     sesionToken.user.person.fullName +
                     " ( " +
                     sesionToken.user.role +
                     " ) "
-                  : "Ingresar"}
-              </Typography>
-            </Grid>
-            <DropdownMenuComponent
-              options={sesionToken.token !== "no" ? userOptions : logOptions}
-            />
-          </Grid>
-{/*         //) : (
+                  : "Ingresar"} */}
+            {getName()}
+          </Typography>
+        </Grid>
+        <DropdownMenuComponent
+          //options={sesionToken?.token !== "no" ? userOptions : logOptions}
+          //options={userOptions.concat(logOptions)}
+          options = {getOptions()}
+        />
+      </Grid>
+      {/*         //) : (
           //vista movil
           <Grid container xs={size} paddingLeft={2}>
 
           </Grid>
         //)} */}
-        </>
+    </>
   );
 };
 

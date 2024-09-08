@@ -10,24 +10,42 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DrawerLeftNew from "./drawerLeft/newDrawer";
 import { useAppSelector } from "@/lib/hooks";
+import { UserToken } from "../types/userSesionToken";
+import { getSesionData } from "../login/login/localUserData";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
   borderColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR,
 };
+const linkStyles =
+  "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
+const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; //bg-gray-300 border-slate-400
+
 const NavBar: React.FC = () => {
   const router = useRouter();
   const handleNavigate = (route: string) => {
     router.push(route);
   };
-  const token = useAppSelector((state) => state.sesionToken.token)
+  const [sesionToken, setSesionToken] = useState<UserToken | undefined>(
+    {} as UserToken
+  );
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
   });
-  const linkStyles =
-    "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
-  const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; //bg-gray-300 border-slate-400
+  const logout = () => {
+    setSesionToken({} as UserToken);
+    console.log('ejecucion de la funcion logout')
+  };
+
+  useEffect(() => {
+    const result = {
+      token: getSesionData("sesionToken"),
+      user: getSesionData("sesionUser"),
+    };
+    setSesionToken(result);
+    console.log(result, " data recuperada de localstorage");
+  }, []);
 
   return (
     <Grid
@@ -38,8 +56,7 @@ const NavBar: React.FC = () => {
       alignItems={"center"}
       sx={MainGridStyles}
     >
-
-      {token !== 'no' ? <DrawerLeftNew /> : <></>}
+      {sesionToken?.token !== "no" ? <DrawerLeftNew /> : <></>}
 
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
@@ -53,7 +70,18 @@ const NavBar: React.FC = () => {
           windowSize={windowSize}
           size={3}
           handleNavigate={handleNavigate}
+          sesionToken={sesionToken}
+          logout = {logout}
         />
+        <button
+          onClick={() =>
+            console.log(
+              getSesionData("sesionToken") + " data recuperada de lacreta"
+            )
+          }
+        >
+          LA CRRRETA
+        </button>
       </Grid>
     </Grid>
   );

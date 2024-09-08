@@ -5,6 +5,8 @@ import {
   shortSuccess,
   showLoadingSpinner,
 } from "../../components/modalAlerts";
+import { setSessionCookie } from "@/app/helpers/cookies";
+import { setNewSession } from "./localUserData";
 
 export function dinamicLogin(
   email: string | HTMLInputElement,
@@ -24,10 +26,12 @@ export function dinamicLogin(
         closeSwal();
         shortSuccess();
         // Resuelve la promesa con la respuesta
+        //console.log('lo que le pasare a starNewSesion ', response.data.data.token, response.data.data.user)
+        setNewSession(response.data.data.user, response.data.data.token)
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("error capturado: ", error, email, password); // debug
+        //console.log("error capturado: ", error, email, password); // debug
         closeSwal();
         errorSwal();
         // Rechaza la promesa con el error
