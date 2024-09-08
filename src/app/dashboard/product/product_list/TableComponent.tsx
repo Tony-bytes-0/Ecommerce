@@ -79,8 +79,8 @@ const Row: React.FC<TableComponentProductType> = ({
     >
       <TableCell align="center">{name}</TableCell>
       <TableCell align="center">{description}</TableCell>
-      <TableCell align="center">{category}</TableCell>
       <TableCell align="center">{price}</TableCell>
+      <TableCell align="center">{category}</TableCell>
       <TableCell align="center">{stock}</TableCell>
       <TableCell align="center">
         <ButtonGroup variant="outlined" aria-label="Basic button group">

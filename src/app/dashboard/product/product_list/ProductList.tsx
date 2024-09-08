@@ -2,11 +2,9 @@
 import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
 import { ProductType } from "./types";
 import { useAppSelector } from "@/lib/hooks";
-import { Box, Grid } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
+import { Box, Grid, SelectChangeEvent } from "@mui/material";
+import { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
-import AddProduct from "../add/Add";
-import ProductInput from "../add/ProductInput";
 import { regexs } from "@/app/components/regexs";
 import CustomAddNewProduct from "@/app/components/CustomAddNewProduct";
 import CustomAddEditButtons from "@/app/components/CustomAddEditButtons";
@@ -19,10 +17,11 @@ interface IFormFields {
   price: string;
   stock: string;
   category: string;
+  //category: CategoryType;
 }
 
 export default function ProductList() {
-  const [welcome, setWelcome] = useState(true);
+  //const [welcome, setWelcome] = useState(true);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [addModal, setAddModal] = useState(false);
@@ -42,7 +41,7 @@ export default function ProductList() {
     const value = event.target.value;
     if (fieldName === "price" && !regexs.floatNumber.test(value)) {
       return; // Prevent updating state with invalid input
-    }
+    } 
     if (fieldName === "stock" && !regexs.onlyNumbers.test(value)) {
       return; // Prevent updating state with invalid input
     }
@@ -53,16 +52,22 @@ export default function ProductList() {
     }));
   };
 
+  const selectorHandler = (event: SelectChangeEvent) => {
+    setFormState( (prevState) => ({...prevState, category: event.target.value }) );
+  };
+
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
-  /*   async function fetchProductList() { // estatico
-    const response = await baseGet("/product/", token, "Cargando productos...");
-    setCategoryList(response.data);
-  } */
-
-  function fetchProductList() {
-    console.log("soy una supuesta funcion asincrona :)");
+  async function fetchProductList() { // estatico
+    try {
+      const response = await baseGet("/product", token, "Cargando productos...");
+      console.log(response.data)
+      //setProductList(response.data);
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   async function createNewProduct() {
     setProductList((currentLsit) => [...currentLsit, formFields]);
     setFormState({
@@ -87,15 +92,8 @@ export default function ProductList() {
     });
   } */
   useEffect(() => {
-    if (token == "no") {
-      console.log("deslogeado!");
-    } else {
-      if (welcome) {
-        setWelcome(false);
-        //fetchProductList(); // estatico
-      }
-    }
-  }, [productList, token, welcome]);
+  fetchProductList()
+  }, []);
 
   return (
     <Grid container>
@@ -116,16 +114,6 @@ export default function ProductList() {
           />
         </Box>
 
-        {/* 
-          <ProductInput
-            modalTitle = {'Añadir producto'}
-            formFields = { formFields }
-            handler={handleChange}
-            modal={addModal}
-            handleClose={handleClose}
-            addFunction={createNewProduct}
-            buttonText = {'Agregar'}
-          /> */}
         <CustomAddNewProduct
           itemName={"Añadir producto"}
           formFields={formFields}
@@ -134,6 +122,8 @@ export default function ProductList() {
           addFunction={createNewProduct}
           buttonText="Agregar"
           handler={handleChange}
+          selectorHandler={selectorHandler}
+          token = {token}
         />
         <TableComponent
           token={token}

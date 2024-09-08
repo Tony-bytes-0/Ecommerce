@@ -51,30 +51,19 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
       },
     }, //debug
   ];
-  //const [sessionData, setSessionData] = useState<UserToken | null>(null);
-/*   useEffect(() => {
-    const sesionData = getSessionData()
-    if (sesionData) {
-      setSessionData(sesionData);
-      console.log('las cukis son: ', sesionData //.user.person.fullName
-        )
-    }
-  }, []) */
+
 
   return (
     <>
-      {
-        //vista desktop
-        windowSize.width >= 800 ? (
+{/*         //vista desktop
+        //windowSize.width >= 800 ? ( */}
           <Grid container item xs={size}>
             <Grid item xs={12} textAlign={"center"}>
               <Typography variant="caption">
                 {sesionToken.token !== "no"
                   ? "Bienvenido " +
                     sesionToken.user.person.fullName +
-                    //sessionData?.user?.person.fullName +
                     " ( " +
-                    //sessionData?.user?.role +
                     sesionToken.user.role +
                     " ) "
                   : "Ingresar"}
@@ -84,20 +73,13 @@ const User: React.FC<UserTypes> = ({ size, windowSize, handleNavigate }) => {
               options={sesionToken.token !== "no" ? userOptions : logOptions}
             />
           </Grid>
-        ) : (
+{/*         //) : (
           //vista movil
           <Grid container xs={size} paddingLeft={2}>
-            {/*             {hasMoreThanOneProperty( sesionToken.sesionToken.data ) ? (
-              <DropdownMenu options={userOptions} xs={12} />
-            ) : (
-              <IconButton>
-                <LoginIcon fontSize="large" onClick={handleModalLogin} />
-              </IconButton>
-            )} */}
+
           </Grid>
-        )
-      }
-    </>
+        //)} */}
+        </>
   );
 };
 

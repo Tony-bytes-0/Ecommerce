@@ -8,19 +8,25 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import DescriptionIcon from '@mui/icons-material/Description';
+import DescriptionIcon from "@mui/icons-material/Description";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
 import CustomTitleHeader from "./TittleHeader";
 import CategoryIcon from "@mui/icons-material/Category";
 import LabelIcon from "@mui/icons-material/Label";
+import { baseGet } from "../helpers/baseApiRequest";
+import { ChangeEvent, useEffect, useState } from "react";
+import { CategoryType } from "../dashboard/category/categoryList/types";
 
 type CustomAddNewItemType = {
   buttonText: string;
@@ -29,9 +35,11 @@ type CustomAddNewItemType = {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     fieldName: string
   ) => void;
+  selectorHandler: (event: SelectChangeEvent) => void;
   modal: boolean;
   handleClose: () => void;
   addFunction: () => void;
+  token: string;
   formFields: {
     name: string;
     description: string;
@@ -49,10 +57,37 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
   handleClose,
   addFunction,
   itemName,
+  token,
+  selectorHandler,
 }) => {
   const addAndCloseModal = () => {
     addFunction();
     handleClose();
+  };
+  const [CategoryList, setCategoryList] = useState<CategoryType[]>([]);
+  async function fetchCategoryList() {
+    const response = await baseGet("/category/", token, "Cargando categorias");
+    setCategoryList(response.data);
+  }
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
+
+  const translateTitles = (param: string) => {
+    switch (param) {
+      case "name":
+        return "Nombre";
+      case "price":
+        return "Precio";
+      case "stock":
+        return "Cantidad";
+      case "description":
+        return "Descripción";
+      case "category":
+        return "Categoria";
+      default:
+        return null;
+    }
   };
 
   const getDynamicIcon = (param: string): React.ReactNode => {
@@ -63,7 +98,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
         return <LocalOfferIcon />;
       case "stock":
         return <InventoryIcon />;
-      case "desciption":
+      case "description":
         return <DescriptionIcon />;
       case "category":
         return <CategoryIcon />;
@@ -75,7 +110,9 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
   return (
     <Dialog open={modal} onClose={handleClose}>
       <DialogTitle>
-        <CustomTitleHeader width="100%">{itemName}</CustomTitleHeader>
+        <CustomTitleHeader width="100%">
+          <b>{itemName}</b>
+        </CustomTitleHeader>
       </DialogTitle>
       <DialogContent>
         <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -87,7 +124,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>{getDynamicIcon(key)}</ListItemIcon>
-                      <ListItemText primary={key} />
+                      <ListItemText primary={translateTitles(key)} />
                     </ListItemButton>
                   </ListItem>
                 </List>
@@ -96,11 +133,25 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
               <nav aria-label="secondary mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    <TextField
-                      value={value}
-                      onChange={(event) => handler(event, key)}
-                      fullWidth
-                    ></TextField>
+                    {key == "category" ? (
+                      <Select
+                        fullWidth
+                        value={formFields.category ?? ''}
+                        onChange={selectorHandler}
+                      >
+                        {CategoryList.map((e) => (
+                          <MenuItem key={e._id} value={e._id}>
+                            {e.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    ) : (
+                      <TextField
+                        value={value}
+                        onChange={(event) => handler(event, key)}
+                        fullWidth
+                      ></TextField>
+                    )}
                   </ListItem>
                 </List>
               </nav>

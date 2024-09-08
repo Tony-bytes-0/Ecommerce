@@ -21,6 +21,10 @@ const DropdownMenuComponent: React.FC<DropdownOption> = ({ options }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const clickAndClose = (doSomeAction: () => void) => {
+    handleClose()
+    doSomeAction()
+  }
   
   return (<Grid container xs={12} alignItems={'center'} justifyContent={'center'}>
       <IconButton onClick={handleClick}>
@@ -34,7 +38,7 @@ const DropdownMenuComponent: React.FC<DropdownOption> = ({ options }) => {
 
       <MenuList id="navbarMenu">
         {options.map((option) => (
-          <MenuItem key={option.id} onClick={option.function}>
+          <MenuItem key={option.id} onClick={() => clickAndClose(option.function)}>
             {/* <ListItemText primary={option.label} /> */}
             <Typography >{option.label}</Typography>
           </MenuItem>
