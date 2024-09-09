@@ -20,16 +20,27 @@ export type INewProductType = {
   images: [{ url: string }];
 };
 
-export type TableProducTypeList = {
+export type ModalHandlersAndTokenType = {
+  handleOpenModal: () => void;
+  handleCloseModal: () => void;
+  token: string;
+}
+
+export type TableProducTypeList  = {
+  handleOpenModal: () => void;
+  handleCloseModal: () => void;
+  token: string;
   productList: ProductType[];
   updateFetchFunction: () => void;
   provitionalDelete: (arg0: string, arg1: string) => void;
-  token: string;
+  
 };
 
 export type RowProducType = {
     product: ProductType;
     updateFetchFunction: () => void;
     provitionalDelete: (arg0: string, arg1: string) => void;
+    handleOpenModal: () => void;
+    handleCloseModal: () => void;
     token: string;
 }

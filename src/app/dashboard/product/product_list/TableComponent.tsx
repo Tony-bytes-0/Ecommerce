@@ -15,6 +15,7 @@ const TableComponent: React.FC<TableProducTypeList> = ({
   updateFetchFunction,
   provitionalDelete,
   token,
+  handleOpenModal, handleCloseModal,
 }) => {
   console.log("desde table component: ", productList);
   return (

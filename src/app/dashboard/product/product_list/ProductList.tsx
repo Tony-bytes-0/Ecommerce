@@ -16,7 +16,6 @@ export default function ProductList() {
   const [productList, setProductList] = useState<ProductType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [addModal, setAddModal] = useState(false);
-
   const [formFields, setFormState] = useState<INewProductType>(
     {} as INewProductType
   );
@@ -48,7 +47,7 @@ export default function ProductList() {
 
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
-  async function fetchProductList() {
+  async function refresProducList() {
     // estatic
     if (token !== "no") {
       try {
@@ -69,21 +68,13 @@ export default function ProductList() {
     //setProductList((currentLsit) => [...currentLsit, formFields]);
     setFormState({} as INewProductType);
   }
+
   function provitionalDelete(name: string) {
     setProductList(productList.filter((e) => e.name !== name));
   }
-  /*   async function createNewCategory() { //estatico
-    basePost(
-      "/category/",
-      token,
-      { name: name },
-      "Creando categoria"
-    ).then(() => {
-      //fetchProductList(); // estatico
-    });
-  } */
+
   useEffect(() => {
-    fetchProductList();
+    refresProducList();
   }, [token]);
 
   return (
@@ -101,7 +92,7 @@ export default function ProductList() {
         >
           <CustomAddEditButtons
             action={handleOpen}
-            action2={fetchProductList}
+            action2={refresProducList}
           />
         </Box>
 
@@ -119,8 +110,10 @@ export default function ProductList() {
         <TableComponent
           token={token}
           productList={productList}
-          updateFetchFunction={fetchProductList}
+          updateFetchFunction={refresProducList}
           provitionalDelete={provitionalDelete}
+          handleOpenModal = {handleOpen}
+          handleCloseModal = { handleClose}
         />
       </Grid>
     </Grid>

@@ -1,44 +1,46 @@
 import { basePut } from "@/app/helpers/baseApiRequest";
-import { RowProducType } from "@/app/types/product";
+import { INewProductType, RowProducType } from "@/app/types/product";
 import { Button, ButtonGroup, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateInput from "../add/UpdateInput";
-import Swal from "sweetalert2";
-import React from "react";
+import React, { useState } from "react";
+import CustomAddNewProduct from "@/app/components/CustomAddNewProduct";
 
 const TableRowProductList: React.FC<RowProducType> = ({
-    product,
-    updateFetchFunction,
-    provitionalDelete,
-    token,
-  }) => {
-    const [update, setUpdate] = React.useState("");
-    const [updateModal, setUpdateModal] = React.useState(false);
-    const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if ((event && event.target.value) || event.target.value == "") {
-        const value = event.target.value;
-        setUpdate(value);
-      }
-    };
-    const toggleModal = () => {
-      setUpdateModal(() => !updateModal);
-    };
-  
-    async function updateCategory(name: string, token: string) {
-      //console.log('estoy enviando esto: ', {name: update}, "/category/" + name ) //debug
-      basePut(
-        "/category/" + name,
-        token,
-        { name: update },
-        "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
-      ).then(() => {
-        updateFetchFunction();
-      });
+  product,
+  updateFetchFunction,
+  provitionalDelete,
+  token,
+}) => {
+  const [update, setUpdate] = React.useState("");
+  const [updateModal, setUpdateModal] = React.useState(false);
+  const [formFields, setFormState] = useState<INewProductType>(
+    {} as INewProductType
+  );
+  const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if ((event && event.target.value) || event.target.value == "") {
+      const value = event.target.value;
+      setUpdate(value);
     }
-  
-    /*   async function deleteProduct(name: string, token: string) { //estatico
+  };
+  const toggleModal = () => {
+    setUpdateModal(() => !updateModal);
+  };
+
+  async function updateProduct(id: string, token: string) {
+    //console.log('estoy enviando esto: ', {name: update}, "/category/" + name ) //debug
+    basePut(
+      "/product/" + id,
+      token,
+      { name: update },
+      "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
+    ).then(() => {
+      updateFetchFunction();
+    });
+  }
+
+  /*   async function deleteProduct(name: string, token: string) { //estatico
       Swal.fire({
         title: "Borrar categoria?",
         showDenyButton: true,
@@ -61,38 +63,51 @@ const TableRowProductList: React.FC<RowProducType> = ({
       });
     }
    */
-  
-    return (
-      <TableRow
-        //key={user.id}
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-      >
-        <TableCell align="center">{product.name}</TableCell>
-        <TableCell align="center">{product.description}</TableCell>
-        <TableCell align="center">{product.price}</TableCell>
-        <TableCell align="center">{product.category.name}</TableCell>
-        <TableCell align="center">{product.stock}</TableCell>
-        <TableCell align="center">
-          <ButtonGroup variant="outlined" aria-label="Basic button group">
-            <Button onClick={() => toggleModal()}>
-              <EditIcon />
-            </Button>
-            <Button color="error" onClick={() => provitionalDelete(product.id, token)}>
-              <DeleteIcon />
-              <UpdateInput
-                newValue={update}
-                handler={handleUpdate}
-                modal={updateModal}
-                handleClose={toggleModal}
-                addFunction={() => updateCategory(product.id, token)}
-                token={token}
-                buttonText={"Editar"}
-              />
-            </Button>
-          </ButtonGroup>
-        </TableCell>
-      </TableRow>
-    );
-  };
 
-  export default TableRowProductList;
+  return (
+    <TableRow
+      //key={user.id}
+      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+    >
+      <TableCell align="center">{product.name}</TableCell>
+      <TableCell align="center">{product.description}</TableCell>
+      <TableCell align="center">{product.price}</TableCell>
+      <TableCell align="center">{product.category.name}</TableCell>
+      <TableCell align="center">{product.stock}</TableCell>
+      <TableCell align="center">
+        <ButtonGroup variant="outlined" aria-label="Basic button group">
+          <Button onClick={() => toggleModal()}>
+            <EditIcon />
+          </Button>
+          <Button
+            color="error"
+            onClick={() => provitionalDelete(product.id, token)}
+          >
+            <DeleteIcon />
+            <UpdateInput
+              newValue={update}
+              handler={handleUpdate}
+              modal={updateModal}
+              handleClose={toggleModal}
+              addFunction={() => updateProduct(product.id, token)}
+              token={token}
+              buttonText={"Editar"}
+            />
+            <CustomAddNewProduct 
+            addFunction={updateFetchFunction}
+            buttonText="Editar producto"
+            formFields={formFields}
+            handleClose={}
+            handler={}
+            itemName=""
+            modal
+            selectorHandler={}
+            />
+          </Button>
+        </ButtonGroup>
+      </TableCell>
+    </TableRow>
+  );
+};
+
+export default TableRowProductList;
