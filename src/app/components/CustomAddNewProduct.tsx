@@ -70,8 +70,10 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     setCategoryList(response.data);
   }
   useEffect(() => {
-    fetchCategoryList();
-  }, []);
+    if (token !== "no") {
+      fetchCategoryList();
+    }
+  }, [modal]);
 
   const translateTitles = (param: string) => {
     switch (param) {
@@ -136,11 +138,11 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                     {key == "category" ? (
                       <Select
                         fullWidth
-                        value={formFields.category ?? ''}
+                        value={formFields.category ?? ""}
                         onChange={selectorHandler}
                       >
                         {CategoryList.map((e) => (
-                          <MenuItem key={e._id} value={e._id}>
+                          <MenuItem key={'CategoryId:' + e._id} value={e._id}>
                             {e.name}
                           </MenuItem>
                         ))}

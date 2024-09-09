@@ -48,7 +48,7 @@ const NavBar: React.FC = () => {
         //asignar valores del localStorage al state
         dispatch(setToken(localStorageSesion.token))
         dispatch(setUser(localStorageSesion.user))
-        console.log({ localStorageSesion }, "NAVBAR USEEFFECT");
+        //console.log({ localStorageSesion }, "NAVBAR USEEFFECT"); //debug
       } catch (error) {
         console.error('Error cargando datos de sesión:', error);
         // Aquí podrías manejar el error, por ejemplo, redirigiendo al usuario a la página de inicio de sesión

@@ -63,7 +63,7 @@ const User: React.FC<UserTypes> = ({
   ];
 
   const getName = () => {
-    console.log('esto esta en el state? ', sesionToken)
+    //console.log('esto esta en el state? ', sesionToken) //debug
     if (sesionToken?.user?.person?.fullName) {
       return sesionToken?.user.person.fullName;
     }

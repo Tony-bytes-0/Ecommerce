@@ -1,6 +1,6 @@
 "use client";
 import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
-import { ProductType } from "./types";
+import { INewProductType, ProductType } from "@/app/types/product";
 import { useAppSelector } from "@/lib/hooks";
 import { Box, Grid, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -11,28 +11,15 @@ import CustomAddEditButtons from "@/app/components/CustomAddEditButtons";
 import CustomTitleHeader from "@/app/components/TittleHeader";
 import ElegantFont from "@/app/components/ElegantFont";
 
-interface IFormFields {
-  name: string;
-  description: string;
-  price: string;
-  stock: string;
-  category: string;
-  //category: CategoryType;
-}
-
 export default function ProductList() {
   //const [welcome, setWelcome] = useState(true);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [addModal, setAddModal] = useState(false);
 
-  const [formFields, setFormState] = useState<IFormFields>({
-    name: "",
-    description: "",
-    price: "",
-    stock: "",
-    category: "",
-  });
+  const [formFields, setFormState] = useState<INewProductType>(
+    {} as INewProductType
+  );
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -41,7 +28,7 @@ export default function ProductList() {
     const value = event.target.value;
     if (fieldName === "price" && !regexs.floatNumber.test(value)) {
       return; // Prevent updating state with invalid input
-    } 
+    }
     if (fieldName === "stock" && !regexs.onlyNumbers.test(value)) {
       return; // Prevent updating state with invalid input
     }
@@ -53,30 +40,34 @@ export default function ProductList() {
   };
 
   const selectorHandler = (event: SelectChangeEvent) => {
-    setFormState( (prevState) => ({...prevState, category: event.target.value }) );
+    setFormState((prevState) => ({
+      ...prevState,
+      category: event.target.value,
+    }));
   };
 
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
-  async function fetchProductList() { // estatico
-    try {
-      const response = await baseGet("/product", token, "Cargando productos...");
-      console.log(response.data)
-      //setProductList(response.data);
-    } catch (error) {
-      console.log(error)
+  async function fetchProductList() {
+    // estatic
+    if (token !== "no") {
+      try {
+        const response = await baseGet(
+          "/product",
+          token,
+          "Cargando productos..."
+        );
+        console.log(response.data);
+        setProductList(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
   async function createNewProduct() {
-    setProductList((currentLsit) => [...currentLsit, formFields]);
-    setFormState({
-      name: "",
-      description: "",
-      price: "",
-      stock: "",
-      category: "",
-    });
+    //setProductList((currentLsit) => [...currentLsit, formFields]);
+    setFormState({} as INewProductType);
   }
   function provitionalDelete(name: string) {
     setProductList(productList.filter((e) => e.name !== name));
@@ -92,8 +83,8 @@ export default function ProductList() {
     });
   } */
   useEffect(() => {
-  fetchProductList()
-  }, []);
+    fetchProductList();
+  }, [token]);
 
   return (
     <Grid container>
@@ -123,7 +114,7 @@ export default function ProductList() {
           buttonText="Agregar"
           handler={handleChange}
           selectorHandler={selectorHandler}
-          token = {token}
+          token={token}
         />
         <TableComponent
           token={token}
