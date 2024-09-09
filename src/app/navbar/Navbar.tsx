@@ -9,9 +9,10 @@ import Categorys from "./categorys/Categorys";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DrawerLeftNew from "./drawerLeft/newDrawer";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { UserToken } from "../types/userSesionToken";
 import { getSesionData } from "../login/login/localUserData";
+import { setToken, setUser } from "@/lib/token/sesionToken";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -19,32 +20,41 @@ const MainGridStyles = {
 };
 const linkStyles =
   "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
-const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; //bg-gray-300 border-slate-400
+const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; 
 
 const NavBar: React.FC = () => {
+  const dispatch = useAppDispatch()
   const router = useRouter();
   const handleNavigate = (route: string) => {
     router.push(route);
   };
-  const [sesionToken, setSesionToken] = useState<UserToken | undefined>(
+/*   const [sesionToken, setSesionToken] = useState<UserToken | undefined>( //local
     {} as UserToken
-  );
+  ); */
+  const sesionData = useAppSelector((state) => state.sesionToken)
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
   });
   const logout = () => {
-    setSesionToken({} as UserToken);
+    //setSesionToken({} as UserToken);
     console.log('ejecucion de la funcion logout')
   };
 
   useEffect(() => {
-    const result = {
-      token: getSesionData("sesionToken"),
-      user: getSesionData("sesionUser"),
+    const loadSessionData = async () => {
+      try {//try to load storageSesion
+        const localStorageSesion = {user: getSesionData('sesionUser'), token: getSesionData('sesionToken')}
+        //asignar valores del localStorage al state
+        dispatch(setToken(localStorageSesion.token))
+        dispatch(setUser(localStorageSesion.user))
+        console.log({ localStorageSesion }, "NAVBAR USEEFFECT");
+      } catch (error) {
+        console.error('Error cargando datos de sesión:', error);
+        // Aquí podrías manejar el error, por ejemplo, redirigiendo al usuario a la página de inicio de sesión
+      }
     };
-    setSesionToken(result);
-    console.log(result, " data recuperada de localstorage");
+    loadSessionData()
   }, []);
 
   return (
@@ -56,7 +66,7 @@ const NavBar: React.FC = () => {
       alignItems={"center"}
       sx={MainGridStyles}
     >
-      {sesionToken?.token !== "no" ? <DrawerLeftNew /> : <></>}
+      {sesionData?.token !== "no" ? <DrawerLeftNew /> : <></>}
 
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
@@ -70,13 +80,14 @@ const NavBar: React.FC = () => {
           windowSize={windowSize}
           size={3}
           handleNavigate={handleNavigate}
-          sesionToken={sesionToken}
+          sesionToken={sesionData}
           logout = {logout}
         />
         <button
           onClick={() =>
             console.log(
-              getSesionData("sesionToken") + " data recuperada de lacreta"
+              //getSesionData("sesionToken") + " data recuperada de lacreta"
+              console.log(sesionData)
             )
           }
         >

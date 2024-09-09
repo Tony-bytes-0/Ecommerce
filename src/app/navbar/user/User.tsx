@@ -63,12 +63,14 @@ const User: React.FC<UserTypes> = ({
   ];
 
   const getName = () => {
+    console.log('esto esta en el state? ', sesionToken)
     if (sesionToken?.user?.person?.fullName) {
       return sesionToken?.user.person.fullName;
     }
   };
   const getOptions = () => {
-    if (sesionToken?.token === '') {
+    console.log(sesionToken)
+    if (sesionToken?.token == '' || !sesionToken?.token) {
       return logOptions
     }
     else {
@@ -83,20 +85,12 @@ const User: React.FC<UserTypes> = ({
       <Grid container item xs={size}>
         <Grid item xs={12} textAlign={"center"}>
           <Typography variant="caption">
-            {/*                 {sesionToken.token !== "no"
-                  ? "Bienvenido " +
-                    sesionToken.user.person.fullName +
-                    " ( " +
-                    sesionToken.user.role +
-                    " ) "
-                  : "Ingresar"} */}
             {getName()}
           </Typography>
         </Grid>
         <DropdownMenuComponent
-          //options={sesionToken?.token !== "no" ? userOptions : logOptions}
-          //options={userOptions.concat(logOptions)}
-          options = {getOptions()}
+          options={userOptions.concat(logOptions)} //todas las opciones
+          //options = {getOptions()}
         />
       </Grid>
       {/*         //) : (
