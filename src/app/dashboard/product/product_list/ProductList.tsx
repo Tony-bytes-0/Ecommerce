@@ -1,6 +1,11 @@
 "use client";
 import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
-import { INewProductType, ProductType } from "@/app/types/product";
+import {
+  exampleINewProductType,
+  INewProductType,
+  ProductType,
+  UpdateProducType,
+} from "@/app/types/product";
 import { useAppSelector } from "@/lib/hooks";
 import { Box, Grid, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -10,14 +15,21 @@ import CustomAddNewProduct from "@/app/components/CustomAddNewProduct";
 import CustomAddEditButtons from "@/app/components/CustomAddEditButtons";
 import CustomTitleHeader from "@/app/components/TittleHeader";
 import ElegantFont from "@/app/components/ElegantFont";
+import { CategoryType } from "@/app/types/category";
 
 export default function ProductList() {
   //const [welcome, setWelcome] = useState(true);
+  const [loading, setLoading] = useState(false)
   const [productList, setProductList] = useState<ProductType[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
   const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   const [formFields, setFormState] = useState<INewProductType>(
-    {} as INewProductType
+    exampleINewProductType as INewProductType
+  );
+  const [updateFormFields, setUpdateFormFields] = useState<UpdateProducType>(
+    {} as UpdateProducType
   );
 
   const handleChange = (
@@ -39,16 +51,24 @@ export default function ProductList() {
   };
 
   const selectorHandler = (event: SelectChangeEvent) => {
+    console.log(event)
     setFormState((prevState) => ({
       ...prevState,
-      category: event.target.value,
+      categoryId: event.target.value,
     }));
   };
 
+  const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const result = event.target.value
+    formFields.images[0] = {url: result}
+  }
+
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
-  async function refresProducList() {
-    // estatic
+  const updateHandleOpen = () => setUpdateModal(true);
+  const updateHandleClose = () => setUpdateModal(false);
+//axios
+  async function refreshProducList() {
     if (token !== "no") {
       try {
         const response = await baseGet(
@@ -56,17 +76,25 @@ export default function ProductList() {
           token,
           "Cargando productos..."
         );
-        console.log(response.data);
         setProductList(response.data);
       } catch (error) {
-        console.log(error);
       }
     }
   }
 
   async function createNewProduct() {
-    //setProductList((currentLsit) => [...currentLsit, formFields]);
-    setFormState({} as INewProductType);
+      try {
+        const response = await basePost(
+          "/product",
+          token,
+          {formFields},
+          "Agregando producto..."
+        );
+        console.log(response.data);
+        setFormState(exampleINewProductType);
+      } catch (error) {
+        console.log(error);
+      }
   }
 
   function provitionalDelete(name: string) {
@@ -74,7 +102,7 @@ export default function ProductList() {
   }
 
   useEffect(() => {
-    refresProducList();
+    refreshProducList();
   }, [token]);
 
   return (
@@ -92,12 +120,13 @@ export default function ProductList() {
         >
           <CustomAddEditButtons
             action={handleOpen}
-            action2={refresProducList}
+            action2={refreshProducList}
           />
         </Box>
 
         <CustomAddNewProduct
-          itemName={"Añadir producto"}
+          categoryList={categoryList}
+          itemName={"Añadir producto!"}
           formFields={formFields}
           modal={addModal}
           handleClose={handleClose}
@@ -105,15 +134,20 @@ export default function ProductList() {
           buttonText="Agregar"
           handler={handleChange}
           selectorHandler={selectorHandler}
+          imageSelector={imageHandler}
           token={token}
         />
         <TableComponent
           token={token}
           productList={productList}
-          updateFetchFunction={refresProducList}
+          updateFetchFunction={refreshProducList}
           provitionalDelete={provitionalDelete}
-          handleOpenModal = {handleOpen}
-          handleCloseModal = { handleClose}
+          //todo esto es para el actualizar dentro de dos niveles :(
+          handleOpenModal={updateHandleOpen}
+          handleCloseModal={updateHandleClose}
+          updateFormFields={updateFormFields}
+          updateHandler={handleChange}
+          updateSelectorHandler={selectorHandler}
         />
       </Grid>
     </Grid>

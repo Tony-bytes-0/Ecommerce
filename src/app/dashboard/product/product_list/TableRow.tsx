@@ -1,5 +1,9 @@
 import { basePut } from "@/app/helpers/baseApiRequest";
-import { INewProductType, RowProducType } from "@/app/types/product";
+import {
+  INewProductType,
+  RowProducType,
+  UpdateProducType,
+} from "@/app/types/product";
 import { Button, ButtonGroup, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,20 +16,44 @@ const TableRowProductList: React.FC<RowProducType> = ({
   updateFetchFunction,
   provitionalDelete,
   token,
+  updateFormFields,
+  updateHandler,
+  updateSelectorHandler,
 }) => {
-  const [update, setUpdate] = React.useState("");
   const [updateModal, setUpdateModal] = React.useState(false);
-  const [formFields, setFormState] = useState<INewProductType>(
-    {} as INewProductType
-  );
+  const [formFields, setFormState] = useState<UpdateProducType>({
+    name: "",
+    price: "",
+    stock: "",
+    category: "",
+    categoryId: "",
+    description: "",
+    images: [{ url: "" }],
+  } as UpdateProducType);
   const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if ((event && event.target.value) || event.target.value == "") {
-      const value = event.target.value;
-      setUpdate(value);
-    }
+    return 0;
   };
   const toggleModal = () => {
     setUpdateModal(() => !updateModal);
+  };
+  const handleOpenModal = () => {
+    setUpdateModal(true);
+  };
+  const handleCloseModal = () => {
+    setUpdateModal(false);
+  };
+  const handleImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
+    const selectedFile = event.target.files?.[0];
+  
+    if (selectedFile) {
+      //setSelectedImage(selectedFile);
+      
+      // Aquí puedes agregar la lógica para subir la imagen al servidor o manejarla localmente
+      console.log(`Imagen seleccionada para ${key}:`, selectedFile);
+    }
   };
 
   async function updateProduct(id: string, token: string) {
@@ -33,7 +61,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
     basePut(
       "/product/" + id,
       token,
-      { name: update },
+      { name: "update" },
       "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
     ).then(() => {
       updateFetchFunction();
@@ -84,24 +112,17 @@ const TableRowProductList: React.FC<RowProducType> = ({
             onClick={() => provitionalDelete(product.id, token)}
           >
             <DeleteIcon />
-            <UpdateInput
-              newValue={update}
-              handler={handleUpdate}
+
+            <CustomAddNewProduct
+              addFunction={updateFetchFunction}
+              buttonText="Editar producto"
+              formFields={formFields}
+              handleClose={handleCloseModal}
+              handler={handleOpenModal}
+              itemName="Editar"
               modal={updateModal}
-              handleClose={toggleModal}
-              addFunction={() => updateProduct(product.id, token)}
+              selectorHandler={updateSelectorHandler}
               token={token}
-              buttonText={"Editar"}
-            />
-            <CustomAddNewProduct 
-            addFunction={updateFetchFunction}
-            buttonText="Editar producto"
-            formFields={formFields}
-            handleClose={}
-            handler={}
-            itemName=""
-            modal
-            selectorHandler={}
             />
           </Button>
         </ButtonGroup>

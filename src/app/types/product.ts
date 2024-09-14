@@ -1,3 +1,4 @@
+import { SelectChangeEvent } from "@mui/material";
 import { CategoryType } from "./category";
 
 export type ProductType = {
@@ -16,31 +17,45 @@ export type INewProductType = {
   description: string;
   price: string;
   stock: string;
-  category: string;
+  categoryId: string;
   images: [{ url: string }];
 };
+
+export interface UpdateProducType extends INewProductType {
+  categoryId: string
+}
 
 export type ModalHandlersAndTokenType = {
   handleOpenModal: () => void;
   handleCloseModal: () => void;
   token: string;
+  updateFormFields: UpdateProducType
+  updateHandler: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    fieldName: string
+  ) => void;
+  updateSelectorHandler: (event: SelectChangeEvent) => void;
 }
 
-export type TableProducTypeList  = {
-  handleOpenModal: () => void;
-  handleCloseModal: () => void;
-  token: string;
+export interface TableProducTypeList extends ModalHandlersAndTokenType  {
   productList: ProductType[];
   updateFetchFunction: () => void;
   provitionalDelete: (arg0: string, arg1: string) => void;
   
 };
 
-export type RowProducType = {
+export interface RowProducType extends ModalHandlersAndTokenType {
     product: ProductType;
     updateFetchFunction: () => void;
     provitionalDelete: (arg0: string, arg1: string) => void;
-    handleOpenModal: () => void;
-    handleCloseModal: () => void;
-    token: string;
+
+}
+
+export const exampleINewProductType: INewProductType = {
+  name: "",
+  description: "",
+  price: "",
+  stock: "",
+  categoryId: "",
+  images: [{ url: "" }]
 }

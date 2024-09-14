@@ -15,9 +15,12 @@ const TableComponent: React.FC<TableProducTypeList> = ({
   updateFetchFunction,
   provitionalDelete,
   token,
-  handleOpenModal, handleCloseModal,
+  handleOpenModal,
+  handleCloseModal,
+  updateFormFields,
+  updateHandler,
+  updateSelectorHandler
 }) => {
-  console.log("desde table component: ", productList);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -43,14 +46,18 @@ const TableComponent: React.FC<TableProducTypeList> = ({
         <TableBody>
           {productList.map((product, index) => (
             <TableRowProductList
+              handleCloseModal={handleCloseModal}
+              handleOpenModal={handleOpenModal}
               product={product}
               key={index}
               provitionalDelete={provitionalDelete}
               token={token}
               updateFetchFunction={updateFetchFunction}
+              updateFormFields={updateFormFields}
+              updateHandler={updateHandler}
+              updateSelectorHandler={updateSelectorHandler}
             />
           ))}
-
         </TableBody>
       </Table>
     </TableContainer>

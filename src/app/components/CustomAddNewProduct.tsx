@@ -26,7 +26,9 @@ import CategoryIcon from "@mui/icons-material/Category";
 import LabelIcon from "@mui/icons-material/Label";
 import { baseGet } from "../helpers/baseApiRequest";
 import { ChangeEvent, useEffect, useState } from "react";
-import { CategoryType } from "../dashboard/category/categoryList/types";
+import ImageIcon from "@mui/icons-material/Image";
+import { INewProductType, ProductType } from "../types/product";
+import { CategoryType } from "../types/category";
 
 type CustomAddNewItemType = {
   buttonText: string;
@@ -36,17 +38,16 @@ type CustomAddNewItemType = {
     fieldName: string
   ) => void;
   selectorHandler: (event: SelectChangeEvent) => void;
+  imageSelector: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => void;
   modal: boolean;
   handleClose: () => void;
   addFunction: () => void;
   token: string;
-  formFields: {
-    name: string;
-    description: string;
-    price: string;
-    stock: string;
-    category: string;
-  };
+  formFields: INewProductType;
+  categoryList: CategoryType[];
 };
 
 const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
@@ -59,21 +60,14 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
   itemName,
   token,
   selectorHandler,
+  imageSelector,
+  //categoryList,
 }) => {
   const addAndCloseModal = () => {
     addFunction();
     handleClose();
   };
-  const [CategoryList, setCategoryList] = useState<CategoryType[]>([]);
-  async function fetchCategoryList() {
-    const response = await baseGet("/category/", token, "Cargando categorias");
-    setCategoryList(response.data);
-  }
-  useEffect(() => {
-    if (token !== "no") {
-      fetchCategoryList();
-    }
-  }, [modal]);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([])
 
   const translateTitles = (param: string) => {
     switch (param) {
@@ -85,8 +79,10 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
         return "Cantidad";
       case "description":
         return "Descripción";
-      case "category":
+      case "categoryId":
         return "Categoria";
+      case "images":
+        return "Imagen";
       default:
         return null;
     }
@@ -102,12 +98,23 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
         return <InventoryIcon />;
       case "description":
         return <DescriptionIcon />;
-      case "category":
+      case "categoryId":
         return <CategoryIcon />;
+      case "images":
+        return <ImageIcon />;
       default:
         return null; // Devuelve null si el parâmetro no es conocido
     }
   };
+  async function fetchCategoryList() {
+    if(token !== 'no'){
+      const response = await baseGet("/category/", token, "Cargando categorias");
+      setCategoryList(response.data);
+    }
+  }
+  useEffect(() => {
+    fetchCategoryList();
+  }, [token])
 
   return (
     <Dialog open={modal} onClose={handleClose}>
@@ -135,24 +142,46 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
               <nav aria-label="secondary mailbox folders">
                 <List>
                   <ListItem disablePadding>
-                    {key == "category" ? (
-                      <Select
-                        fullWidth
-                        value={formFields.category ?? ""}
-                        onChange={selectorHandler}
-                      >
-                        {CategoryList.map((e) => (
-                          <MenuItem key={'CategoryId:' + e._id} value={e._id}>
-                            {e.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    ) : (
+                    {key !== "categoryId" &&
+                    key !== "images" &&
+                    key !== "categoryId" ? (
                       <TextField
                         value={value}
                         onChange={(event) => handler(event, key)}
                         fullWidth
-                      ></TextField>
+                      />
+                    ) : (
+                      <></>
+                    )}
+                    {/*Casos irregulares, campos irregulares*/}
+                    {key == "categoryId" ? (
+                      <Select
+                        fullWidth
+                        value={formFields.categoryId ?? ""}
+                        onChange={selectorHandler}
+                      >
+                        {categoryList.map((e) => (
+                            <MenuItem key={e.id} value={e.id}>
+                              {e.name}
+                            </MenuItem>
+                          ))
+                        }
+                      </Select>
+                    ) : (
+                      <></>
+                    )}
+                    {key == "images" ? (
+                      <>
+                        <Typography variant="body2">Añadir Imagen:</Typography>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(event) => imageSelector(event, key)}
+                          style={{ margin: "10px 0" }}
+                        />
+                      </>
+                    ) : (
+                      <></>
                     )}
                   </ListItem>
                 </List>
@@ -172,5 +201,26 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     </Dialog>
   );
 };
+
+{
+  /*                     <></> //key === "image" ? (
+                      // Contenedor para añadir una imagen
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Typography variant="body2">Añadir Imagen:</Typography>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(event) => imageSelector(event, key)}
+                          style={{ margin: "10px 0" }}
+                        />
+                        {formFields.images && (
+                          <img
+                            src={URL.createObjectURL(new Blob)}
+                            alt="Selected Image"
+                            style={{ maxWidth: "100%", height: "auto" }}
+                          />
+                        )} 
+                      </Box> */
+}
 
 export default CustomAddNewProduct;
