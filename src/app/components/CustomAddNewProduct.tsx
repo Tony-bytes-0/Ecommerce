@@ -29,6 +29,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import ImageIcon from "@mui/icons-material/Image";
 import { INewProductType, ProductType } from "../types/product";
 import { CategoryType } from "../types/category";
+import ImageInputComponent from "./ImgInput";
 
 type CustomAddNewItemType = {
   buttonText: string;
@@ -38,10 +39,7 @@ type CustomAddNewItemType = {
     fieldName: string
   ) => void;
   selectorHandler: (event: SelectChangeEvent) => void;
-  imageSelector: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    key: string
-  ) => void;
+  imageHandler: any;
   modal: boolean;
   handleClose: () => void;
   addFunction: () => void;
@@ -60,7 +58,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
   itemName,
   token,
   selectorHandler,
-  imageSelector,
+  imageHandler,
   //categoryList,
 }) => {
   const addAndCloseModal = () => {
@@ -143,7 +141,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                 <List>
                   <ListItem disablePadding>
                     {key !== "categoryId" &&
-                    key !== "images" &&
+                    key !== "file1" &&
                     key !== "categoryId" ? (
                       <TextField
                         value={value}
@@ -170,15 +168,9 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                     ) : (
                       <></>
                     )}
-                    {key == "images" ? (
+                    {key == "file1" ? (
                       <>
-                        <Typography variant="body2">Añadir Imagen:</Typography>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(event) => imageSelector(event, key)}
-                          style={{ margin: "10px 0" }}
-                        />
+                        <ImageInputComponent onImageChange={imageHandler} image={formFields.file1} />
                       </>
                     ) : (
                       <></>

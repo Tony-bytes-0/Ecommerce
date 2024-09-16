@@ -19,7 +19,7 @@ import { CategoryType } from "@/app/types/category";
 
 export default function ProductList() {
   //const [welcome, setWelcome] = useState(true);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
@@ -51,50 +51,60 @@ export default function ProductList() {
   };
 
   const selectorHandler = (event: SelectChangeEvent) => {
-    console.log(event)
+    console.log(event);
     setFormState((prevState) => ({
       ...prevState,
       categoryId: event.target.value,
     }));
   };
 
-  const imageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const result = event.target.value
-    formFields.images[0] = {url: result}
-  }
+  const imageHandler = (file: File[]) => {
+        setFormState((prevState) => ({
+          ...prevState, 
+          file1: file[0] as any
+        }))
+    }
 
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
   const updateHandleOpen = () => setUpdateModal(true);
   const updateHandleClose = () => setUpdateModal(false);
-//axios
+  //axios
   async function refreshProducList() {
     if (token !== "no") {
       try {
         const response = await baseGet(
-          "/product",
+          "/product/",
           token,
           "Cargando productos..."
         );
         setProductList(response.data);
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   }
 
   async function createNewProduct() {
-      try {
-        const response = await basePost(
-          "/product",
-          token,
-          {formFields},
-          "Agregando producto..."
-        );
-        console.log(response.data);
-        setFormState(exampleINewProductType);
-      } catch (error) {
-        console.log(error);
-      }
+    const bodyFormData = new FormData()
+    const keys = Object.keys(formFields).filter(key => key !== 'file1');
+
+    keys.forEach((key) => {
+      bodyFormData.append(key, formFields[key as keyof INewProductType]);
+    });
+
+    bodyFormData.append('file1', formFields.file1);//manejar el file por separado
+    console.log(formFields.file1)
+    try {
+      const response = await basePost(
+        "/product/",
+        token,
+        bodyFormData ,
+        "Agregando producto..."
+      );
+      console.log(response.data);
+      setFormState(exampleINewProductType);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function provitionalDelete(name: string) {
@@ -134,7 +144,7 @@ export default function ProductList() {
           buttonText="Agregar"
           handler={handleChange}
           selectorHandler={selectorHandler}
-          imageSelector={imageHandler}
+          imageHandler={imageHandler}
           token={token}
         />
         <TableComponent

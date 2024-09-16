@@ -1,5 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
 import { CategoryType } from "./category";
+//import { File } from "buffer";
+import { File } from "buffer";
 
 export type ProductType = {
   id: string;
@@ -18,7 +20,7 @@ export type INewProductType = {
   price: string;
   stock: string;
   categoryId: string;
-  images: [{ url: string }];
+  file1: any;
 };
 
 export interface UpdateProducType extends INewProductType {
@@ -57,5 +59,5 @@ export const exampleINewProductType: INewProductType = {
   price: "",
   stock: "",
   categoryId: "",
-  images: [{ url: "" }]
+  file1: ""
 }
