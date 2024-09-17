@@ -19,7 +19,7 @@ const TableComponent: React.FC<TableProducTypeList> = ({
   handleCloseModal,
   updateFormFields,
   updateHandler,
-  updateSelectorHandler
+  updateSelectorHandler,
 }) => {
   return (
     <TableContainer component={Paper}>
@@ -42,7 +42,7 @@ const TableComponent: React.FC<TableProducTypeList> = ({
               <b>Stock</b>
             </TableCell>
             <TableCell align="center">
-              <b>Imagenes</b>
+              <b>Acciones</b>
             </TableCell>
           </TableRow>
         </TableHead>

@@ -83,16 +83,6 @@ const NavBar: React.FC = () => {
           sesionToken={sesionData}
           logout = {logout}
         />
-        <button
-          onClick={() =>
-            console.log(
-              //getSesionData("sesionToken") + " data recuperada de lacreta"
-              console.log(sesionData)
-            )
-          }
-        >
-          LA CRRRETA
-        </button>
       </Grid>
     </Grid>
   );

@@ -4,6 +4,7 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import ReplayIcon from '@mui/icons-material/Replay';
+import { IconButton } from "@mui/material";
 type CustomAddEditButtons = {
   action: () => void;
   action2: () => void;
@@ -12,12 +13,12 @@ type CustomAddEditButtons = {
 const CustomAddEditButtons: React.FC<CustomAddEditButtons> = ({action, action2}) => {
     return (
         <Box sx={{ '& > :not(style)': { m: 1 } }}>
-          <Fab color="primary" aria-label="add" onClick={action} size="large">
-            <AddIcon />
-          </Fab>
-          <Fab color="secondary" variant="circular" aria-label="edit" onClick={action2}>
-            <ReplayIcon />
-          </Fab>
+          <IconButton color="primary"  onClick={action} size="large">
+            <AddIcon  fontSize="large"  />
+          </IconButton>
+          <IconButton color="secondary" size="large" onClick={action2}>
+            <ReplayIcon fontSize="large" />
+          </IconButton>
         </Box>
       );
 };

@@ -118,9 +118,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
       <TableCell align="center">{product.price}</TableCell>
       <TableCell align="center">{product.category.name}</TableCell>
       <TableCell align="center">{product.stock}</TableCell>
-      <TableCell align="center">
-      
-      </TableCell>
+
       <TableCell align="center">
         <ButtonGroup variant="outlined" aria-label="Basic button group">
           <Button onClick={() => handleOpenImageModal({images: product.images})} ><ImageIcon/></Button>

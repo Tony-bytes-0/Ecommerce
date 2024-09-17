@@ -102,8 +102,6 @@ export default function ProductList() {
       console.log('este es el keyName: ', dinamicKey)
       formDataBody.append(dinamicKey, imageFile)
     })
-    //formDataBody.append('file1', formFields.file1);//manejar el file por separado
-    //console.log(formFields.file1)
     try {
       const response = await basePost(
         "/product/",
