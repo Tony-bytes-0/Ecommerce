@@ -20,7 +20,7 @@ export type INewProductType = {
   price: string;
   stock: string;
   categoryId: string;
-  file1: any;
+  images: any[]; 
 };
 
 export interface UpdateProducType extends INewProductType {
@@ -43,14 +43,20 @@ export interface TableProducTypeList extends ModalHandlersAndTokenType  {
   productList: ProductType[];
   updateFetchFunction: () => void;
   provitionalDelete: (arg0: string, arg1: string) => void;
-  
 };
 
 export interface RowProducType extends ModalHandlersAndTokenType {
     product: ProductType;
     updateFetchFunction: () => void;
     provitionalDelete: (arg0: string, arg1: string) => void;
+}
 
+export type ProductImage = {
+  url: string;
+}
+
+export type ProductImageArray = {
+  images: ProductImage[]
 }
 
 export const exampleINewProductType: INewProductType = {
@@ -59,5 +65,5 @@ export const exampleINewProductType: INewProductType = {
   price: "",
   stock: "",
   categoryId: "",
-  file1: ""
+  images: []
 }

@@ -59,11 +59,12 @@ export default function ProductList() {
   };
 
   const imageHandler = (file: File[]) => {
-        setFormState((prevState) => ({
-          ...prevState, 
-          file1: file[0] as any
-        }))
-    }
+    setFormState((prevState) => ({
+      ...prevState,
+      //file1: file[0] as any
+      images: [...(prevState.images || []), ...(Array.isArray(file) ? file : [file])]
+    }));
+  };
 
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
@@ -84,20 +85,30 @@ export default function ProductList() {
   }
 
   async function createNewProduct() {
-    const bodyFormData = new FormData()
-    const keys = Object.keys(formFields).filter(key => key !== 'file1');
+    const formDataBody = new FormData();
+    type ValidKeys = Exclude<keyof INewProductType, "images">;
+
+    // Filter the keys and assert the type
+    const keys: ValidKeys[] = Object.keys(formFields).filter(
+      (key) => key !== "images"
+    ) as ValidKeys[];
 
     keys.forEach((key) => {
-      bodyFormData.append(key, formFields[key as keyof INewProductType]);
+      formDataBody.append(key, formFields[key]);
     });
 
-    bodyFormData.append('file1', formFields.file1);//manejar el file por separado
-    console.log(formFields.file1)
+    formFields.images.forEach((imageFile, index) => {
+      const dinamicKey = 'file' + (index + 1)
+      console.log('este es el keyName: ', dinamicKey)
+      formDataBody.append(dinamicKey, imageFile)
+    })
+    //formDataBody.append('file1', formFields.file1);//manejar el file por separado
+    //console.log(formFields.file1)
     try {
       const response = await basePost(
         "/product/",
         token,
-        bodyFormData ,
+        formDataBody,
         "Agregando producto..."
       );
       console.log(response.data);

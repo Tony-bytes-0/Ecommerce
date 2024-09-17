@@ -41,6 +41,9 @@ const TableComponent: React.FC<TableProducTypeList> = ({
             <TableCell align="center">
               <b>Stock</b>
             </TableCell>
+            <TableCell align="center">
+              <b>Imagenes</b>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

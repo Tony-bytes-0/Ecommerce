@@ -25,7 +25,6 @@ const ImageInputComponent: React.FC<ImageInputProps> = ({
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('handleFilechange!!!!!!!!!!!!')
     const files = event.target.files;
     if (!files || !files.length) return;
 

@@ -1,15 +1,19 @@
 import { basePut } from "@/app/helpers/baseApiRequest";
 import {
   INewProductType,
+  ProductImageArray,
   RowProducType,
   UpdateProducType,
 } from "@/app/types/product";
-import { Button, ButtonGroup, TableCell, TableRow } from "@mui/material";
+import { Box, Button, ButtonGroup, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ImageIcon from '@mui/icons-material/Image';
 import UpdateInput from "../add/UpdateInput";
 import React, { useState } from "react";
 import CustomAddNewProduct from "@/app/components/CustomAddNewProduct";
+import ModalGallery from "@/app/components/ModalGalery";
+import getImageFromUrl from "@/app/helpers/getImageFromUrl";
 
 const TableRowProductList: React.FC<RowProducType> = ({
   product,
@@ -21,7 +25,10 @@ const TableRowProductList: React.FC<RowProducType> = ({
   updateSelectorHandler,
 }) => {
   const [updateModal, setUpdateModal] = React.useState(false);
-  const [formFields, setFormState] = useState<UpdateProducType>({
+  const [imageModal, setImageModal] = useState(false)
+  const [imageArray, setImageArray] = useState<ProductImageArray>({images:[]} as ProductImageArray)
+  const [example, setExample] = useState<any>()
+/*   const [formFields, setFormState] = useState<UpdateProducType>({
     name: "",
     price: "",
     stock: "",
@@ -29,7 +36,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
     categoryId: "",
     description: "",
     images: [{ url: "" }],
-  } as UpdateProducType);
+  } as UpdateProducType); */
   const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     return 0;
   };
@@ -42,6 +49,15 @@ const TableRowProductList: React.FC<RowProducType> = ({
   const handleCloseModal = () => {
     setUpdateModal(false);
   };
+  const handleOpenImageModal = (images: ProductImageArray) => {
+    setImageArray(images)
+    console.log('buscando: ', images.images[0].url)
+    //getImageFromUrl(images.images[0].url)
+    setImageModal(true)
+  }
+  const handleCloseImageModal = () => {
+    setImageModal(false)
+  }
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: string
@@ -92,7 +108,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
     }
    */
 
-  return (
+  return (<>
     <TableRow
       //key={user.id}
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -103,7 +119,11 @@ const TableRowProductList: React.FC<RowProducType> = ({
       <TableCell align="center">{product.category.name}</TableCell>
       <TableCell align="center">{product.stock}</TableCell>
       <TableCell align="center">
+      
+      </TableCell>
+      <TableCell align="center">
         <ButtonGroup variant="outlined" aria-label="Basic button group">
+          <Button onClick={() => handleOpenImageModal({images: product.images})} ><ImageIcon/></Button>
           <Button onClick={() => toggleModal()}>
             <EditIcon />
           </Button>
@@ -113,7 +133,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
           >
             <DeleteIcon />
 
-            <CustomAddNewProduct
+{/*             <CustomAddNewProduct
               addFunction={updateFetchFunction}
               buttonText="Editar producto"
               formFields={formFields}
@@ -123,12 +143,19 @@ const TableRowProductList: React.FC<RowProducType> = ({
               modal={updateModal}
               selectorHandler={updateSelectorHandler}
               token={token}
-            />
+            /> */}
           </Button>
         </ButtonGroup>
       </TableCell>
+
     </TableRow>
-  );
+    <ModalGallery 
+      images={imageArray}
+      isOpen={imageModal}
+      onClose={handleCloseImageModal}
+      example={example}
+      />
+    </>);
 };
 
 export default TableRowProductList;

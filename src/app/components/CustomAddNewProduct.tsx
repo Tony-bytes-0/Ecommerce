@@ -66,6 +66,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     handleClose();
   };
   const [categoryList, setCategoryList] = useState<CategoryType[]>([])
+  const [loadingData, setLoading] = useState(false)
 
   const translateTitles = (param: string) => {
     switch (param) {
@@ -111,7 +112,10 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     }
   }
   useEffect(() => {
-    fetchCategoryList();
+    setLoading(true)
+    if(loadingData){
+      fetchCategoryList();
+    }
   }, [token])
 
   return (
@@ -141,8 +145,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                 <List>
                   <ListItem disablePadding>
                     {key !== "categoryId" &&
-                    key !== "file1" &&
-                    key !== "categoryId" ? (
+                    key !== "images" ? (
                       <TextField
                         value={value}
                         onChange={(event) => handler(event, key)}
@@ -168,10 +171,15 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                     ) : (
                       <></>
                     )}
-                    {key == "file1" ? (
-                      <>
-                        <ImageInputComponent onImageChange={imageHandler} image={formFields.file1} />
-                      </>
+                    {key == "images" ? (
+                      <Box sx={{display:'flex', flexDirection:'column'}}>
+                      
+                      <ImageInputComponent onImageChange={imageHandler} image={formFields.images[0]} />
+                      {formFields.images.map((e, index) => (
+                        <ImageInputComponent onImageChange={imageHandler} image={e} key={index} /> 
+                      ))}
+                          
+                      </Box>
                     ) : (
                       <></>
                     )}
