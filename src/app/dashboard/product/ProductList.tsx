@@ -28,8 +28,8 @@ export default function ProductList() {
   const [formFields, setFormState] = useState<INewProductType>(
     exampleINewProductType as INewProductType
   );
-  const [updateFormFields, setUpdateFormFields] = useState<UpdateProducType>(
-    {} as UpdateProducType
+  const [updateFormFields, setUpdateFormFields] = useState<INewProductType>(
+    exampleINewProductType as INewProductType
   );
 
   const handleChange = (
@@ -62,13 +62,19 @@ export default function ProductList() {
     setFormState((prevState) => ({
       ...prevState,
       //file1: file[0] as any
-      images: [...(prevState.images || []), ...(Array.isArray(file) ? file : [file])]
+      images: [
+        ...(prevState.images || []),
+        ...(Array.isArray(file) ? file : [file]),
+      ],
     }));
   };
 
   const handleOpen = () => setAddModal(true);
   const handleClose = () => setAddModal(false);
-  const updateHandleOpen = () => setUpdateModal(true);
+  const updateHandleOpen = (toUpdateForm: ProductType) => {
+    
+    setUpdateModal(true);
+  }
   const updateHandleClose = () => setUpdateModal(false);
   //axios
   async function refreshProducList() {
@@ -98,10 +104,10 @@ export default function ProductList() {
     });
 
     formFields.images.forEach((imageFile, index) => {
-      const dinamicKey = 'file' + (index + 1)
-      console.log('este es el keyName: ', dinamicKey)
-      formDataBody.append(dinamicKey, imageFile)
-    })
+      const dinamicKey = "file" + (index + 1);
+      console.log("este es el keyName: ", dinamicKey);
+      formDataBody.append(dinamicKey, imageFile);
+    });
     try {
       const response = await basePost(
         "/product/",
@@ -113,6 +119,14 @@ export default function ProductList() {
       setFormState(exampleINewProductType);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function updateProduct(){
+    try {
+      
+    } catch (error) {
+      
     }
   }
 
@@ -143,9 +157,9 @@ export default function ProductList() {
           />
         </Box>
 
-        <CustomAddNewProduct
+        <CustomAddNewProduct //para crear
           categoryList={categoryList}
-          itemName={"Añadir producto!"}
+          itemName={"Añadir producto"}
           formFields={formFields}
           modal={addModal}
           handleClose={handleClose}
@@ -155,6 +169,21 @@ export default function ProductList() {
           selectorHandler={selectorHandler}
           imageHandler={imageHandler}
           token={token}
+          updateProduct={false}
+        />
+        <CustomAddNewProduct //para update
+          categoryList={categoryList}
+          itemName={"Actualizar producto"}
+          formFields={formFields}
+          modal={updateModal}
+          handleClose={updateHandleClose}
+          addFunction={updateProduct}
+          buttonText="Actualizar"
+          handler={handleChange}
+          selectorHandler={selectorHandler}
+          imageHandler={imageHandler}
+          token={token}
+          updateProduct={false}
         />
         <TableComponent
           token={token}

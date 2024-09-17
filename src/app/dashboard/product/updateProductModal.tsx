@@ -21,15 +21,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CustomTitleHeader from "./TittleHeader";
+import CustomTitleHeader from "@/app/components/TittleHeader"; 
 import CategoryIcon from "@mui/icons-material/Category";
 import LabelIcon from "@mui/icons-material/Label";
-import { baseGet } from "../helpers/baseApiRequest";
+import { baseGet } from "@/app/helpers/baseApiRequest"; 
 import { ChangeEvent, useEffect, useState } from "react";
 import ImageIcon from "@mui/icons-material/Image";
-import { INewProductType, ProductType } from "../types/product";
-import { CategoryType } from "../types/category";
-import ImageInputComponent from "./ImgInput";
+import { INewProductType } from "@/app/types/product";
+
+
+import ImageInputComponent from "@/app/components/ImgInput";
+import { CategoryType } from "@/app/types/category";
+
+
 
 type CustomAddNewItemType = {
   buttonText: string;
@@ -46,7 +50,6 @@ type CustomAddNewItemType = {
   token: string;
   formFields: INewProductType;
   categoryList: CategoryType[];
-  updateProduct: boolean; //true para actualizar el producto
 };
 
 const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
@@ -60,7 +63,6 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
   token,
   selectorHandler,
   imageHandler,
-  updateProduct,
   //categoryList,
 }) => {
   const addAndCloseModal = () => {
@@ -203,6 +205,5 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     </Dialog>
   );
 };
-
 
 export default CustomAddNewProduct;
