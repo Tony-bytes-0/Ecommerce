@@ -13,7 +13,6 @@ import TableRowProductList from "./TableRow";
 const TableComponent: React.FC<TableProducTypeList> = ({
   productList,
   updateFetchFunction,
-  provitionalDelete,
   token,
   handleOpenModal,
   handleCloseModal,
@@ -22,6 +21,7 @@ const TableComponent: React.FC<TableProducTypeList> = ({
   updateImageHandler,
   updateSelectorHandler,
   setFixedValuesInFormData,
+  deleteProduct,
 }) => {
   return (
     <TableContainer component={Paper}>
@@ -55,7 +55,6 @@ const TableComponent: React.FC<TableProducTypeList> = ({
               handleOpenModal={handleOpenModal}
               product={product}
               key={index}
-              provitionalDelete={provitionalDelete}
               token={token}
               updateFetchFunction={updateFetchFunction}
               updateFormFields={updateFormFields}
@@ -63,6 +62,7 @@ const TableComponent: React.FC<TableProducTypeList> = ({
               updateHandler={updateHandler}
               updateSelectorHandler={updateSelectorHandler}
               setFixedValuesInFormData={setFixedValuesInFormData}
+              deleteProduct={deleteProduct}
             />
           ))}
         </TableBody>

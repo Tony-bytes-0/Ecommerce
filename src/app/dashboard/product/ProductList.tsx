@@ -1,5 +1,5 @@
 "use client";
-import { baseGet, basePost, basePut } from "@/app/helpers/baseApiRequest";
+import { baseDelete, baseGet, basePost, basePut } from "@/app/helpers/baseApiRequest";
 import {
   exampleINewProductType,
   INewProductType,
@@ -19,7 +19,7 @@ import { CategoryType } from "@/app/types/category";
 
 export default function ProductList() {
   //const [welcome, setWelcome] = useState(true);
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
@@ -128,30 +128,15 @@ export default function ProductList() {
   };
 
   async function createNewProduct() {
-/*     const formDataBody = new FormData();
-    type ValidKeys = Exclude<keyof INewProductType, "images">;
-
-    // Filter the keys and assert the type
-    const keys: ValidKeys[] = Object.keys(formFields).filter(
-      (key) => key !== "images"
-    ) as ValidKeys[];
-
-    keys.forEach((key) => {
-      formDataBody.append(key, formFields[key]);
-    });
-
-    formFields.images.forEach((imageFile, index) => {
-      const dinamicKey = "file" + (index + 1);
-      formDataBody.append(dinamicKey, imageFile);
-    }); */
     try {
       const response = await basePost(
         "/product/",
         token,
         //formDataBody,
         constructFormData(),
-        "Actualizando producto..."
+        "Creando producto..."
       );
+      refreshProducList();
       setFormState(exampleINewProductType);
     } catch (error) {
       console.log(error);
@@ -173,8 +158,18 @@ export default function ProductList() {
     }
   }
 
-  function provitionalDelete(name: string) {
-    setProductList(productList.filter((e) => e.name !== name));
+  async function deleteProduct(id: string){
+    try {
+      baseDelete(
+        "/product/" + id,
+        token,
+        "Eliminando producto..."
+      )
+      //refreshProducList()
+      setProductList(productList.filter((e) => e.id !== id))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -232,7 +227,6 @@ export default function ProductList() {
           token={token}
           productList={productList}
           updateFetchFunction={refreshProducList}
-          provitionalDelete={provitionalDelete}
           //todo esto es para el actualizar dentro de dos niveles :(
           handleOpenModal={updateHandleOpen}
           handleCloseModal={updateHandleClose}
@@ -241,6 +235,8 @@ export default function ProductList() {
           updateSelectorHandler={selectorHandler} //selector category handler
           updateImageHandler={imageHandler} //image selector handler
           setFixedValuesInFormData={setFixedValuesInFormData}
+          //delete
+          deleteProduct = {deleteProduct}
         />
       </Grid>
     </Grid>

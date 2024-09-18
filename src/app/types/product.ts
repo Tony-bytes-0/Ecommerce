@@ -40,8 +40,8 @@ export type ModalHandlersAndTokenType = {
   updateSelectorHandler: (event: SelectChangeEvent) => void;
   updateImageHandler: any;
   updateFetchFunction: () => void;
-  provitionalDelete: (arg0: string, arg1: string) => void;
   setFixedValuesInFormData: (arg0: ProductType) => void;
+  deleteProduct: (arg0: string) => void;
 }
 
 export interface TableProducTypeList extends ModalHandlersAndTokenType  {
