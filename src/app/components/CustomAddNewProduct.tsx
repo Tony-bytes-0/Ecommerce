@@ -147,6 +147,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
                 <List>
                   <ListItem disablePadding>
                     {key !== "categoryId" &&
+                    key !== "id" &&
                     key !== "images" ? (
                       <TextField
                         value={value}
@@ -199,6 +200,7 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
         <Button onClick={handleClose}>
           <Typography fontFamily={"cursive"}>Cerrar</Typography>
         </Button>
+        <Button onClick={() => console.log(formFields)}>view form</Button>
       </DialogActions>
     </Dialog>
   );

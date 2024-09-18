@@ -1,5 +1,5 @@
 "use client";
-import { baseGet, basePost } from "@/app/helpers/baseApiRequest";
+import { baseGet, basePost, basePut } from "@/app/helpers/baseApiRequest";
 import {
   exampleINewProductType,
   INewProductType,
@@ -28,11 +28,9 @@ export default function ProductList() {
   const [formFields, setFormState] = useState<INewProductType>(
     exampleINewProductType as INewProductType
   );
-  /*   const [updateFormFields, setUpdateFormFields] = useState<INewProductType>(
-    exampleINewProductType as INewProductType
-  ); */
   const setFixedValuesInFormData = (product: ProductType) => {
     setFormState({
+      id: product.id,
       name: product.name,
       description: product.description,
       price: product.price,
@@ -61,7 +59,6 @@ export default function ProductList() {
   };
 
   const selectorHandler = (event: SelectChangeEvent) => {
-    console.log(event);
     setFormState((prevState) => ({
       ...prevState,
       categoryId: event.target.value,
@@ -81,15 +78,16 @@ export default function ProductList() {
 
   const handleOpen = () => {
     setFormState({
-      name: '',
-      description: '',
-      price: '0',
-      stock: '0',
-      categoryId: '0',
+      id: "",
+      name: "",
+      description: "",
+      price: "0",
+      stock: "0",
+      categoryId: "0",
       images: [],
     });
-    setAddModal(true)
-  }
+    setAddModal(true);
+  };
   const handleClose = () => setAddModal(false);
   const updateHandleOpen = () => {
     setUpdateModal(true);
@@ -109,8 +107,28 @@ export default function ProductList() {
     }
   }
 
-  async function createNewProduct() {
+  const constructFormData = () => {
     const formDataBody = new FormData();
+    type ValidKeys = Exclude<keyof INewProductType, "images">;
+
+    // Filter the keys and assert the type
+    const keys: ValidKeys[] = Object.keys(formFields).filter(
+      (key) => key !== "images"
+    ) as ValidKeys[];
+
+    keys.forEach((key) => {
+      formDataBody.append(key, formFields[key]);
+    });
+    //formDataBody.append('id', formFields.id)//esto no funciona en el bucle...
+    formFields.images.forEach((imageFile, index) => {
+      const dinamicKey = "file" + (index + 1);
+      formDataBody.append(dinamicKey, imageFile);
+    });
+    return formDataBody;
+  };
+
+  async function createNewProduct() {
+/*     const formDataBody = new FormData();
     type ValidKeys = Exclude<keyof INewProductType, "images">;
 
     // Filter the keys and assert the type
@@ -124,17 +142,16 @@ export default function ProductList() {
 
     formFields.images.forEach((imageFile, index) => {
       const dinamicKey = "file" + (index + 1);
-      console.log("este es el keyName: ", dinamicKey);
       formDataBody.append(dinamicKey, imageFile);
-    });
+    }); */
     try {
       const response = await basePost(
         "/product/",
         token,
-        formDataBody,
-        "Agregando producto..."
+        //formDataBody,
+        constructFormData(),
+        "Actualizando producto..."
       );
-      console.log(response.data);
       setFormState(exampleINewProductType);
     } catch (error) {
       console.log(error);
@@ -142,8 +159,18 @@ export default function ProductList() {
   }
 
   async function updateProduct() {
+    //console.log('se va a actualizar: ', constructFormData())
     try {
-    } catch (error) {}
+      const response = await basePut(
+        "/product/",
+        token,
+        constructFormData(),
+        "Actualizando producto..."
+      );
+      setFormState(exampleINewProductType);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   function provitionalDelete(name: string) {
@@ -213,7 +240,7 @@ export default function ProductList() {
           updateHandler={handleChange} //fields handler
           updateSelectorHandler={selectorHandler} //selector category handler
           updateImageHandler={imageHandler} //image selector handler
-          setFixedValuesInFormData= {setFixedValuesInFormData}
+          setFixedValuesInFormData={setFixedValuesInFormData}
         />
       </Grid>
     </Grid>

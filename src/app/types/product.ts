@@ -15,6 +15,7 @@ export type ProductType = {
 };
 
 export type INewProductType = {
+  id: string;
   name: string;
   description: string;
   price: string;
@@ -60,6 +61,7 @@ export type ProductImageArray = {
 }
 
 export const exampleINewProductType: INewProductType = {
+  id:"",
   name: "",
   description: "",
   price: "",

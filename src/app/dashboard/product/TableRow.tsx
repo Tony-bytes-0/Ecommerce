@@ -33,6 +33,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
   const [example, setExample] = useState<any>()
 
   const setValuesAndOpenEditModal = (valuesToSetUpdate: ProductType) => {
+    console.log('necesito convertir esto en file antes de poder actualizar', typeof(valuesToSetUpdate.images))//necesito convertir
     setFixedValuesInFormData(valuesToSetUpdate)
     handleOpenModal()
   }
@@ -45,19 +46,6 @@ const TableRowProductList: React.FC<RowProducType> = ({
   const handleCloseImageModal = () => {
     setImageModal(false)
   }
-  const handleImageUpload = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    key: string
-  ) => {
-    const selectedFile = event.target.files?.[0];
-  
-    if (selectedFile) {
-      //setSelectedImage(selectedFile);
-      
-      // Aquí puedes agregar la lógica para subir la imagen al servidor o manejarla localmente
-      console.log(`Imagen seleccionada para ${key}:`, selectedFile);
-    }
-  };
 
   return (<>
     <TableRow
