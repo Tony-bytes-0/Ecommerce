@@ -19,7 +19,9 @@ const TableComponent: React.FC<TableProducTypeList> = ({
   handleCloseModal,
   updateFormFields,
   updateHandler,
+  updateImageHandler,
   updateSelectorHandler,
+  setFixedValuesInFormData,
 }) => {
   return (
     <TableContainer component={Paper}>
@@ -57,8 +59,10 @@ const TableComponent: React.FC<TableProducTypeList> = ({
               token={token}
               updateFetchFunction={updateFetchFunction}
               updateFormFields={updateFormFields}
+              updateImageHandler={updateImageHandler}
               updateHandler={updateHandler}
               updateSelectorHandler={updateSelectorHandler}
+              setFixedValuesInFormData={setFixedValuesInFormData}
             />
           ))}
         </TableBody>

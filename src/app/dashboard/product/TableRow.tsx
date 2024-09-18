@@ -2,6 +2,7 @@ import { basePut } from "@/app/helpers/baseApiRequest";
 import {
   INewProductType,
   ProductImageArray,
+  ProductType,
   RowProducType,
   UpdateProducType,
 } from "@/app/types/product";
@@ -9,7 +10,6 @@ import { Box, Button, ButtonGroup, TableCell, TableRow } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ImageIcon from '@mui/icons-material/Image';
-import UpdateInput from "../add/UpdateInput";
 import React, { useState } from "react";
 import CustomAddNewProduct from "@/app/components/CustomAddNewProduct";
 import ModalGallery from "@/app/components/ModalGalery";
@@ -23,32 +23,19 @@ const TableRowProductList: React.FC<RowProducType> = ({
   updateFormFields,
   updateHandler,
   updateSelectorHandler,
+  updateImageHandler,
+  handleOpenModal,
+  setFixedValuesInFormData,
 }) => {
   const [updateModal, setUpdateModal] = React.useState(false);
   const [imageModal, setImageModal] = useState(false)
   const [imageArray, setImageArray] = useState<ProductImageArray>({images:[]} as ProductImageArray)
   const [example, setExample] = useState<any>()
-/*   const [formFields, setFormState] = useState<UpdateProducType>({
-    name: "",
-    price: "",
-    stock: "",
-    category: "",
-    categoryId: "",
-    description: "",
-    images: [{ url: "" }],
-  } as UpdateProducType); */
-  const handleUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    return 0;
-  };
-  const toggleModal = () => {
-    setUpdateModal(() => !updateModal);
-  };
-  const handleOpenModal = () => {
-    setUpdateModal(true);
-  };
-  const handleCloseModal = () => {
-    setUpdateModal(false);
-  };
+
+  const setValuesAndOpenEditModal = (valuesToSetUpdate: ProductType) => {
+    setFixedValuesInFormData(valuesToSetUpdate)
+    handleOpenModal()
+  }
   const handleOpenImageModal = (images: ProductImageArray) => {
     setImageArray(images)
     console.log('buscando: ', images.images[0].url)
@@ -72,42 +59,6 @@ const TableRowProductList: React.FC<RowProducType> = ({
     }
   };
 
-  async function updateProduct(id: string, token: string) {
-    //console.log('estoy enviando esto: ', {name: update}, "/category/" + name ) //debug
-    basePut(
-      "/product/" + id,
-      token,
-      { name: "update" },
-      "Actualizando categoria, no cierre esta pestaña ni recargue la pagina"
-    ).then(() => {
-      updateFetchFunction();
-    });
-  }
-
-  /*   async function deleteProduct(name: string, token: string) { //estatico
-      Swal.fire({
-        title: "Borrar categoria?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Si, estoy seguro",
-        denyButtonText: `no, volver`
-      }).then((result) => {
-        if (result.isConfirmed) {
-          
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
-      });
-      baseDelete(
-        "/category/" + name ,
-      token,
-        "Eliminando, no cierre esta pestaña"
-      ).then(() => {
-        updateFetchFunction();
-      });
-    }
-   */
-
   return (<>
     <TableRow
       //key={user.id}
@@ -122,7 +73,7 @@ const TableRowProductList: React.FC<RowProducType> = ({
       <TableCell align="center">
         <ButtonGroup variant="outlined" aria-label="Basic button group">
           <Button onClick={() => handleOpenImageModal({images: product.images})} ><ImageIcon/></Button>
-          <Button onClick={() => toggleModal()}>
+          <Button onClick={() => setValuesAndOpenEditModal(product)}>
             <EditIcon />
           </Button>
           <Button
@@ -130,18 +81,6 @@ const TableRowProductList: React.FC<RowProducType> = ({
             onClick={() => provitionalDelete(product.id, token)}
           >
             <DeleteIcon />
-
-{/*             <CustomAddNewProduct
-              addFunction={updateFetchFunction}
-              buttonText="Editar producto"
-              formFields={formFields}
-              handleClose={handleCloseModal}
-              handler={handleOpenModal}
-              itemName="Editar"
-              modal={updateModal}
-              selectorHandler={updateSelectorHandler}
-              token={token}
-            /> */}
           </Button>
         </ButtonGroup>
       </TableCell>

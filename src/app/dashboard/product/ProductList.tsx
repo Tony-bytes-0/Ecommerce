@@ -28,9 +28,19 @@ export default function ProductList() {
   const [formFields, setFormState] = useState<INewProductType>(
     exampleINewProductType as INewProductType
   );
-  const [updateFormFields, setUpdateFormFields] = useState<INewProductType>(
+  /*   const [updateFormFields, setUpdateFormFields] = useState<INewProductType>(
     exampleINewProductType as INewProductType
-  );
+  ); */
+  const setFixedValuesInFormData = (product: ProductType) => {
+    setFormState({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      categoryId: product.category.id,
+      images: product.images,
+    });
+  };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -69,12 +79,21 @@ export default function ProductList() {
     }));
   };
 
-  const handleOpen = () => setAddModal(true);
-  const handleClose = () => setAddModal(false);
-  const updateHandleOpen = (toUpdateForm: ProductType) => {
-    
-    setUpdateModal(true);
+  const handleOpen = () => {
+    setFormState({
+      name: '',
+      description: '',
+      price: '0',
+      stock: '0',
+      categoryId: '0',
+      images: [],
+    });
+    setAddModal(true)
   }
+  const handleClose = () => setAddModal(false);
+  const updateHandleOpen = () => {
+    setUpdateModal(true);
+  };
   const updateHandleClose = () => setUpdateModal(false);
   //axios
   async function refreshProducList() {
@@ -122,12 +141,9 @@ export default function ProductList() {
     }
   }
 
-  async function updateProduct(){
+  async function updateProduct() {
     try {
-      
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 
   function provitionalDelete(name: string) {
@@ -157,7 +173,7 @@ export default function ProductList() {
           />
         </Box>
 
-        <CustomAddNewProduct //para crear
+        <CustomAddNewProduct //para crear create
           categoryList={categoryList}
           itemName={"Añadir producto"}
           formFields={formFields}
@@ -171,7 +187,7 @@ export default function ProductList() {
           token={token}
           updateProduct={false}
         />
-        <CustomAddNewProduct //para update
+        <CustomAddNewProduct //para actualizar update
           categoryList={categoryList}
           itemName={"Actualizar producto"}
           formFields={formFields}
@@ -193,9 +209,11 @@ export default function ProductList() {
           //todo esto es para el actualizar dentro de dos niveles :(
           handleOpenModal={updateHandleOpen}
           handleCloseModal={updateHandleClose}
-          updateFormFields={updateFormFields}
-          updateHandler={handleChange}
-          updateSelectorHandler={selectorHandler}
+          updateFormFields={formFields}
+          updateHandler={handleChange} //fields handler
+          updateSelectorHandler={selectorHandler} //selector category handler
+          updateImageHandler={imageHandler} //image selector handler
+          setFixedValuesInFormData= {setFixedValuesInFormData}
         />
       </Grid>
     </Grid>

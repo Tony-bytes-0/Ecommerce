@@ -37,18 +37,18 @@ export type ModalHandlersAndTokenType = {
     fieldName: string
   ) => void;
   updateSelectorHandler: (event: SelectChangeEvent) => void;
+  updateImageHandler: any;
+  updateFetchFunction: () => void;
+  provitionalDelete: (arg0: string, arg1: string) => void;
+  setFixedValuesInFormData: (arg0: ProductType) => void;
 }
 
 export interface TableProducTypeList extends ModalHandlersAndTokenType  {
   productList: ProductType[];
-  updateFetchFunction: () => void;
-  provitionalDelete: (arg0: string, arg1: string) => void;
 };
 
 export interface RowProducType extends ModalHandlersAndTokenType {
     product: ProductType;
-    updateFetchFunction: () => void;
-    provitionalDelete: (arg0: string, arg1: string) => void;
 }
 
 export type ProductImage = {
