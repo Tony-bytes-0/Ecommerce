@@ -7,6 +7,7 @@ import { styled } from "@mui/system";
 import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
 import { Grid } from "@mui/material";
+import { CategoryType } from "@/app/types/category";
 
 const categorys = [
   { id: 1, label: "Ropa", href: "/" },
@@ -14,21 +15,27 @@ const categorys = [
   { id: 3, label: "Computación", href: "/" },
 ];
 
-export default function Categorys(props: {
-  xs: number;
-  windowsSize: { width: number; height: number };
-}) {
+interface props {
+  categoryList: CategoryType[];
+  windowsSize: {
+    height: number; width: number;
+  }
+  xs:number
+}
+
+const Categorys:React.FC<props> = ({categoryList, windowsSize, xs}) => {
+//export default function Categorys(props: {
   return (
     <>
-      {props.windowsSize.width <= 800 ? (
+      {windowsSize.width <= 800 ? (
         <></>
       ) : (
-        <Grid item xs={props.xs}>
+        <Grid item xs={xs}>
           <Dropdown>
             <MenuButton>Categorias</MenuButton>
             <Menu slots={{ listbox: AnimatedListbox }} className="z-20">
-              {categorys.map((e) => (
-                <MenuItem key={e.id}>{e.label}</MenuItem>
+              {categoryList.map((e) => (
+                <MenuItem key={e.id}>{e.name}</MenuItem>
               ))}
             </Menu>
           </Dropdown>
@@ -193,3 +200,5 @@ const MenuButton = styled(BaseMenuButton)(
   }
   `
 );
+
+export default Categorys;

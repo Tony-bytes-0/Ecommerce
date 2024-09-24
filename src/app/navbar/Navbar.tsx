@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { UserToken } from "../types/userSesionToken";
 import { getSesionData } from "../login/login/localUserData";
 import { setToken, setUser } from "@/lib/token/sesionToken";
+import { CategoryType } from "../types/category";
+import { baseGet } from "../helpers/baseApiRequest";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -20,42 +22,52 @@ const MainGridStyles = {
 };
 const linkStyles =
   "p-2 border-b-0 border-transparent transition-border-color duration-300 ease-in-out hover:border-b-8 hover:border-black hover-scale";
-const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10"; 
+const mainContainerStyles = " fixed w-full min-w-full border-b-4 z-10";
 
 const NavBar: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const handleNavigate = (route: string) => {
     router.push(route);
   };
-/*   const [sesionToken, setSesionToken] = useState<UserToken | undefined>( //local
-    {} as UserToken
-  ); */
-  const sesionData = useAppSelector((state) => state.sesionToken)
+  const sesionData = useAppSelector((state) => state.sesionToken);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
   });
+
   const logout = () => {
-    //setSesionToken({} as UserToken);
-    console.log('ejecucion de la funcion logout')
+    console.log("ejecucion de la funcion logout");
   };
+
+  async function getCategoryList() {
+    if(sesionData.token !== 'no'){
+      const response = await baseGet("/category/", sesionData.token, "Cargando categorias");
+      setCategoryList(response.data);
+    }
+  }
 
   useEffect(() => {
     const loadSessionData = async () => {
-      try {//try to load storageSesion
-        const localStorageSesion = {user: getSesionData('sesionUser'), token: getSesionData('sesionToken')}
+      try {
+        //try to load storageSesion
+        const localStorageSesion = {
+          user: getSesionData("sesionUser"),
+          token: getSesionData("sesionToken"),
+        };
         //asignar valores del localStorage al state
-        dispatch(setToken(localStorageSesion.token))
-        dispatch(setUser(localStorageSesion.user))
+        dispatch(setToken(localStorageSesion.token));
+        dispatch(setUser(localStorageSesion.user));
         //console.log({ localStorageSesion }, "NAVBAR USEEFFECT"); //debug
       } catch (error) {
-        console.error('Error cargando datos de sesión:', error);
+        console.error("Error cargando datos de sesión:", error);
         // Aquí podrías manejar el error, por ejemplo, redirigiendo al usuario a la página de inicio de sesión
       }
     };
-    loadSessionData()
-  }, []);
+    loadSessionData();
+    getCategoryList()
+  }, [sesionData.token]);
 
   return (
     <Grid
@@ -71,7 +83,7 @@ const NavBar: React.FC = () => {
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />
-        <Categorys windowsSize={windowSize} xs={6} />
+        <Categorys categoryList={categoryList} windowsSize={windowSize} xs={6} />
       </Grid>
       <Grid container item xs={6} alignItems={"center"} alignContent={"center"}>
         <SearchField windowSize={windowSize} size={7} />
@@ -81,7 +93,7 @@ const NavBar: React.FC = () => {
           size={3}
           handleNavigate={handleNavigate}
           sesionToken={sesionData}
-          logout = {logout}
+          logout={logout}
         />
       </Grid>
     </Grid>

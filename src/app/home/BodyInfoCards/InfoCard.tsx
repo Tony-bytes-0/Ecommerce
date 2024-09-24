@@ -74,7 +74,7 @@ const InfoCard: React.FC<props> = ({ product, xs }) => {
         <Card
           className={hoverExpand}
           component={"div"}
-          style={{ maxHeight: "580px", minHeight: "380px" }}
+          style={{ maxHeight: "380px", minHeight: "180px" }}
         >
           <CardMedia>
             <Box
