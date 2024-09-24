@@ -21,10 +21,10 @@ export default function DrawerLeftNew() {
   const menuOptionList: MenuOptionList = optionList;
   const IterateOptions: React.FC<menuOption> = ({ name, navigator, icon }) => {
     return (
-      <ListItem>
-        <ListItemButton onClick={() => handleNavigate(navigator)}>
+      <ListItem sx ={{ padding:0, margin:0 }} id = 'jeje aidi'>
+        <ListItemButton onClick={() => handleNavigate(navigator)} sx ={{ margin:0, padding: 2}}>
           <ListItemIcon>{icon}</ListItemIcon>
-          <Typography fontSize={16}>{name}</Typography>
+          <Typography fontSize={16} sx={{ }}>{name}</Typography>
         </ListItemButton>
       </ListItem>
     );

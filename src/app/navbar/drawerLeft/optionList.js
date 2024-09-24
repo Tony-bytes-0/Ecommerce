@@ -18,14 +18,14 @@ export const optionList = {
 ],
   category: [
     {
-      name: "Ver categorias",
+      name: "Categorias",
       navigator: "/dashboard/category/categoryList",
       icon: <LabelIcon />,
     },
 ],
   product: [
     {
-        name: "Ver Productos",
+        name: "Productos",
         navigator: "/dashboard/product",
         icon: <CategoryIcon />,
       },

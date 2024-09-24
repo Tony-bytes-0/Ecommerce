@@ -89,8 +89,8 @@ const User: React.FC<UserTypes> = ({
           </Typography>
         </Grid>
         <DropdownMenuComponent
-          options={userOptions.concat(logOptions)} //todas las opciones
-          //options = {getOptions()}
+          //options={userOptions.concat(logOptions)} //todas las opciones
+          options = {getOptions()}
         />
       </Grid>
       {/*         //) : (
