@@ -23,16 +23,18 @@ import { addAmountToItem, addItem } from "@/lib/shopingCar/shopingCart";
 import esponsiveText from "./responsiveText";
 import Image from "next/image";
 import Link from "next/link";
+import { ProductType } from "@/app/types/product";
 
 const hoverExpand =
   "transition-transform duration-500 ease-in-out transform hover:scale-110 scrollBar";
   const showOverflow = "relative overflow-visible max-h-[300px] overflow-indicator "
-type InfoCardTypes = {
-  item: Item;
-  xs: number;
-  windowSize: { width: number; height: number };
-};
-const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
+
+  interface props {
+    product: ProductType;
+    xs: number;
+  }
+
+const InfoCard: React.FC<props> = ({ product, xs }) => {
   const dispatch = useAppDispatch();
   const [itemsInCar, setItemsInCar] = useState<ListOfItems>({ items: [] });
   const shopingCart = useAppSelector((state) => state.shopingCart);
@@ -46,7 +48,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
   const handleHide = () => {
     setExpanded(false);
   };
-  const handleAdd = (): void => {
+/*   const handleAdd = (): void => {
     if (
       shopingCart.items.filter((iterable: Item) => item.id === iterable.id)
         .length > 0
@@ -57,15 +59,15 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
       dispatch(addItem(item));
       addStorageItem(item);
     }
-  };
+  }; */
 
   useEffect(() => {
     setItemsInCar({ items: getList() });
   }, []); 
 
-  useEffect(() => {
+/*   useEffect(() => {
     setIsOverflowing(item.name.length > 10);
-  }, [item.name.length]);
+  }, [item.name.length]); */
   return (
     <Grid item xs={xs} margin={2} padding={0}>
       <Box>
@@ -78,7 +80,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
             <Box
               sx={{ maxHeight: "380px", minHeight: "100px", display: "flex" }}
             >
-              <Image src={item.imgUrl} alt="" width={10000} height={1000} />
+              {/* <Image src={item.imgUrl} alt="" width={10000} height={1000} /> */}
             </Box>
           </CardMedia>
           <CardContent>
@@ -98,7 +100,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
                 onMouseEnter={handleShow}
                 onMouseLeave={handleHide}
               >
-                {item.name}
+                {product.name}
               </Typography>
             </ThemeProvider>
             <Typography
@@ -114,7 +116,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
                 textAlign: "center",
               }}
             >
-              {item.price + " $"}
+              {product.price + " $"}
             </Typography>
           </CardContent>
           <CardActions>
@@ -129,7 +131,7 @@ const InfoCard: React.FC<InfoCardTypes> = ({ item, xs }) => {
                 variant="contained"
                 className="bg-blue-400"
                 fullWidth
-                onClick={handleAdd}
+                //onClick={handleAdd}
               >
                 <ShoppingCartIcon />
               </Button>

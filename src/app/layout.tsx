@@ -29,7 +29,7 @@ export default function RootLayout({
             <NavBar />
           </Provider>
         </nav>
-        <Grid container>
+        <Grid container >
           <Provider store={store}> {children} </Provider>
           <Footer
             name={"Ecommerce"}
