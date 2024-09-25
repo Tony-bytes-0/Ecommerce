@@ -19,7 +19,6 @@ import { CategoryType } from "@/app/types/category";
 
 export default function ProductList() {
   //const [welcome, setWelcome] = useState(true);
-  //const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const token = useAppSelector((state) => state.sesionToken.token);
@@ -173,8 +172,9 @@ export default function ProductList() {
   }
 
   useEffect(() => {
-    refreshProducList();
-  }, [token]);
+      refreshProducList();
+  //}, [token]);
+  }, [token])
 
   return (
     <Grid container>
@@ -195,7 +195,7 @@ export default function ProductList() {
           />
         </Box>
 
-        <CustomAddNewProduct //para crear create
+      <CustomAddNewProduct //para crear create
           categoryList={categoryList}
           itemName={"Añadir producto"}
           formFields={formFields}
@@ -222,7 +222,7 @@ export default function ProductList() {
           imageHandler={imageHandler}
           token={token}
           updateProduct={false}
-        />
+        /> 
         <TableComponent
           token={token}
           productList={productList}

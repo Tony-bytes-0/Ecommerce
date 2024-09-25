@@ -114,12 +114,9 @@ const CustomAddNewProduct: React.FC<CustomAddNewItemType> = ({
     }
   }
   useEffect(() => {
-    setLoading(true)
-    if(loadingData){
       fetchCategoryList();
-    }
-  //}, [token, fetchCategoryList, loadingData])
-  })
+  }, [token])
+  //})
 
   return (
     <Dialog open={modal} onClose={handleClose}>

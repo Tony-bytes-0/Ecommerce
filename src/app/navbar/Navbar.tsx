@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DrawerLeftNew from "./drawerLeft/newDrawer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { UserToken } from "../types/userSesionToken";
 import { getSesionData } from "../login/login/localUserData";
 import { setToken, setUser } from "@/lib/token/sesionToken";
 import { CategoryType } from "../types/category";
@@ -69,14 +68,15 @@ const NavBar: React.FC = () => {
     getCategoryList()
   }, [sesionData.token]);
 
+
   return (
     <Grid
       container
+      sx={MainGridStyles}
       className={mainContainerStyles}
       paddingLeft={windowSize.width <= 800 ? 2 : 0}
       paddingRight={windowSize.width <= 800 ? 5 : 0}
       alignItems={"center"}
-      sx={MainGridStyles}
     >
       {sesionData?.token !== "no" ? <DrawerLeftNew /> : <></>}
 
