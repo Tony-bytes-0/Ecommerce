@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import NavBar from "@/app/navbar/Navbar";
 import { makeStore } from "@/lib/store";
 import Footer from "./components/Footer";
+import { useAppDispatch } from "@/lib/hooks";
+import { setName } from "@/lib/productfilters/simpleObject";
 
 const defaultGray = "#C1C1C1";
 
@@ -21,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const store = makeStore();
+
   return (
     <html lang="en">
       <body>

@@ -14,6 +14,7 @@ import { getSesionData } from "../login/login/localUserData";
 import { setToken, setUser } from "@/lib/token/sesionToken";
 import { CategoryType } from "../types/category";
 import { baseGet } from "../helpers/baseApiRequest";
+import { setId, setName } from "@/lib/productfilters/simpleObject";
 
 const MainGridStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -30,7 +31,6 @@ const NavBar: React.FC = () => {
     router.push(route);
   };
   const sesionData = useAppSelector((state) => state.sesionToken);
-  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
@@ -39,13 +39,6 @@ const NavBar: React.FC = () => {
   const logout = () => {
     console.log("ejecucion de la funcion logout");
   };
-
-  async function getCategoryList() {
-    if(sesionData.token !== 'no'){
-      const response = await baseGet("/category/", sesionData.token, "Cargando categorias");
-      setCategoryList(response.data);
-    }
-  }
 
   useEffect(() => {
     const loadSessionData = async () => {
@@ -65,9 +58,12 @@ const NavBar: React.FC = () => {
       }
     };
     loadSessionData();
-    getCategoryList()
   }, [sesionData.token]);
 
+  const ancestro = () => {
+    console.log('marico, haz algo')
+    dispatch(setName('porfavor'))
+  }
 
   return (
     <Grid
@@ -83,7 +79,7 @@ const NavBar: React.FC = () => {
       <Grid container item xs={6}>
         <HamburgerMenu windowSize={windowSize} xs={2} />
         <HomeIconComponent windowSize={windowSize} xs={3} />
-        <Categorys categoryList={categoryList} windowsSize={windowSize} xs={6} />
+        {/* <Categorys categoryList={categoryList} windowsSize={windowSize} xs={6} /> */}
       </Grid>
       <Grid container item xs={6} alignItems={"center"} alignContent={"center"}>
         <SearchField windowSize={windowSize} size={7} />

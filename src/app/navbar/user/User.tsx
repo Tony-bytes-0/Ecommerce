@@ -69,7 +69,7 @@ const User: React.FC<UserTypes> = ({
     }
   };
   const getOptions = () => {
-    console.log(sesionToken)
+    //console.log(sesionToken)
     if (sesionToken?.token == '' || !sesionToken?.token) {
       return logOptions
     }

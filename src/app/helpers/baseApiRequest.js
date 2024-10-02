@@ -10,7 +10,7 @@ export async function baseGet (route, token, loadMessage ){
         },
       })
       shortSuccess()
-      console.log(response.data)
+      //console.log(response.data)
       return response.data;
       
     } catch (error) {

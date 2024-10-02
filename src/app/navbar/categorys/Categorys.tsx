@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import { Dropdown } from "@mui/base/Dropdown";
 import { Menu, MenuListboxSlotProps } from "@mui/base/Menu";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
@@ -6,44 +6,49 @@ import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
 import { CssTransition } from "@mui/base/Transitions";
 import { PopupContext } from "@mui/base/Unstable_Popup";
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import { CategoryType } from "@/app/types/category";
-
-const categorys = [
-  { id: 1, label: "Ropa", href: "/" },
-  { id: 2, label: "Electrodomesticos", href: "/" },
-  { id: 3, label: "Computación", href: "/" },
-];
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setName } from "@/lib/productfilters/simpleObject";
+import { baseGet } from "@/app/helpers/baseApiRequest";
+import { forwardRef, useContext, useEffect, useState } from "react";
 
 interface props {
   categoryList: CategoryType[];
-  windowsSize: {
-    height: number; width: number;
-  }
-  xs:number
+  //setFilter: (arg0: CategoryType) => void;
+/*   windowsSize: {
+    height: number;
+    width: number;
+  }; */
+  xs: number;
 }
 
-const Categorys:React.FC<props> = ({categoryList, windowsSize, xs}) => {
-//export default function Categorys(props: {
+const Categorys: React.FC<props> = ({  xs, categoryList }) => {
+  const dispatch = useAppDispatch()
+  const handleChangeS = () => {
+    dispatch(setName('NAME!"!!!!!!!!'))
+  }
+
   return (
     <>
-      {windowsSize.width <= 800 ? (
-        <></>
-      ) : (
         <Grid item xs={xs}>
           <Dropdown>
             <MenuButton>Categorias</MenuButton>
             <Menu slots={{ listbox: AnimatedListbox }} className="z-20">
               {categoryList.map((e) => (
-                <MenuItem key={e.id}>{e.name}</MenuItem>
+                <MenuItem
+                  key={e.id}
+                  //onClick={handleChangeS}
+                >
+                  {e.name}
+                </MenuItem>
               ))}
             </Menu>
           </Dropdown>
         </Grid>
-      )}
     </>
   );
-}
+};
 
 const blue = {
   50: "#F0F7FF",
@@ -112,12 +117,12 @@ const Listbox = styled("ul")(
   `
 );
 
-const AnimatedListbox = React.forwardRef(function AnimatedListbox(
+const AnimatedListbox = forwardRef(function AnimatedListbox(
   props: MenuListboxSlotProps,
   ref: React.ForwardedRef<HTMLUListElement>
 ) {
   const { ownerState, ...other } = props;
-  const popupContext = React.useContext(PopupContext);
+  const popupContext = useContext(PopupContext);
 
   if (popupContext == null) {
     throw new Error(

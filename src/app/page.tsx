@@ -9,6 +9,7 @@ import { makeStore } from "@/lib/store";
 import { ProductType } from "./types/product";
 import { baseGet } from "./helpers/baseApiRequest";
 import ActualPage from "./home/ActualPage";
+import { CategoryType } from "./types/category";
 
 const GridMainStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
@@ -22,6 +23,7 @@ export default function Home() {
     name: "Todos los productos",
   });
   const [productList, setProductList] = useState<ProductType[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([])
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
@@ -38,15 +40,26 @@ export default function Home() {
       } catch (error) {}
     }
   }
+  async function getCategorys() {
+    if (token !== "no") {
+      try {
+        const response = await baseGet(
+          "/category/",
+          token,
+          "Cargando productos..."
+        );
+        setCategoryList(response.data);
+      } catch (error) {}
+    }
+  }
   useEffect(() => {
     getProducts();
+    getCategorys();
     const handleResize = () => {
-      //if (typeof window !== "undefined") {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-      //}
     };
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -57,7 +70,7 @@ export default function Home() {
     <Grid container sx={GridMainStyles}>
       <Provider store={store}>
         <Promo windowSize={windowSize} />
-        <ActualPage />
+        <ActualPage categoryList = {categoryList} />
         <ProductsContainer
           products={productList}
           xs={windowSize.width <= 800 ? 5 : 3}

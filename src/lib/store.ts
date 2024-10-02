@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import shopingCart from "@/lib/shopingCar/shopingCart";
 import sesionToken from "@/lib/token/sesionToken";
+import productFiltersSlice from "./productfilters/productFiltersSlice";
+import simpleObjectReducer from "./productfilters/simpleObject";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       shopingCart: shopingCart,
-      sesionToken: sesionToken
+      sesionToken: sesionToken,
+      productFiltersSlice: productFiltersSlice,
+      simpleObject: simpleObjectReducer
     },
   });
 };
