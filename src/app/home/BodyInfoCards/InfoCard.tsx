@@ -48,18 +48,19 @@ const InfoCard: React.FC<props> = ({ product, xs }) => {
   const handleHide = () => {
     setExpanded(false);
   };
-/*   const handleAdd = (): void => {
+   const handleAdd = (): void => {
+    console.log(product)
     if (
-      shopingCart.items.filter((iterable: Item) => item.id === iterable.id)
+      shopingCart.items.filter((iterable: Item) => iterable.id === product.id)
         .length > 0
     ) {
-      dispatch(addAmountToItem({ item: item, amountToChange: 1 }));
-      addStorageItem(item);
+      dispatch(addAmountToItem({ product: product, amountToChange: 1 }));
+      addStorageItem(product);
     } else {
-      dispatch(addItem(item));
-      addStorageItem(item);
+      dispatch(addItem(product));
+      addStorageItem(product);
     }
-  }; */
+  }; 
 
   useEffect(() => {
     setItemsInCar({ items: getList() });
@@ -131,7 +132,7 @@ const InfoCard: React.FC<props> = ({ product, xs }) => {
                 variant="contained"
                 className="bg-blue-400"
                 fullWidth
-                //onClick={handleAdd}
+                onClick={handleAdd}
               >
                 <ShoppingCartIcon />
               </Button>

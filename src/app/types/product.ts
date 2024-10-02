@@ -9,7 +9,7 @@ export type ProductType = {
   createdAt: string;
   name: string;
   description: string;
-  stock: string;
+  stock: number;
   price: string;
   category: CategoryType;
 };
