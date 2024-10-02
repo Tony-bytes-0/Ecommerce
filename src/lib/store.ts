@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import shopingCart from "@/lib/shopingCar/shopingCart";
 import sesionToken from "@/lib/token/sesionToken";
 import productFiltersSlice from "./productfilters/productFiltersSlice";
-import simpleObjectReducer from "./productfilters/simpleObject";
+//import simpleObjectReducer from "./productfilters/simpleObject";
 
 export const makeStore = () => {
   return configureStore({
@@ -10,7 +10,7 @@ export const makeStore = () => {
       shopingCart: shopingCart,
       sesionToken: sesionToken,
       productFiltersSlice: productFiltersSlice,
-      simpleObject: simpleObjectReducer
+      //simpleObject: simpleObjectReducer
     },
   });
 };

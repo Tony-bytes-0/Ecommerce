@@ -15,10 +15,14 @@ const productFiltersSlice = createSlice({
   initialState,
   reducers: {
     setFilter: (state, action: PayloadAction<Filter>) => {
-      state.name = action.payload.name;
+      //state.name = action.payload.name;
+      state.name = 'me borre'
+    },
+    deleteFilters: (state) => {
+      state.name = 'me borre'
     }
   },
 });
 
-export const { setFilter } = productFiltersSlice.actions;
+export const { setFilter, deleteFilters } = productFiltersSlice.actions;
 export default productFiltersSlice.reducer;

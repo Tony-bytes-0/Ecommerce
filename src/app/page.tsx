@@ -10,24 +10,37 @@ import { ProductType } from "./types/product";
 import { baseGet } from "./helpers/baseApiRequest";
 import ActualPage from "./home/ActualPage";
 import { CategoryType } from "./types/category";
+import {
+  deleteFilters,
+  setFilter,
+} from "@/lib/productfilters/productFiltersSlice";
 
 const GridMainStyles = {
   backgroundColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
 };
 
-export default function Home() {
+const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
   const store = makeStore();
   const token = useAppSelector((state) => state.sesionToken.token);
-  const [filters, setFilters] = useState({
+  const [productList, setProductList] = useState<ProductType[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
+  const [filter, setFilter] = useState({
     id: "",
     name: "Todos los productos",
   });
-  const [productList, setProductList] = useState<ProductType[]>([]);
-  const [categoryList, setCategoryList] = useState<CategoryType[]>([])
   const [windowSize, setWindowSize] = useState({
     width: 1000,
     height: 1000,
   });
+
+  const categorySelectHandler = (categoryName: string) => {
+    console.log(categoryName);
+    setFilter({
+      id: "",
+      name: categoryName,
+    });
+  };
   async function getProducts() {
     if (token !== "no") {
       try {
@@ -70,7 +83,11 @@ export default function Home() {
     <Grid container sx={GridMainStyles}>
       <Provider store={store}>
         <Promo windowSize={windowSize} />
-        <ActualPage categoryList = {categoryList} />
+        <ActualPage
+          filter={filter}
+          categoryList={categoryList}
+          categorySelectHandler={categorySelectHandler}
+        />
         <ProductsContainer
           products={productList}
           xs={windowSize.width <= 800 ? 5 : 3}
@@ -78,4 +95,6 @@ export default function Home() {
       </Provider>
     </Grid>
   );
-}
+};
+
+export default Home;

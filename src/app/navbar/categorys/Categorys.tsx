@@ -10,11 +10,11 @@ import { Grid, IconButton } from "@mui/material";
 import { CategoryType } from "@/app/types/category";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setName } from "@/lib/productfilters/simpleObject";
-import { baseGet } from "@/app/helpers/baseApiRequest";
-import { forwardRef, useContext, useEffect, useState } from "react";
+import { forwardRef, useContext } from "react";
 
 interface props {
   categoryList: CategoryType[];
+  categorySelectHandler: (arg0: CategoryType) => void;
   //setFilter: (arg0: CategoryType) => void;
 /*   windowsSize: {
     height: number;
@@ -23,10 +23,9 @@ interface props {
   xs: number;
 }
 
-const Categorys: React.FC<props> = ({  xs, categoryList }) => {
-  const dispatch = useAppDispatch()
-  const handleChangeS = () => {
-    dispatch(setName('NAME!"!!!!!!!!'))
+const Categorys: React.FC<props> = ({  xs, categoryList, categorySelectHandler }) => {
+  const handleChangeS = (event: any) => {
+    categorySelectHandler(event.target.textContent)
   }
 
   return (
@@ -38,7 +37,8 @@ const Categorys: React.FC<props> = ({  xs, categoryList }) => {
               {categoryList.map((e) => (
                 <MenuItem
                   key={e.id}
-                  //onClick={handleChangeS}
+                  //onClick={categorySelectHandler}
+                  onClick={handleChangeS}
                 >
                   {e.name}
                 </MenuItem>
