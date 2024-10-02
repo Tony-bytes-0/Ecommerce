@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Item } from "@/app/home/BodyInfoCards/ItemTypes";
 import {
   Box,
   Divider,
@@ -15,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppDispatch } from "@/lib/hooks";
 import { addAmountToItem, deleteItem } from "@/lib/shopingCar/shopingCart";
 import { removeStorageItem, handleSetAmount } from "./comunFunctions";
+import { ProductType } from "@/app/types/product";
 
 const selectorStyle = {
   ul: {
@@ -47,7 +47,7 @@ const CustomTypgraphy = (props: any) => {
   );
 };
 
-function CarItem(item: Item) {
+function CarItem(product: ProductType) {
   const dispatch = useAppDispatch();
   const [amountArray, setAmountArray] = useState(
     Array.from({ length: 10 }, (_, index) => index + 1)
@@ -55,45 +55,46 @@ function CarItem(item: Item) {
   const handleSelectChange = (event: SelectChangeEvent) => {
     const selectedValue = event.target.value;
     dispatch(
-      addAmountToItem({ item: item, amountToChange: parseInt(selectedValue) })
+      addAmountToItem({ product: product, amountToChange: parseInt(selectedValue) })
     );
-    handleSetAmount(item, parseInt(selectedValue));
+    handleSetAmount(product, parseInt(selectedValue));
   };
-  const handleRemoveItem = (item: Item) => {
-    dispatch(deleteItem(item));
-    removeStorageItem(item);
+  const handleRemoveItem = (product: ProductType) => {
+    dispatch(deleteItem(product));
+    removeStorageItem(product);
   };
 
   return (
     <Box sx={MainBoxStyles}>
       <Grid container justifyContent={"center"} alignItems={"center"}>
         <Image
-          alt={item.name}
-          src={item.imgUrl}
+          alt={product.name}
+          //src={product.images[0].url} //arreglar imagen
+          src=''
           width={240}
           height={75}
           style={imageStyles}
         />
       </Grid>
 
-      <CustomTypgraphy text={item.name} />
-      <CustomTypgraphy text={item.price * item.amount + " $"} />
+      <CustomTypgraphy text={product.name} />
+      <CustomTypgraphy text={parseInt(product.price) * product.stock + " $"} />
       <Box>
         <Select
           defaultValue=""
           sx={selectorStyle}
           size="small"
-          value={JSON.stringify(item.amount)}
+          value={JSON.stringify(product.stock)}
           onChange={handleSelectChange}
         >
           {amountArray.map((e) => (
-            <MenuItem value={e} key={item.id}>
+            <MenuItem value={e} key={e}>
               {e}
             </MenuItem>
           ))}
         </Select>
         <IconButton edge="end" aria-label="delete">
-          <DeleteIcon fontSize="large" onClick={() => handleRemoveItem(item)} />
+          <DeleteIcon fontSize="large" onClick={() => handleRemoveItem(product)} />
         </IconButton>
       </Box>
       <Divider />

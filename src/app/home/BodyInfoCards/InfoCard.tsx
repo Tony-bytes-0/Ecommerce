@@ -51,7 +51,7 @@ const InfoCard: React.FC<props> = ({ product, xs }) => {
    const handleAdd = (): void => {
     console.log(product)
     if (
-      shopingCart.items.filter((iterable: Item) => iterable.id === product.id)
+      shopingCart.productList.filter((iterable: ProductType) => iterable.id === product.id)
         .length > 0
     ) {
       dispatch(addAmountToItem({ product: product, amountToChange: 1 }));

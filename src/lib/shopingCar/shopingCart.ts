@@ -12,16 +12,18 @@ const shopingCart = createSlice({
       state.productList.push(action.payload);
     },
 
-    addAmountToItem: (state, action: PayloadAction<ItemAndAmount>) => {
+    addAmountToItem: (state, action: PayloadAction<{
+      product: ProductType, amountToChange: number
+    }>) => {
       state.productList.map((product) => {
-        if (product.id == action.payload.item.id) {
+        if (product.id == action.payload.product.id) {
           product.stock = action.payload.amountToChange;
         } else {
           product;
         }
       });
     },
-    deleteItem: (state, action: PayloadAction<Item>) => {
+    deleteItem: (state, action: PayloadAction<ProductType>) => {
       state.productList = state.productList.filter((product) => product.id !== action.payload.id)
     },
     setCarState: (state, action) => {

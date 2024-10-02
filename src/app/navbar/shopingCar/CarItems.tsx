@@ -1,12 +1,12 @@
 "use client";
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Item } from "../../home/BodyInfoCards/ItemTypes";
 import CarItem from "./CarItem";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { clearCar, setCarState } from "@/lib/shopingCar/shopingCart";
 import { getList } from "./comunFunctions";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { ProductType } from "@/app/types/product";
 
 const ItemsStyles = {
   display: "flex",
@@ -22,9 +22,9 @@ function CarItems() {
   const carItems = useAppSelector((state) => state.shopingCart);
   const calculateTotal = () => {
     let total = 0;
-    for (let index = 0; index < carItems.items.length; index++) {
+    for (let index = 0; index < carItems.productList.length; index++) {
       total =
-        total + carItems.items[index].price * carItems.items[index].amount;
+        total + parseInt(carItems.productList[index].price) * carItems.productList[index].stock;
     }
     return total;
   };
@@ -57,7 +57,7 @@ function CarItems() {
       </AppBar>
       </Grid>
       <Grid marginTop={10} sx={ItemsStyles}>
-        {carItems.items.map((e: Item) => (
+        {carItems.productList.map((e: ProductType) => (
           <CarItem {...e} key={e.id} />
         ))}
       </Grid>

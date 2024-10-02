@@ -1,4 +1,4 @@
-import { Item } from "@/app/home/BodyInfoCards/ItemTypes";
+import { ProductType } from "@/app/types/product";
 import Swal from "sweetalert2";
 
 const key = "carItems";
@@ -10,15 +10,15 @@ export const saveList = (list: []) => {
   localStorage.setItem(key, JSON.stringify(list));
   return undefined
 }
-export const addStorageItem = (item: Item) => {
+export const addStorageItem = (product: ProductType) => {
   const list = getList();
-  const selected = list.filter((e: Item) => e.id == item.id);
+  const selected = list.filter((e: ProductType) => e.id == product.id);
   if (selected.length == 0) {
-    list.push(item);
+    list.push(product);
     saveList(list);
   } else {
-    const newList = list.map((e: Item) =>
-      e.id === item.id ? { ...e, amount: e.amount + 1 } : e
+    const newList = list.map((e: ProductType) =>
+      e.id === product.id ? { ...e, stock: e.stock + 1 } : e
     );
     saveList(newList);
   }
@@ -30,19 +30,19 @@ export const addStorageItem = (item: Item) => {
     timer: 500
   });
 };
-export const handleSetAmount = ( item: Item, amount: number) => {
+export const handleSetAmount = ( ProductType: ProductType, amount: number) => {
 const list = getList();
-const selected = list.filter((e: Item) => e.id == item.id);
+const selected = list.filter((e: ProductType) => e.id == ProductType.id);
   if (selected.length !== 0) {
-    const newList = list.map((e: Item) =>
-      e.id === item.id ? { ...e, amount: amount } : e
+    const newList = list.map((e: ProductType) =>
+      e.id === ProductType.id ? { ...e, amount: amount } : e
     );
     saveList(newList);
   }
 }
-export const removeStorageItem = (item: Item) => {
+export const removeStorageItem = (ProductType: ProductType) => {
   const list = getList();
-  const newList = list.filter((product: Item) => product.id !== item.id)
+  const newList = list.filter((product: ProductType) => product.id !== ProductType.id)
   saveList(newList)
 }
 
@@ -56,26 +56,26 @@ export const removeStorageItem = (item: Item) => {
   function saveList(list: []) {
     localStorage.setItem(key, JSON.stringify(list));
   }
-  const handleAddItem = (item: Item) => {
+  const handleAddItem = (ProductType: ProductType) => {
     const list = getList();
-    const selected = list.filter((e: Item) => e.id == item.id);
+    const selected = list.filter((e: ProductType) => e.id == ProductType.id);
     if (selected.length == 0) {
-      item.amount = 1;
-      list.push(item);
+      ProductType.amount = 1;
+      list.push(ProductType);
       saveList(list);
     } else {
-      const newList = list.map((e: Item) =>
-        e.id === item.id ? { ...e, amount: e.amount + 1 } : e
+      const newList = list.map((e: ProductType) =>
+        e.id === ProductType.id ? { ...e, amount: e.amount + 1 } : e
       );
       saveList(newList);
     }
   };
   const handleRemoveItem = (id: number) => {
     const list = getList();
-    const selected = list.filter((e: Item) => e.id == id);
+    const selected = list.filter((e: ProductType) => e.id == id);
     if (selected.length !== 0) {
-      const newList = list.map((e: Item) =>
-        e.id === item.id ? { ...e, amount: e.amount - 1 } : e
+      const newList = list.map((e: ProductType) =>
+        e.id === ProductType.id ? { ...e, amount: e.amount - 1 } : e
       );
       saveList(newList);
     }
